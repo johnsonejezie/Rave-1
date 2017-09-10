@@ -68,7 +68,8 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         shimmerView.contentView = loadingLabel
         
         let urlStr : NSString = url!.addingPercentEscapes(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))! as NSString
-        let _URL : NSURL = NSURL(string: urlStr as String)!
+        //let urlStr:Ns  = url!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        let _URL : NSURL = NSURL(string: urlStr as! String)!
         let request = URLRequest(url: _URL as URL)
         webView.load(request)
         webView.allowsBackForwardNavigationGestures = true

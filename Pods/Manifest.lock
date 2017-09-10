@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (4.5.0)
   - BSErrorMessageView (1.1)
-  - IQKeyboardManagerSwift (4.0.10)
+  - IQKeyboardManagerSwift (4.0.11)
   - KVNProgress (2.3.1)
   - PopupDialog (0.5.4)
   - Shimmer (1.0.2)
@@ -34,7 +34,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   BSErrorMessageView: 67cc7d172995fbc6df602c2b8923f48121ddf7a9
-  IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
+  IQKeyboardManagerSwift: 10f0a6b8ea2904c8943c0e1a116c99f5b8ad83af
   KVNProgress: 8167b1f19e2758290c0b6143020ed9dcbb0477a1
   PopupDialog: 75cf955693590b0cb2fdde00223fb65d99c57247
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
@@ -42,4 +42,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 02c3f93a59ea5f8351f0bf04089b30555d7ee296
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.0

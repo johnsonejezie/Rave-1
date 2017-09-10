@@ -7,28 +7,27 @@
 //
 
 import UIKit
-
-protocol RavePaymentManagerDelegate:class {
-    func ravePaymentManagerDidCancel(_ ravePaymentManager:RavePayManager)
-    func ravePaymentManager(_ ravePaymentManager:RavePayManager, didSucceedPaymentWithResult result:[String:AnyObject])
-    func ravePaymentManager(_ ravePaymentManager:RavePayManager, didFailPaymentWithResult result:[String:AnyObject])
+public protocol RavePaymentManagerDelegate:class {
+   func ravePaymentManagerDidCancel(_ ravePaymentManager:RavePayManager)
+     func ravePaymentManager(_ ravePaymentManager:RavePayManager, didSucceedPaymentWithResult result:[String:AnyObject])
+     func ravePaymentManager(_ ravePaymentManager:RavePayManager, didFailPaymentWithResult result:[String:AnyObject])
 }
 
-class RavePayManager: UIViewController,RavePayControllerDelegate {
-    weak var delegate:RavePaymentManagerDelegate?
-    var email:String?
-    var transcationRef:String?
-    var amount:String?
-    var country:String = "NG"
-    var currencyCode:String = "NGN"
-    var narration:String?
-    var savedCardsAllow = true
+public class RavePayManager: UIViewController,RavePayControllerDelegate {
+    public weak var delegate:RavePaymentManagerDelegate?
+    public var email:String?
+    public var transcationRef:String?
+    public var amount:String?
+    public var country:String = "NG"
+    public var currencyCode:String = "NGN"
+    public var narration:String?
+    public var savedCardsAllow = true
     
     
    
    
     
-    func show(withController controller:UIViewController){
+   public func show(withController controller:UIViewController){
         guard let email = email else {
             fatalError("Email address is missing")
         }
@@ -36,8 +35,8 @@ class RavePayManager: UIViewController,RavePayControllerDelegate {
             fatalError("transactionRef is missing")
         }
        
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let identifier = Bundle(identifier: "flutterwave.Rave")
+        let storyboard = UIStoryboard(name: "Rave", bundle: identifier)
         let _controller = storyboard.instantiateViewController(withIdentifier: "raveNav") as! UINavigationController
         let raveController = _controller.childViewControllers[0] as! RavePayController
         raveController.email = email

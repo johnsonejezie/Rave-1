@@ -58,6 +58,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             cardSavedTable.reloadData()
         }
     }
+     let identifier = Bundle(identifier: "flutterwave.Rave")
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
     @IBOutlet weak var cardSavedDoneButton: UIButton!
     
@@ -152,7 +153,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         let amountIcon = UIButton(type: .system)
         amountIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-        amountIcon.setImage(#imageLiteral(resourceName: "new_card"), for: .normal)
+        
+        amountIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
         amountIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 15)
         let amountIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         amountIcV.addSubview(amountIcon)
@@ -160,7 +162,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         let accountAmountIcon = UIButton(type: .system)
         accountAmountIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-        accountAmountIcon.setImage(#imageLiteral(resourceName: "new_card"), for: .normal)
+        accountAmountIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
         accountAmountIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 15)
         let accountAmountIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         accountAmountIcV.addSubview(accountAmountIcon)
@@ -170,7 +172,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         let pinIcon = UIButton(type: .system)
         pinIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-        pinIcon.setImage(#imageLiteral(resourceName: "calender"), for: .normal)
+        pinIcon.setImage(UIImage(named: "calender", in: identifier ,compatibleWith: nil), for: .normal)
         pinIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
         let pinIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         pinIcV.addSubview(pinIcon)
@@ -179,7 +181,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         let cardIcon = UIButton(type: .system)
         cardIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-        cardIcon.setImage(#imageLiteral(resourceName: "new_card"), for: .normal)
+        cardIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
         cardIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 15)
         let cardIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         cardIcV.addSubview(cardIcon)
@@ -188,7 +190,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         let cvvIcon = UIButton(type: .system)
         cvvIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-        cvvIcon.setImage(#imageLiteral(resourceName: "new_card"), for: .normal)
+        cvvIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
         cvvIcon.frame = CGRect(x: 12, y: 8, width: 20, height: 15)
         let cvvIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         cvvIcV.addSubview(cvvIcon)
@@ -198,7 +200,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         let expIcon = UIButton(type: .system)
         expIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-        expIcon.setImage(#imageLiteral(resourceName: "calender"), for: .normal)
+        expIcon.setImage(UIImage(named: "calender", in: identifier ,compatibleWith: nil), for: .normal)
         expIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
         let expIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         expIcV.addSubview(expIcon)
@@ -209,7 +211,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         let bankIcon = UIButton(type: .system)
         bankIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-        bankIcon.setImage(#imageLiteral(resourceName: "bank_icon"), for: .normal)
+        bankIcon.setImage(UIImage(named: "bank_icon", in: identifier ,compatibleWith: nil), for: .normal)
         bankIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
         let bankIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         bankIcV.addSubview(bankIcon)
@@ -228,7 +230,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         let accNumberIcon = UIButton(type: .system)
         accNumberIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-        accNumberIcon.setImage(#imageLiteral(resourceName: "new_card"), for: .normal)
+        accNumberIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
         accNumberIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 15)
         let accNumberIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         accNumberIcV.addSubview(accNumberIcon)
@@ -237,7 +239,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         let phoneNumberIcon = UIButton(type: .system)
         phoneNumberIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-        phoneNumberIcon.setImage(#imageLiteral(resourceName: "phone"), for: .normal)
+        phoneNumberIcon.setImage(UIImage(named: "phone", in: identifier ,compatibleWith: nil), for: .normal)
         phoneNumberIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
         let phoneNumberIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         phoneNumberIcV.addSubview(phoneNumberIcon)
@@ -322,6 +324,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         self.overLayView.isHidden = true
         isPinMode = false
         validator.unregisterField(pinTextField)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        carView.frame = containerView.bounds
+        bankView.frame = containerView.bounds
     }
     func doneButtonPressed(){
         self.hideCardOvelay()
@@ -484,6 +492,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     private func cardPayAction(){
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
+            
             let first2 = expiry.text!.substring(to: expiry.text!.index(expiry.text!.startIndex, offsetBy: 2))
             let last2 = expiry.text!.substring(from: expiry.text!.index(expiry.text!.endIndex, offsetBy: -2))
             var param = ["PBFPubKey":pubkey,
@@ -552,8 +561,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                                 case "00":
                                     let callbackResult = ["status":"success","payload":res!] as [String : Any]
                                     //self.updateExistingCardToken(selectedCard: self.selectedCard, data: res!)
-                                    self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
                                     KVNProgress.showSuccess(completion: {
+                                        self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
                                         self.dismissV()
                                     })
                                     
@@ -685,7 +694,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 
                 let chargeAmount = data?["charge_amount"] as? String
                 DispatchQueue.main.async {
-                    let popup = PopupDialog(title: "Confirm", message: "You will be charged a transaction fee of \(fee.toCountryCurrency(code:  self.currencyCode)),Total amount to be charged will be \(chargeAmount!.toCountryCurrency(code: self.currencyCode)). Do you wish to continue?")
+                    let popup = PopupDialog(title: "Confirm", message: "You will be charged a transaction fee of \(fee.toCountryCurrency(code:  self.currencyCode)), Total amount to be charged will be \(chargeAmount!.toCountryCurrency(code: self.currencyCode)). Do you wish to continue?")
                     let cancel = CancelButton(title: "Cancel") {
                         
                     }
@@ -978,7 +987,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 if let authURL = data["authurl"] as? String{
                     self.showWebView(url: authURL, ref:flwTransactionRef!)
                 }
-                
+                            
             default:
                 break
             }
@@ -1027,7 +1036,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     
     
     private func showOTPScreen(_ ref:String, isCard:Bool = true , message:String? = "Enter the OTP code below"){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Rave", bundle: identifier)
         let otp = storyboard.instantiateViewController(withIdentifier: "otp") as! OTPController
         otp.isCardValidation = isCard
         otp.transactionReference = ref
@@ -1044,7 +1054,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     private func getBanks(){
         RavePayService.getBanks(resultCallback: { (_banks) in
             DispatchQueue.main.async {
-                self.banks =  _banks
+                self.banks = _banks?.sorted(by: { (first, second) -> Bool in
+                    return first.name!.localizedCaseInsensitiveCompare(second.name!) == .orderedAscending
+                })
+               // self.banks =  _banks
             }
             
         }) { (err) in
@@ -1129,6 +1142,31 @@ extension RavePayController: UITableViewDelegate,UITableViewDataSource{
             return count
         }else{
             return 0
+        }
+    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath:IndexPath) {
+        if(indexPath.section == 0){
+            selectedCard = cardList?[indexPath.row]
+            if (editingStyle == UITableViewCellEditingStyle.delete) {
+                let cards = self.cardList?.filter({ (item) -> Bool in
+                    return item["card_token"] != selectedCard!["card_token"]
+                })
+                UserDefaults.standard.set(cards, forKey: "cards-\(self.email!)")
+                self.cardList?.remove(at: indexPath.row)
+                cardSavedTable.reloadData()
+                if (cardList!.count == 0){
+                    UserDefaults.standard.removeObject(forKey: "cards-\(self.email!)")
+                    self.hideCardOvelay()
+                    isCardSaved = false
+                    
+                    determineCardContainerHeight()
+                    
+                }
+            }
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

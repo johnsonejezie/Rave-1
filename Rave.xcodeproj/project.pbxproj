@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		04D5413712BCE3661795F3D0 /* Pods_RaveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A450EB78B91554DA8D08AC2F /* Pods_RaveTests.framework */; };
+		782DC7A91F346C180074A8A9 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782DC7A11F346C180074A8A9 /* Alamofire.framework */; };
+		782DC7AB1F346C180074A8A9 /* BSErrorMessageView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782DC7A31F346C180074A8A9 /* BSErrorMessageView.framework */; };
+		782DC7AC1F346C180074A8A9 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782DC7A41F346C180074A8A9 /* IQKeyboardManagerSwift.framework */; };
+		782DC7AD1F346C180074A8A9 /* KVNProgress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782DC7A51F346C180074A8A9 /* KVNProgress.framework */; };
+		782DC7AE1F346C180074A8A9 /* PopupDialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782DC7A61F346C180074A8A9 /* PopupDialog.framework */; };
+		782DC7AF1F346C180074A8A9 /* Shimmer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782DC7A71F346C180074A8A9 /* Shimmer.framework */; };
+		782DC7B01F346C180074A8A9 /* SwiftValidator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782DC7A81F346C180074A8A9 /* SwiftValidator.framework */; };
 		785D84701F336653003B8B26 /* Rave.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 785D84661F336653003B8B26 /* Rave.framework */; };
 		785D84751F336653003B8B26 /* RaveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D84741F336653003B8B26 /* RaveTests.swift */; };
 		785D84771F336653003B8B26 /* Rave.h in Headers */ = {isa = PBXBuildFile; fileRef = 785D84691F336653003B8B26 /* Rave.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -25,9 +32,8 @@
 		785D849D1F336AF0003B8B26 /* RavePayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D849C1F336AF0003B8B26 /* RavePayManager.swift */; };
 		785D849F1F336AF6003B8B26 /* RavePayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D849E1F336AF6003B8B26 /* RavePayController.swift */; };
 		785D84A11F336AFC003B8B26 /* OTPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D84A01F336AFC003B8B26 /* OTPController.swift */; };
-		785D84A41F336B24003B8B26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 785D84A31F336B24003B8B26 /* Main.storyboard */; };
+		785D84A41F336B24003B8B26 /* Rave.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 785D84A31F336B24003B8B26 /* Rave.storyboard */; };
 		785D84A71F336E06003B8B26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 785D84A61F336E06003B8B26 /* Assets.xcassets */; };
-		7BAF430E3ECD5A0B90FC9F4E /* Pods_Rave.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84055437D4D503261431AB3D /* Pods_Rave.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +49,14 @@
 /* Begin PBXFileReference section */
 		005477E46E9FD9B1322EE6EC /* Pods-RaveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RaveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RaveTests/Pods-RaveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		12982800246CE4B01FD71EA4 /* Pods-Rave.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rave.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Rave/Pods-Rave.debug.xcconfig"; sourceTree = "<group>"; };
+		782DC7A11F346C180074A8A9 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Barter-hhnwukndeqrnsybtoftlywarfzlt/Build/Products/Debug-iphoneos/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
+		782DC7A21F346C180074A8A9 /* APESuperHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = APESuperHUD.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Barter-hhnwukndeqrnsybtoftlywarfzlt/Build/Products/Debug-iphoneos/APESuperHUD/APESuperHUD.framework"; sourceTree = "<group>"; };
+		782DC7A31F346C180074A8A9 /* BSErrorMessageView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BSErrorMessageView.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Barter-hhnwukndeqrnsybtoftlywarfzlt/Build/Products/Debug-iphoneos/BSErrorMessageView/BSErrorMessageView.framework"; sourceTree = "<group>"; };
+		782DC7A41F346C180074A8A9 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Barter-hhnwukndeqrnsybtoftlywarfzlt/Build/Products/Debug-iphoneos/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework"; sourceTree = "<group>"; };
+		782DC7A51F346C180074A8A9 /* KVNProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KVNProgress.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Barter-hhnwukndeqrnsybtoftlywarfzlt/Build/Products/Debug-iphoneos/KVNProgress/KVNProgress.framework"; sourceTree = "<group>"; };
+		782DC7A61F346C180074A8A9 /* PopupDialog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PopupDialog.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Barter-hhnwukndeqrnsybtoftlywarfzlt/Build/Products/Debug-iphoneos/PopupDialog/PopupDialog.framework"; sourceTree = "<group>"; };
+		782DC7A71F346C180074A8A9 /* Shimmer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Shimmer.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Barter-hhnwukndeqrnsybtoftlywarfzlt/Build/Products/Debug-iphoneos/Shimmer/Shimmer.framework"; sourceTree = "<group>"; };
+		782DC7A81F346C180074A8A9 /* SwiftValidator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftValidator.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Barter-hhnwukndeqrnsybtoftlywarfzlt/Build/Products/Debug-iphoneos/SwiftValidator/SwiftValidator.framework"; sourceTree = "<group>"; };
 		785D84661F336653003B8B26 /* Rave.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rave.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		785D84691F336653003B8B26 /* Rave.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rave.h; sourceTree = "<group>"; };
 		785D846A1F336653003B8B26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,8 +77,9 @@
 		785D849C1F336AF0003B8B26 /* RavePayManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RavePayManager.swift; sourceTree = "<group>"; };
 		785D849E1F336AF6003B8B26 /* RavePayController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RavePayController.swift; sourceTree = "<group>"; };
 		785D84A01F336AFC003B8B26 /* OTPController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPController.swift; sourceTree = "<group>"; };
-		785D84A31F336B24003B8B26 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		785D84A31F336B24003B8B26 /* Rave.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Rave.storyboard; sourceTree = "<group>"; };
 		785D84A61F336E06003B8B26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		78EDC15B1F345B530087CCEB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84055437D4D503261431AB3D /* Pods_Rave.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rave.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		972E5ED5CC61FF24277822A4 /* Pods-Rave.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rave.release.xcconfig"; path = "Pods/Target Support Files/Pods-Rave/Pods-Rave.release.xcconfig"; sourceTree = "<group>"; };
 		A450EB78B91554DA8D08AC2F /* Pods_RaveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RaveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,7 +91,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BAF430E3ECD5A0B90FC9F4E /* Pods_Rave.framework in Frameworks */,
+				782DC7A91F346C180074A8A9 /* Alamofire.framework in Frameworks */,
+				782DC7AB1F346C180074A8A9 /* BSErrorMessageView.framework in Frameworks */,
+				782DC7AC1F346C180074A8A9 /* IQKeyboardManagerSwift.framework in Frameworks */,
+				782DC7AD1F346C180074A8A9 /* KVNProgress.framework in Frameworks */,
+				782DC7AE1F346C180074A8A9 /* PopupDialog.framework in Frameworks */,
+				782DC7AF1F346C180074A8A9 /* Shimmer.framework in Frameworks */,
+				782DC7B01F346C180074A8A9 /* SwiftValidator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +229,7 @@
 		785D84A21F336B15003B8B26 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				785D84A31F336B24003B8B26 /* Main.storyboard */,
+				785D84A31F336B24003B8B26 /* Rave.storyboard */,
 			);
 			name = Storyboard;
 			sourceTree = "<group>";
@@ -224,6 +245,15 @@
 		B2E99C65C2C7BE488B609EF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				782DC7A11F346C180074A8A9 /* Alamofire.framework */,
+				782DC7A21F346C180074A8A9 /* APESuperHUD.framework */,
+				782DC7A31F346C180074A8A9 /* BSErrorMessageView.framework */,
+				782DC7A41F346C180074A8A9 /* IQKeyboardManagerSwift.framework */,
+				782DC7A51F346C180074A8A9 /* KVNProgress.framework */,
+				782DC7A61F346C180074A8A9 /* PopupDialog.framework */,
+				782DC7A71F346C180074A8A9 /* Shimmer.framework */,
+				782DC7A81F346C180074A8A9 /* SwiftValidator.framework */,
+				78EDC15B1F345B530087CCEB /* UIKit.framework */,
 				84055437D4D503261431AB3D /* Pods_Rave.framework */,
 				A450EB78B91554DA8D08AC2F /* Pods_RaveTests.framework */,
 			);
@@ -332,7 +362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				785D84A71F336E06003B8B26 /* Assets.xcassets in Resources */,
-				785D84A41F336B24003B8B26 /* Main.storyboard in Resources */,
+				785D84A41F336B24003B8B26 /* Rave.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,13 +382,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RaveTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4578A06A9EDE13C5262A6F9E /* [CP] Copy Pods Resources */ = {
@@ -397,13 +430,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Rave-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D454F64C18F32A3B060D2B5C /* [CP] Embed Pods Frameworks */ = {
@@ -412,9 +448,24 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-RaveTests/Pods-RaveTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BSErrorMessageView/BSErrorMessageView.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/KVNProgress/KVNProgress.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
+				"${BUILT_PRODUCTS_DIR}/Shimmer/Shimmer.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftValidator/SwiftValidator.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSErrorMessageView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KVNProgress.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Shimmer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftValidator.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -467,6 +518,7 @@
 		785D84781F336653003B8B26 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -506,7 +558,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -521,6 +573,7 @@
 		785D84791F336653003B8B26 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -554,7 +607,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -569,6 +622,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 12982800246CE4B01FD71EA4 /* Pods-Rave.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -583,6 +638,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = flutterwave.Rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = CommonCrypto;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -592,6 +649,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 972E5ED5CC61FF24277822A4 /* Pods-Rave.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -606,6 +665,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = flutterwave.Rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = CommonCrypto;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -614,7 +675,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 005477E46E9FD9B1322EE6EC /* Pods-RaveTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				DEVELOPMENT_TEAM = EEN5SMD5RF;
 				INFOPLIST_FILE = RaveTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -628,7 +689,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BEB45CBF9CE9A9A127878C75 /* Pods-RaveTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				DEVELOPMENT_TEAM = EEN5SMD5RF;
 				INFOPLIST_FILE = RaveTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

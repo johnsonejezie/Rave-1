@@ -8,16 +8,16 @@
 
 import UIKit
 
-class RavePayConfig: NSObject {
-    var publicKey:String?
-    var secretKey:String?
-    var isStaging:Bool = true
-    var themeColor:UIColor = UIColor(hex: "#382E4B")
-    var secondaryThemeColor:UIColor = UIColor(hex: "#E1E2E2")
-    var buttonThemeColor:UIColor = UIColor(hex: "#00A384")
+public class RavePayConfig: NSObject {
+    public var publicKey:String?
+    public var secretKey:String?
+    public var isStaging:Bool = true
+    public var themeColor:UIColor = UIColor(hex: "#382E4B")
+    public var secondaryThemeColor:UIColor = UIColor(hex: "#E1E2E2")
+    public var buttonThemeColor:UIColor = UIColor(hex: "#00A384")
 
     
-    class func sharedConfig() -> RavePayConfig {
+   public class func sharedConfig() -> RavePayConfig {
         
         struct Static {
             static let kbManager = RavePayConfig()

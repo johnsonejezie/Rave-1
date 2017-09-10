@@ -30,16 +30,18 @@ s.source = { :git => "https://github.com/solejay/Rave-iOS.git", :tag => "#{s.ver
 # For example,
 # s.source = { :git => "https://github.com/JRG-Developer/RWPickFlavor.git", :tag => "#{s.version}"}
 
+s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
 
 # 7
-s.framework = "UIKit"
-s.dependency 'Alamofire', '~> 4.5.0'
+s.framework = 'UIKit'
+s.dependency 'Alamofire'
+#s.dependency 'BSErrorMessageView'
 s.dependency 'IQKeyboardManagerSwift','~> 4.0.6'
 s.dependency 'SwiftValidator'
 s.dependency 'KVNProgress', '~> 2.3.1'
 s.dependency 'PopupDialog', '~> 0.5.4'
 s.dependency 'Shimmer', '~> 1.0.2'
-#s.dependency "BSErrorMessageView"
+
 
 # 8
 s.source_files = "Rave/**/*.{swift}"

@@ -8,6 +8,8 @@
 
 import Foundation
 
+import CommonCrypto
+
 public class TripleDES {
     static func encrypt(string:String, key:String) -> NSData? {
         
