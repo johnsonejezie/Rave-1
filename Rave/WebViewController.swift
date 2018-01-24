@@ -67,7 +67,8 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         loadingLabel.textColor = .white
         shimmerView.contentView = loadingLabel
         
-        let urlStr : NSString = url!.addingPercentEscapes(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))! as NSString
+        //url!.addingPercentEscapes(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))!
+        let urlStr : NSString =   url!.addingPercentEncoding(withAllowedCharacters:  .urlPathAllowed)! as NSString
         //let urlStr:Ns  = url!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         let _URL : NSURL = NSURL(string: urlStr as! String)!
         let request = URLRequest(url: _URL as URL)
@@ -78,7 +79,7 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Web"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         self.navigationController?.navigationBar.barTintColor =  RavePayConfig.sharedConfig().themeColor
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false

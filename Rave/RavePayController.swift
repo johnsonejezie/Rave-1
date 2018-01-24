@@ -7,16 +7,25 @@
 //
 
 import UIKit
-import IQKeyboardManagerSwift
+//import IQKeyboardManagerSwift
 import KVNProgress
 import SwiftValidator
 import BSErrorMessageView
 import PopupDialog
+//import CreditCardValidator
 
 protocol RavePayControllerDelegate:class {
     func ravePayDidCancel(_ ravePayController:RavePayController)
     func ravePay(_ ravePayController:RavePayController, didSucceedPaymentWithResult result:[String:AnyObject])
     func ravePay(_ ravePayController:RavePayController, didFailPaymentWithResult result:[String:AnyObject])
+}
+
+public enum PaymentMethods: String {
+     case card = "CARD", account = "ACCOUNT", paypal = "PAYPAL", mpesa = "MPESA" , mobileMoney = "MOBILE MONEY"
+}
+
+public enum PaymentRoute: String {
+     case card = "card", existingCard = "existing_card", bank = "bank", paypal = "paypal"
 }
 
 
@@ -26,6 +35,18 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     @IBOutlet var carView: UIView!
     @IBOutlet var pinView: UIView!
     @IBOutlet var bankView: UIView!
+    @IBOutlet var paypalView: UIView!
+    @IBOutlet var mpesaContainer: UIView!
+    @IBOutlet weak var mpesaBusinessNumber: UILabel!
+    
+    @IBOutlet weak var mpesaPayButton: UIButton!
+    @IBOutlet weak var mpesaAccountNumber: UILabel!
+    
+    @IBOutlet var billingCodeView: UIView!
+    @IBOutlet weak var billingCodeTextField: UITextField!
+    @IBOutlet weak var billingButton: UIButton!
+    
+    @IBOutlet weak var payPalButton: UIButton!
     @IBOutlet weak var pinTextField: UITextField!
     @IBOutlet weak var cardNumber: VSTextField!
     @IBOutlet weak var cardPayButton: UIButton!
@@ -43,8 +64,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     @IBOutlet weak var accountBank: UITextField!
     @IBOutlet weak var accountNumber: UITextField!
     @IBOutlet weak var phoneNUmber: UITextField!
-    
+   // let creditCardValidator = CreditCardValidator()
     @IBOutlet weak var savedCardConstants: NSLayoutConstraint!
+    var cardIcon:UIButton!
+    var cardIcV:UIView!
     var bankPicker:UIPickerView!
     var banks:[Bank]? = [] {
         didSet{
@@ -64,7 +87,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     
     @IBOutlet weak var cardSavedTable: UITableView!
     @IBOutlet weak var cardSavedBar: UIView!
-    var bodyParam:Dictionary<String,String>?
+    var bodyParam:Dictionary<String,Any>?
     var merchantTransRef:String? = "RaveMobileiOS"
     var email:String? = "segun.solaja@gmail.com"
     var amount:String? = "500"
@@ -76,8 +99,13 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     let validator = Validator()
     var isInCardMode = true
     var isPinMode = false
-    
-    var paymentRoute:String!
+    var isBillingCodeMode = false
+    var segcontrol:CustomSegementControl!
+    var paymentRoute:PaymentRoute!
+    var selectedIndex:Int!
+    var paymentMethods:[PaymentMethods] = [.card,.account,.paypal]
+    var supportedPaymentMethods:[PaymentMethods] = []
+    var meta:[[String:String]]?
     var cardList:[[String:String]]? {
         didSet{
             cardSavedTable.reloadData()
@@ -87,10 +115,11 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     @IBOutlet var savedCardPopup: UIView!
     
     private var overLayView:UIView!
+    private var billingOverLayView:UIView!
     private var savedCardOverLayView:UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        IQKeyboardManager.sharedManager().enable = false
         configureView()
     }
 
@@ -100,6 +129,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
     private func  configureView(){
+         let count = supportedPaymentMethods.count
+        if count > 0 {
+                self.paymentMethods = supportedPaymentMethods
+        }
+       
+        
         cardList =  UserDefaults.standard.object(forKey: "cards-\(self.email!)") as? [[String:String]]
         
         cardSavedTable.delegate = self
@@ -108,9 +143,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         containerView.addSubview(carView)
         containerView.addSubview(bankView)
+        containerView.addSubview(paypalView)
+        containerView.addSubview(mpesaContainer)
         overLayView = UIView(frame:self.view.frame)
         overLayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         overLayView.isHidden = true
+        
+        billingOverLayView = UIView(frame:self.view.frame)
+        billingOverLayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        billingOverLayView.isHidden = true
         
         
         
@@ -123,6 +164,16 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         self.view.addSubview(overLayView)
 
         overLayView.addSubview(pinView)
+        
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(hideBillingOvelay))
+        billingOverLayView.addGestureRecognizer(tap2)
+        billingOverLayView.isUserInteractionEnabled = true
+        billingCodeView.center = CGPoint(x: billingOverLayView.center.x, y: billingOverLayView.center.y - 100)
+        billingCodeView.layer.cornerRadius = 6
+        
+        self.view.addSubview(billingOverLayView)
+        
+        billingOverLayView.addSubview(billingCodeView)
         
         savedCardOverLayView =  UIView(frame:self.view.frame)
         savedCardOverLayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
@@ -144,6 +195,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         cardPayButton.layer.cornerRadius =  cardPayButton.frame.height / 2
         cardPayButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
         pinButton.layer.cornerRadius =  pinButton.frame.height / 2
+        billingButton.layer.cornerRadius =  billingButton.frame.height / 2
         bankPayButton.layer.cornerRadius =  bankPayButton.frame.height / 2
         bankPayButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
         savedCardsButton.layer.cornerRadius =  savedCardsButton.frame.height / 2
@@ -169,6 +221,14 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         styleTextField(accountAmountTextField,leftView: accountAmountIcV)
 
         
+        let billingIcon = UIButton(type: .system)
+        billingIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        billingIcon.setImage(UIImage(named: "calender", in: identifier ,compatibleWith: nil), for: .normal)
+        billingIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let billingIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        billingIcV.addSubview(billingIcon)
+        
+        styleTextField(billingCodeTextField,leftView: billingIcV)
         
         let pinIcon = UIButton(type: .system)
         pinIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
@@ -179,14 +239,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         styleTextField(pinTextField,leftView: pinIcV)
         
-        let cardIcon = UIButton(type: .system)
+        cardIcon = UIButton(type: .system)
         cardIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
         cardIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
         cardIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 15)
-        let cardIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        cardIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         cardIcV.addSubview(cardIcon)
         styleTextField(cardNumber,leftView: cardIcV)
         cardNumber.setFormatting("xxxx xxxx xxxx xxxx xxxx", replacementChar: "x")
+      //  cardNumber.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         
         let cvvIcon = UIButton(type: .system)
         cvvIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
@@ -249,7 +310,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         containerView.layer.cornerRadius = 6
         containerView.layer.borderWidth = 1
         containerView.layer.borderColor =  RavePayConfig.sharedConfig().secondaryThemeColor.cgColor
-        IQKeyboardManager.sharedManager().enable = true
+      //  IQKeyboardManager.sharedManager().enable = true
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissV))
         self.navigationItem.leftBarButtonItem = barButton
@@ -259,9 +320,25 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         setPayButtonTitle(code: currencyCode, button: cardPayButton)
         bankPayButton.addTarget(self, action: #selector(bankPayButtonTapped), for: .touchUpInside)
         setPayButtonTitle(code: currencyCode, button: bankPayButton)
+        
+        payPalButton.layer.cornerRadius =  payPalButton.frame.height / 2
+        payPalButton.layer.borderWidth = 0.5
+        payPalButton.layer.borderColor =  RavePayConfig.sharedConfig().themeColor.cgColor
+        payPalButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
+        payPalButton.addTarget(self, action: #selector(doPayPalButtonTapped), for: .touchUpInside)
+        setPayButtonTitle(code: currencyCode, button: payPalButton)
+        
+        mpesaPayButton.layer.cornerRadius =  payPalButton.frame.height / 2
+        mpesaPayButton.layer.borderWidth = 0.5
+        mpesaPayButton.layer.borderColor =  RavePayConfig.sharedConfig().themeColor.cgColor
+        mpesaPayButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
+        setPayButtonTitle(code: currencyCode, button: mpesaPayButton)
 
         pinButton.addTarget(self, action: #selector(pinButtonTapped), for: .touchUpInside)
         pinButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
+        
+        billingButton.addTarget(self, action: #selector(billingButtonTapped), for: .touchUpInside)
+        billingButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
         
         //required fields
         validator.registerField(self.cardNumber, errorLabel: nil, rules: [RequiredRule(message:"Card number is required")])
@@ -312,7 +389,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
 //            button.setTitle("PAY \(amount!.toCurrency(0))", for: .normal)
 //        }
         
-        button.setTitle("PAY", for: .normal)
+        button.setTitle("PAY \(amount!.toCountryCurrency(code:  self.currencyCode))", for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -320,18 +397,25 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         setupNavBar()
         getBanks()
     }
-    func hideOvelay(){
+    @objc func hideOvelay(){
         self.overLayView.isHidden = true
         isPinMode = false
         validator.unregisterField(pinTextField)
+    }
+    @objc func hideBillingOvelay(){
+        self.billingOverLayView.isHidden = true
+        isBillingCodeMode = false
+        validator.unregisterField(billingCodeTextField)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         carView.frame = containerView.bounds
         bankView.frame = containerView.bounds
+        paypalView.frame = containerView.bounds
+        mpesaContainer.frame = containerView.bounds
     }
-    func doneButtonPressed(){
+    @objc func doneButtonPressed(){
         self.hideCardOvelay()
 //        if let token  = selectedCard?["card_token"]{
 //            KVNProgress.show(withStatus: "Processing...")
@@ -346,7 +430,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         self.savedCardOverLayView.isHidden = true
     }
     
-    func dismissV(){
+    @objc func dismissV(){
         delegate?.ravePayDidCancel(self)
         NotificationCenter.default.post(name: NSNotification.Name("cancelled"), object: nil)
         self.navigationController?.dismiss(animated: true, completion: nil)
@@ -363,20 +447,30 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
     private func getTitleView() -> CustomSegementControl{
-        let control = CustomSegementControl(frame: CGRect(x: 0, y: 0, width: 200, height: 35))
-        control.buttonTitles = "CARD,ACCOUNT"
-        control.addTarget(self, action:#selector(segmentedControlTapped), for: .valueChanged)
-        control.bgColor = UIColor.white.withAlphaComponent(0.7)
-        control.clipsToBounds = true
-        return control
+        segcontrol = CustomSegementControl(frame: CGRect(x: 0, y: 0, width: 250, height: 40))
+        let options = paymentMethods.map({ (item) -> String in
+            return item.rawValue
+        })
+        segcontrol.buttonTitles = options.joined(separator: ",")
+        //segcontrol.buttonTitles = "CARD,ACCOUNT"
+        segcontrol.addTarget(self, action:#selector(segmentedControlTapped), for: .valueChanged)
+        segcontrol.bgColor = UIColor.white.withAlphaComponent(0.7)
+        let button = segcontrol.buttons[selectedIndex]
+        segcontrol.buttonTapped(button)
+        segcontrol.clipsToBounds = true
+        return segcontrol
     }
     
-    func segmentedControlTapped(_ sender : CustomSegementControl){
+    @objc func segmentedControlTapped(_ sender : CustomSegementControl){
         self.view.endEditing(true)
-        switch sender.selectedIndex {
-        case 0:
+        self.selectedIndex = sender.selectedIndex
+        let paymentOption = self.paymentMethods[sender.selectedIndex]
+        switch paymentOption {
+        case .card:
             carView.isHidden = false
             bankView.isHidden = true
+            paypalView.isHidden = true
+            mpesaContainer.isHidden = true
             if(amount == .none){
                 amountTextField.isHidden = false
                 containerHeight.constant = 415
@@ -397,10 +491,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             validator.unregisterField(accountNumber)
 
             
-        default:
+        case .account :
             isInCardMode = false
             carView.isHidden = true
             bankView.isHidden = false
+            paypalView.isHidden = true
+            mpesaContainer.isHidden = true
             //containerHeight.constant = 233
             if(amount == .none){
                 validator.registerField(self.accountAmountTextField, errorLabel: nil, rules: [RequiredRule(message:"Amount  is required")])
@@ -421,6 +517,21 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             validator.unregisterField(expiry)
             validator.unregisterField(cvv)
             validator.unregisterField(pinTextField)
+            
+        case .paypal:
+            carView.isHidden = true
+            bankView.isHidden = true
+            paypalView.isHidden = false
+            mpesaContainer.isHidden = true
+            containerHeight.constant = 128
+        case .mpesa:
+            carView.isHidden = true
+            bankView.isHidden = true
+            paypalView.isHidden = true
+            mpesaContainer.isHidden = false
+            containerHeight.constant =  243
+        default:
+            break
         }
     }
     
@@ -448,7 +559,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
         }
     }
-    func cardPayButtonTapped(){
+    @objc func cardPayButtonTapped(){
         validator.validate(self)
     }
     func validationSuccessful() {
@@ -456,7 +567,11 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         if(isPinMode){
             self.hideOvelay()
             self.dopinButtonTapped()
-        }else{
+        }else if(isBillingCodeMode){
+            self.hideBillingOvelay()
+            self.doBillingButtonTapped()
+        }
+        else{
             if(isInCardMode){
                 self.doCardPayButtonTapped()
             }else{
@@ -486,16 +601,24 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     func doCardPayButtonTapped(){
        // showOTPScreen()
         self.view.endEditing(true)
-        paymentRoute = "card"
+        paymentRoute = .card
         self.getFee()
 
     }
+    @objc func doPayPalButtonTapped(){
+        // showOTPScreen()
+        self.view.endEditing(true)
+        paymentRoute = .paypal
+        self.getFee()
+        
+    }
+    
     private func cardPayAction(){
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
             
             let first2 = expiry.text!.substring(to: expiry.text!.index(expiry.text!.startIndex, offsetBy: 2))
             let last2 = expiry.text!.substring(from: expiry.text!.index(expiry.text!.endIndex, offsetBy: -2))
-            var param = ["PBFPubKey":pubkey,
+            var param:[String:Any] = ["PBFPubKey":pubkey ,
                          "cardno":cardNumber.text!,
                          "cvv":cvv.text!,
                          "amount":amount!,
@@ -509,6 +632,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                          "device_fingerprint": (UIDevice.current.identifierForVendor?.uuidString)!]
             if let narrate = narration{
                 param.merge(["narration":narrate])
+            }
+            if let meta = meta{
+                param.merge(["meta":meta])
             }
             
             let jsonString  = param.jsonStringify()
@@ -530,13 +656,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     func doPayWithCardToken(token:String){
        // "firstname":"Kola",
        // "lastname":"Oyekole",
-         paymentRoute = "existing_card"
+         paymentRoute = .existingCard
          self.getFee(token)
     }
+    
     private func cardTokenPayAction(_ token:String){
+      KVNProgress.show(withStatus: "Processing..")
         amount = amount != .none ? (amount! != "0" ? amount : amountTextField.text) : amountTextField.text
         if let secKey = RavePayConfig.sharedConfig().secretKey{
-            var param = ["currency":currencyCode,
+            var param:[String:Any] = ["currency":currencyCode,
                          "SECKEY":secKey,
                          "token":token,
                          "country":country!,
@@ -546,6 +674,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                          "txRef":merchantTransRef!]
             if let narrate = narration{
                 param.merge(["narration":narrate])
+            }
+            if let meta = meta{
+                param.merge(["meta":meta])
             }
             RavePayService.chargeWithToken(param, resultCallback: { (res) in
                 if let status = res?["status"] as? String{
@@ -602,25 +733,59 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
 
     }
     
-    func showSavedCards(){
+    @objc func showSavedCards(){
         savedCardOverLayView.isHidden = false
     }
     
-    func bankPayButtonTapped(){
+    @objc func bankPayButtonTapped(){
         validator.validate(self)
     }
     
     func dobankPayButtonTapped(){
         self.view.endEditing(true)
-         paymentRoute = "bank"
+         paymentRoute = .bank
         self.getFee()
     }
+    
+    private func paypalAction(){
+        amount = amount != .none ? (amount! != "0" ? amount : accountAmountTextField.text) : accountAmountTextField.text
+        if let pubkey = RavePayConfig.sharedConfig().publicKey{
+            let param:[String:Any] = [
+                "PBFPubKey": pubkey,
+                "is_paypal": "true",
+                "payment_type":"paypal",
+                "amount": amount!,
+                "email": email!,
+                "narration":"paypal",
+                "phonenumber":"",
+                "currency": currencyCode,
+                "country":country!,
+                "meta":"",
+                "IP": getIFAddresses().first!,
+                "txRef": merchantTransRef!,
+                "device_fingerprint": (UIDevice.current.identifierForVendor?.uuidString)!
+            ]
+            let jsonString  = param.jsonStringify()
+            let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
+            let data =  TripleDES.encrypt(string: jsonString, key:secret)
+            let base64String = data?.base64EncodedString()
+            
+            let reqbody = [
+                "PBFPubKey": pubkey,
+                "client": base64String!, // Encrypted $data payload here.
+                "alg": "3DES-24"
+            ]
+            self.charge(reqbody: reqbody)
+            
+        }
+    }
+    
     private func bankPayAction(){
         amount = amount != .none ? (amount! != "0" ? amount : accountAmountTextField.text) : accountAmountTextField.text
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
             let isInternetBanking = (selectedBank?.isInternetBanking)! == true ? 1 : 0
             let _accountNumber = accountNumber.text! == "" ? "0000" : accountNumber.text!
-            var param = [
+            var param:[String:Any] = [
                 "PBFPubKey": pubkey,
                 "accountnumber": _accountNumber,
                 "accountbank": (selectedBank?.bankCode)!,
@@ -636,6 +801,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             ]
             if(isInternetBanking == 1){
                 param.merge(["is_internet_banking":"\(isInternetBanking)"])
+            }
+            if let meta = meta{
+                param.merge(["meta":meta])
             }
             if let narrate = narration{
                 param.merge(["narration":narrate])
@@ -661,14 +829,14 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
             var param:[String:String] = [:]
              switch(self.paymentRoute){
-             case "card":
+             case .card:
                 let first6 = cardNumber.text!.substring(to: cardNumber.text!.index(cardNumber.text!.startIndex, offsetBy: 6))
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
                     "currency": currencyCode,
                     "card6": first6]
-             case "existing_card":
+             case .existingCard:
                 let first6  = selectedCard?["first6"]
                 param = [
                     "PBFPubKey": pubkey,
@@ -676,12 +844,19 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                     "currency": currencyCode,
                     "card6": first6!]
                 
-             case "bank":
+             case .bank:
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
                     "currency": currencyCode,
                     "ptype": "2"]
+                
+             case .paypal:
+                param = [
+                    "PBFPubKey": pubkey,
+                    "amount": amount!,
+                    "currency": currencyCode,
+                    "ptype": "paypal"]
              default:
                 break
             }
@@ -700,12 +875,14 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                     }
                     let proceed = DefaultButton(title: "Proceed") {
                         switch(self.paymentRoute){
-                            case "card":
+                            case .card:
                                 self.cardPayAction()
-                            case "existing_card":
+                            case .existingCard:
                                 self.cardTokenPayAction(token)
-                            case "bank":
+                            case .bank:
                                 self.bankPayAction()
+                            case .paypal:
+                                self.paypalAction()
                             default:
                                 break
                         }
@@ -721,6 +898,50 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 })
             })
         }
+    }
+    
+    func charge(reqbody:[String:String])
+    {
+        KVNProgress.show(withStatus: "Processing..")
+        RavePayService.charge(reqbody, resultCallback: { (res) in
+            if let status = res?["status"] as? String{
+                if status == "success"{
+                    let result = res?["data"] as? Dictionary<String,AnyObject>
+                    
+                    if let chargeResponse = result?["chargeResponseCode"] as? String{
+                        switch chargeResponse{
+                        case "00":
+                            let callbackResult = ["status":"success","payload":res!] as [String : Any]
+                            self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
+                            KVNProgress.showSuccess()
+                            break
+                        case "02":
+                            KVNProgress.dismiss()
+                           // self.determineAuthModelUsed(data: result!)
+                        default:
+                            break
+                        }
+                    }
+                }else{
+                    if let message = res?["message"] as? String{
+                        KVNProgress.dismiss()
+                        showMessageDialog("Error", message: message, image: nil, axis: .horizontal, viewController: self, handler: {
+                            
+                        })
+                        
+                    }
+                }
+            }
+            
+            
+        }, errorCallback: { (err) in
+            KVNProgress.dismiss()
+            showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                
+            })
+            
+            print(err)
+        })
     }
     
     func chargeAccount(reqbody:[String:String])
@@ -825,6 +1046,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         switch string {
         case "PIN":
             self.showPin()
+        case "AVS_VBVSECURECODE":
+            self.showBillingView()
         case "VBVSECURECODE":
             if let authURL = data["authurl"] as? String {
                 self.showWebView(url: authURL,ref:flwTransactionRef!)
@@ -987,7 +1210,11 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 if let authURL = data["authurl"] as? String{
                     self.showWebView(url: authURL, ref:flwTransactionRef!)
                 }
-                            
+            case "AVS_VBVSECURECODE":
+                if let authURL = data["authurl"] as? String {
+                    self.showWebView(url: authURL,ref:flwTransactionRef!)
+                }
+                
             default:
                 break
             }
@@ -1008,6 +1235,16 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         self.navigationController?.pushViewController(webController, animated: true)
     }
     
+    private func showBillingView(){
+        billingCodeTextField.text = ""
+        billingOverLayView.isHidden = false
+        isBillingCodeMode = true
+        validator.registerField(self.billingCodeTextField, errorLabel: nil, rules: [RequiredRule(message:"Billing code is required")])
+    }
+    @objc private func billingButtonTapped(){
+        validator.validate(self)
+    }
+    
     private func showPin(){
         pinTextField.text = ""
         overLayView.isHidden = false
@@ -1021,6 +1258,21 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     @objc private func dopinButtonTapped(){
         guard let pin = self.pinTextField.text else {return}
         bodyParam?.merge(["suggested_auth":"PIN","pin":pin])
+        let jsonString  = bodyParam!.jsonStringify()
+        let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
+        let data =  TripleDES.encrypt(string: jsonString, key:secret)
+        let base64String = data?.base64EncodedString()
+        
+        let reqbody = [
+            "PBFPubKey": RavePayConfig.sharedConfig().publicKey!,
+            "client": base64String!,
+            "alg": "3DES-24"
+        ]
+        self.chargeCard(reqbody: reqbody)
+    }
+    @objc private func doBillingButtonTapped(){
+        guard let zip = self.billingCodeTextField.text else {return}
+        bodyParam?.merge(["suggested_auth":"AVS_VBVSECURECODE","billingzip":zip])
         let jsonString  = bodyParam!.jsonStringify()
         let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
         let data =  TripleDES.encrypt(string: jsonString, key:secret)
@@ -1093,7 +1345,42 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
         }
     }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return true
+    }
+    func textFieldDidChange(textField: UITextField) {
+//        if let type = creditCardValidator.type(from: textField.text!){
+//            print(type.name)
+//            //let image = self.getCardImage(scheme: type.name.lowercased())
+//             cardIcon = UIButton(type: .custom)
+//             //cardIcon.tintColor =
+//            cardIcon.setImage(UIImage(named: type.name.lowercased(), in: identifier ,compatibleWith: nil), for: .normal)
+//        }else{
+//            print("Couldnt determing type")
+//            cardIcon = UIButton(type: .system)
+//            cardIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+//            cardIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
+//        }
+        cardIcV.removeFromSuperview()
+        cardIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 15)
+        cardIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        cardIcV.addSubview(cardIcon)
+        styleTextField(cardNumber,leftView: cardIcV)
+    }
     
+//    func getCardImage(scheme:String) ->String{
+//        switch scheme{
+//        case "visa":         return "visa"
+//        case "mastercard":   return "mastercard"
+//        case "amex":         return "amex"
+//        case "diners":       return "diner"
+//        case "discover":     return "discover"
+//        case "jcb":          return "jcb"
+//        case "verve":          return "verve"
+//        default:            return "nothing"
+//        }
+//        
+//    }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if let count = self.banks?.count{
@@ -1169,6 +1456,7 @@ extension RavePayController: UITableViewDelegate,UITableViewDataSource{
             }
         }
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = cardSavedTable.dequeueReusableCell(withIdentifier: "cardCell")! as UITableViewCell
         cell.accessoryType = .none

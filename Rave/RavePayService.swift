@@ -69,7 +69,7 @@ class RavePayService: NSObject {
         
         
     }
-    class func charge(_ bodyParam:Dictionary<String,String>,resultCallback:@escaping (_ Result:Dictionary<String,AnyObject>?) -> Void ,errorCallback:@escaping (_ err:String) -> Void ){
+    class func charge(_ bodyParam:Dictionary<String,Any>,resultCallback:@escaping (_ Result:Dictionary<String,AnyObject>?) -> Void ,errorCallback:@escaping (_ err:String) -> Void ){
         
         Alamofire.request(URLHelper.getURL("CHARGE_CARD"),method: .post, parameters: bodyParam).responseJSON {
             (res) -> Void in
@@ -89,7 +89,7 @@ class RavePayService: NSObject {
         
         
      }
-    class func chargeWithToken(_ bodyParam:Dictionary<String,String>,resultCallback:@escaping (_ Result:Dictionary<String,AnyObject>?) -> Void ,errorCallback:@escaping (_ err:String) -> Void ){
+    class func chargeWithToken(_ bodyParam:Dictionary<String,Any>,resultCallback:@escaping (_ Result:Dictionary<String,AnyObject>?) -> Void ,errorCallback:@escaping (_ err:String) -> Void ){
         
         Alamofire.request(URLHelper.getURL("CHARGE_WITH_TOKEN"),method: .post, parameters: bodyParam).responseJSON {
             (res) -> Void in

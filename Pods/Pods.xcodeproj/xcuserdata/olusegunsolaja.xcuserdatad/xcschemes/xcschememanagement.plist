@@ -14,11 +14,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>IQKeyboardManagerSwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>KVNProgress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -51,52 +46,6 @@
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>1A75417BC5F66418356F47455A84D753</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1C88CB825E0BA417428A705C034B2C0B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1CC71F9CD5545E32178492A81594B457</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4D44C5AF781E388D6B0572C94F9774CD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B08F7DBDCC2A762BDE522B028FCB533A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C235F77E101E742652CCF98FFDFA5182</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C74A0266953A6BC31C49A8FF95C0894B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E8E4604D6BBD85532A24D39F696D1314</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>

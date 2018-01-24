@@ -73,9 +73,11 @@ class CustomSegementControl: UIControl {
         for buttonTitle in titles {
             let button = UIButton(type: .system)
             button.setTitle(buttonTitle, for: .normal)
+            let width = self.frame.width / CGFloat(buttonTitles.count)
             button.setTitleColor(buttonTitleColor, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+            button.sizeToFit()
             buttons.append(button)
         }
         
@@ -100,13 +102,15 @@ class CustomSegementControl: UIControl {
         sv.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         sv.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         sv.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        
+       
     }
     
     override func draw(_ rect: CGRect) {
         layer.cornerRadius = self.frame.height / 2
     }
     
-    func buttonTapped(_ sender:UIButton){
+    @objc func buttonTapped(_ sender:UIButton){
        
         for (buttonIndex,button) in buttons.enumerated(){
             button.setTitleColor(buttonTitleColor, for: .normal)
@@ -126,6 +130,10 @@ class CustomSegementControl: UIControl {
         sendActions(for: .valueChanged)
        
         
+    }
+    override var intrinsicContentSize: CGSize {
+        return self.frame.size
+       // return UILayoutFittingExpandedSize
     }
 
 }

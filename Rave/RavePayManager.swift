@@ -8,9 +8,9 @@
 
 import UIKit
 public protocol RavePaymentManagerDelegate:class {
-   func ravePaymentManagerDidCancel(_ ravePaymentManager:RavePayManager)
-     func ravePaymentManager(_ ravePaymentManager:RavePayManager, didSucceedPaymentWithResult result:[String:AnyObject])
-     func ravePaymentManager(_ ravePaymentManager:RavePayManager, didFailPaymentWithResult result:[String:AnyObject])
+    func ravePaymentManagerDidCancel(_ ravePaymentManager:RavePayManager)
+    func ravePaymentManager(_ ravePaymentManager:RavePayManager, didSucceedPaymentWithResult result:[String:AnyObject])
+    func ravePaymentManager(_ ravePaymentManager:RavePayManager, didFailPaymentWithResult result:[String:AnyObject])
 }
 
 public class RavePayManager: UIViewController,RavePayControllerDelegate {
@@ -22,19 +22,22 @@ public class RavePayManager: UIViewController,RavePayControllerDelegate {
     public var currencyCode:String = "NGN"
     public var narration:String?
     public var savedCardsAllow = true
+    public var selectedIndex = 0
+    public var meta:[[String:String]]?
+    public var supportedPaymentMethods:[PaymentMethods]!
     
     
-   
-   
     
-   public func show(withController controller:UIViewController){
+    
+    
+    public func show(withController controller:UIViewController){
         guard let email = email else {
             fatalError("Email address is missing")
         }
         guard let transcationRef = transcationRef else {
             fatalError("transactionRef is missing")
         }
-       
+        
         let identifier = Bundle(identifier: "flutterwave.Rave")
         let storyboard = UIStoryboard(name: "Rave", bundle: identifier)
         let _controller = storyboard.instantiateViewController(withIdentifier: "raveNav") as! UINavigationController
@@ -45,8 +48,11 @@ public class RavePayManager: UIViewController,RavePayControllerDelegate {
         raveController.country = country
         raveController.delegate = self
         raveController.manager = self
+        raveController.meta = meta
         raveController.saveCardsAllow = savedCardsAllow
+        raveController.selectedIndex = selectedIndex
         raveController.currencyCode = currencyCode
+        raveController.supportedPaymentMethods = supportedPaymentMethods
         controller.present(_controller, animated: true, completion: nil)
     }
     
@@ -61,3 +67,4 @@ public class RavePayManager: UIViewController,RavePayControllerDelegate {
     }
     
 }
+
