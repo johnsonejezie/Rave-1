@@ -865,16 +865,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 KVNProgress.dismiss()
                
                 let data = result?["data"] as? [String:AnyObject]
-                let fee = "\((data?["fee"] as? Float)!)"
-                
-                let chargeAmount = data?["charge_amount"] as? String
-                DispatchQueue.main.async {
-                    let popup = PopupDialog(title: "Confirm", message: "You will be charged a transaction fee of \(fee.toCountryCurrency(code:  self.currencyCode)), Total amount to be charged will be \(chargeAmount!.toCountryCurrency(code: self.currencyCode)). Do you wish to continue?")
-                    let cancel = CancelButton(title: "Cancel") {
-                        
-                    }
-                    let proceed = DefaultButton(title: "Proceed") {
-                        switch(self.paymentRoute){
+                if let status =  result?["status"] as? String , status != "error"{
+                    
+                    let fee = "\((data?["fee"] as? Float)!)"
+                    let chargeAmount = data?["charge_amount"] as? String
+                    DispatchQueue.main.async {
+                        let popup = PopupDialog(title: "Confirm", message: "You will be charged a transaction fee of \(fee.toCountryCurrency(code:  self.currencyCode)), Total amount to be charged will be \(chargeAmount!.toCountryCurrency(code: self.currencyCode)). Do you wish to continue?")
+                        let cancel = CancelButton(title: "Cancel") {
+                            
+                        }
+                        let proceed = DefaultButton(title: "Proceed") {
+                            switch(self.paymentRoute){
                             case .card:
                                 self.cardPayAction()
                             case .existingCard:
@@ -885,11 +886,18 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                                 self.paypalAction()
                             default:
                                 break
+                            }
                         }
+                        popup.addButtons([cancel,proceed])
+                        popup.buttonAlignment = .horizontal
+                        self.present(popup, animated: true, completion: nil)
                     }
-                    popup.addButtons([cancel,proceed])
-                    popup.buttonAlignment = .horizontal
-                    self.present(popup, animated: true, completion: nil)
+                }else{
+                    if let err = result?["message"] as? String{
+                        showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                            
+                        })
+                    }
                 }
             }, errorCallback: { (err) in
                 KVNProgress.dismiss()
@@ -897,7 +905,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                     
                 })
             })
+            
         }
+        
     }
     
     func charge(reqbody:[String:String])

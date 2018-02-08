@@ -67,13 +67,21 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         loadingLabel.textColor = .white
         shimmerView.contentView = loadingLabel
         
-        //url!.addingPercentEscapes(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))!
-        let urlStr : NSString =   url!.addingPercentEncoding(withAllowedCharacters:  .urlPathAllowed)! as NSString
-        //let urlStr:Ns  = url!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        let _URL : NSURL = NSURL(string: urlStr as! String)!
-        let request = URLRequest(url: _URL as URL)
-        webView.load(request)
-        webView.allowsBackForwardNavigationGestures = true
+        
+       // let urlStr : NSString =   url!.addingPercentEncoding(withAllowedCharacters:  .urlHostAllowed)! as NSString
+       // let urlStr:Ns  = url!.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
+        //let _URL : NSURL? = NSURL(string: url! as String)
+        if let _URL = url{
+            let ur = _URL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            if let _d = ur{
+                let _url = URL(string: _d)
+                if let theURL = _url {
+                    let request = URLRequest(url: theURL)
+                    webView.load(request)
+                    webView.allowsBackForwardNavigationGestures = true
+                }
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
