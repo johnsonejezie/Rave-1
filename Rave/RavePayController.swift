@@ -865,9 +865,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 KVNProgress.dismiss()
                
                 let data = result?["data"] as? [String:AnyObject]
-                if let status =  result?["status"] as? String , status != "error"{
+                if let _fee =  data?["fee"] as? Float{
                     
-                    let fee = "\((data?["fee"] as? Float)!)"
+                    let fee = "\(_fee)"
                     let chargeAmount = data?["charge_amount"] as? String
                     DispatchQueue.main.async {
                         let popup = PopupDialog(title: "Confirm", message: "You will be charged a transaction fee of \(fee.toCountryCurrency(code:  self.currencyCode)), Total amount to be charged will be \(chargeAmount!.toCountryCurrency(code: self.currencyCode)). Do you wish to continue?")
