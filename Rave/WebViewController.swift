@@ -128,18 +128,46 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
             RavePayService.queryTransaction(param, resultCallback: { (result) in
                 if let  status = result?["status"] as? String{
                     if (status == "success"){
-                        DispatchQueue.main.async {
-                            self.loadingView.isHidden = true
-                            self.shimmerView.isShimmering = false
-                            print(result!)
-                            let callbackResult = ["status":"success","payload":result!] as [String : Any]
-                            if (self.saveCard){
-                                self.addOrUpdateCardToken(cardNumber: self.cardNumber!, data: result!,withFlwRef:ref )
+                        if let data = result?["data"] as? [String:AnyObject] {
+                            if let status = data["status"] as? String{
+                                if status.contains("success"){
+                                    DispatchQueue.main.async {
+                                        self.loadingView.isHidden = true
+                                        self.shimmerView.isShimmering = false
+                                        print(result!)
+                                        let callbackResult = ["status":"success","payload":result!] as [String : Any]
+                                        if (self.saveCard){
+                                            self.addOrUpdateCardToken(cardNumber: self.cardNumber!, data: result!,withFlwRef:ref )
+                                        }
+                                        self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
+                                        self.navigationController?.popViewController(animated: true)
+                                        
+                                    }
+                                }else{
+                                    if let meta = data["flwMeta"] as? [String:AnyObject]{
+                                        if let message = meta["VBVRESPONSEMESSAGE"] as? String {
+                                            showMessageDialog("Error", message: message, image: nil, axis: .horizontal, viewController: self, handler: {
+                                                
+                                            })
+                                        }
+                                    }
+                                    
+                                    
+                                }
                             }
-                            self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
-                            self.navigationController?.popViewController(animated: true)
-
+                            
+                        }else{
+                            DispatchQueue.main.async {
+                                self.loadingView.isHidden = true
+                                self.shimmerView.isShimmering = false
+                                
+                                let callbackResult = ["status":"error","payload":result!] as [String : Any]
+                                self.delegate?.ravePay(self, didFailPaymentWithResult: callbackResult as [String : AnyObject])
+                                self.navigationController?.popViewController(animated: true)
+                                
+                            }
                         }
+                       
                     }else{
                         DispatchQueue.main.async {
                             self.loadingView.isHidden = true
