@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BC904651977CB0399ABE04D07B004AA5"
-               BlueprintName = "PopupDialog"
+               BlueprintIdentifier = "06DACF8DBF00078CC427153B4F5DE848"
+               BlueprintName = "CreditCardValidator"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "PopupDialog.framework">
+               BuildableName = "CreditCardValidator.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

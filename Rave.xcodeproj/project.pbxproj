@@ -32,6 +32,7 @@
 		7873281B20172C6A0012C5A0 /* KVNProgress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7873282120172C6A0012C5A0 /* KVNProgress.framework */; };
 		7873281C20172C6A0012C5A0 /* PopupDialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7873282220172C6A0012C5A0 /* PopupDialog.framework */; };
 		7873281E20172C6A0012C5A0 /* SwiftValidator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7873282420172C6A0012C5A0 /* SwiftValidator.framework */; };
+		788B58A82031E9FF00E31B1C /* CreditCardValidator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788B58A92031E9FF00E31B1C /* CreditCardValidator.framework */; };
 		789D92F72029FD450047DFC3 /* Shimmer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789D92F82029FD450047DFC3 /* Shimmer.framework */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		7873282220172C6A0012C5A0 /* PopupDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7873282320172C6A0012C5A0 /* Shimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7873282420172C6A0012C5A0 /* SwiftValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		788B58A92031E9FF00E31B1C /* CreditCardValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CreditCardValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		789D92F82029FD450047DFC3 /* Shimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78EDC15B1F345B530087CCEB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84055437D4D503261431AB3D /* Pods_Rave.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rave.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				788B58A82031E9FF00E31B1C /* CreditCardValidator.framework in Frameworks */,
 				789D92F72029FD450047DFC3 /* Shimmer.framework in Frameworks */,
 				7815757D202856D70043B587 /* Alamofire.framework in Frameworks */,
 				7873281A20172C6A0012C5A0 /* BSErrorMessageView.framework in Frameworks */,
@@ -245,6 +248,7 @@
 		B2E99C65C2C7BE488B609EF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				788B58A92031E9FF00E31B1C /* CreditCardValidator.framework */,
 				789D92F82029FD450047DFC3 /* Shimmer.framework */,
 				7815757E202856D70043B587 /* Alamofire.framework */,
 				7815757C2028567F0043B587 /* Shimmer.framework */,
@@ -453,6 +457,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-RaveTests/Pods-RaveTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BSErrorMessageView/BSErrorMessageView.framework",
+				"${BUILT_PRODUCTS_DIR}/CreditCardValidator/CreditCardValidator.framework",
 				"${BUILT_PRODUCTS_DIR}/KVNProgress/KVNProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/Shimmer/Shimmer.framework",
@@ -462,6 +467,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSErrorMessageView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CreditCardValidator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KVNProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Shimmer.framework",

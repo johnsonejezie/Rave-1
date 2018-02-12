@@ -12,7 +12,7 @@ import KVNProgress
 import SwiftValidator
 import BSErrorMessageView
 import PopupDialog
-//import CreditCardValidator
+import CreditCardValidator
 
 protocol RavePayControllerDelegate:class {
     func ravePayDidCancel(_ ravePayController:RavePayController)
@@ -64,7 +64,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     @IBOutlet weak var accountBank: UITextField!
     @IBOutlet weak var accountNumber: UITextField!
     @IBOutlet weak var phoneNUmber: UITextField!
-   // let creditCardValidator = CreditCardValidator()
+    let creditCardValidator = CreditCardValidator()
     @IBOutlet weak var savedCardConstants: NSLayoutConstraint!
     var cardIcon:UIButton!
     var cardIcV:UIView!
@@ -247,7 +247,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         cardIcV.addSubview(cardIcon)
         styleTextField(cardNumber,leftView: cardIcV)
         cardNumber.setFormatting("xxxx xxxx xxxx xxxx xxxx", replacementChar: "x")
-      //  cardNumber.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        cardNumber.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         
         let cvvIcon = UIButton(type: .system)
         cvvIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
@@ -1360,19 +1360,19 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return true
     }
-    func textFieldDidChange(textField: UITextField) {
-//        if let type = creditCardValidator.type(from: textField.text!){
-//            print(type.name)
-//            //let image = self.getCardImage(scheme: type.name.lowercased())
-//             cardIcon = UIButton(type: .custom)
-//             //cardIcon.tintColor =
-//            cardIcon.setImage(UIImage(named: type.name.lowercased(), in: identifier ,compatibleWith: nil), for: .normal)
-//        }else{
-//            print("Couldnt determing type")
-//            cardIcon = UIButton(type: .system)
-//            cardIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
-//            cardIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
-//        }
+    @objc func textFieldDidChange(textField: UITextField) {
+        if let type = creditCardValidator.type(from: textField.text!){
+            print(type.name)
+            //let image = self.getCardImage(scheme: type.name.lowercased())
+             cardIcon = UIButton(type: .custom)
+             //cardIcon.tintColor =
+            cardIcon.setImage(UIImage(named: type.name.lowercased(), in: identifier ,compatibleWith: nil), for: .normal)
+        }else{
+            print("Couldnt determing type")
+            cardIcon = UIButton(type: .system)
+            cardIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+            cardIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
+        }
         cardIcV.removeFromSuperview()
         cardIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 15)
         cardIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
@@ -1380,19 +1380,19 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         styleTextField(cardNumber,leftView: cardIcV)
     }
     
-//    func getCardImage(scheme:String) ->String{
-//        switch scheme{
-//        case "visa":         return "visa"
-//        case "mastercard":   return "mastercard"
-//        case "amex":         return "amex"
-//        case "diners":       return "diner"
-//        case "discover":     return "discover"
-//        case "jcb":          return "jcb"
-//        case "verve":          return "verve"
-//        default:            return "nothing"
-//        }
-//        
-//    }
+    func getCardImage(scheme:String) ->String{
+        switch scheme{
+        case "visa":         return "visa"
+        case "mastercard":   return "mastercard"
+        case "amex":         return "amex"
+        case "diners":       return "diner"
+        case "discover":     return "discover"
+        case "jcb":          return "jcb"
+        case "verve":          return "verve"
+        default:            return "nothing"
+        }
+        
+    }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if let count = self.banks?.count{

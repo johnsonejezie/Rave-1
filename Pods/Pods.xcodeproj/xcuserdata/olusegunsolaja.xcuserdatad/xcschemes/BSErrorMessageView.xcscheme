@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B08F7DBDCC2A762BDE522B028FCB533A'
-               BlueprintName = 'BSErrorMessageView'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'BSErrorMessageView.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B08F7DBDCC2A762BDE522B028FCB533A"
+               BlueprintName = "BSErrorMessageView"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "BSErrorMessageView.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

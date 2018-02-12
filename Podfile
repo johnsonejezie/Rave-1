@@ -15,7 +15,7 @@ target 'Rave' do
     #pod 'PopupDialog'
     #pod 'Shimmer', '~> 1.0.2'
     pod 'Shimmer'
-    # pod 'CreditCardValidator'
+    pod 'CreditCardValidator'
 
   target 'RaveTests' do
     inherit! :search_paths
