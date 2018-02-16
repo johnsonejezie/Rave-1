@@ -74,6 +74,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
            bankPicker.reloadAllComponents()
         }
     }
+    var blacklistBanks:[String]?
     var isCardSaved = true
     var selectedBank:Bank?
     var selectedCard:[String:String]? = [:] {
@@ -1318,9 +1319,23 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     private func getBanks(){
         RavePayService.getBanks(resultCallback: { (_banks) in
             DispatchQueue.main.async {
-                self.banks = _banks?.sorted(by: { (first, second) -> Bool in
-                    return first.name!.localizedCaseInsensitiveCompare(second.name!) == .orderedAscending
-                })
+                if let count = self.blacklistBanks?.count{
+                    if count > 0 {
+                        self.blacklistBanks?.forEach({ (name) in
+                            self.banks = _banks?.filter({ (bank) -> Bool in
+                                return !(bank.name?.containsIgnoringCase(find: name))!
+                            })
+                        })
+                        self.banks = self.banks?.sorted(by: { (first, second) -> Bool in
+                            return first.name!.localizedCaseInsensitiveCompare(second.name!) == .orderedAscending
+                        })
+                    }else{
+                        self.banks = _banks?.sorted(by: { (first, second) -> Bool in
+                            return first.name!.localizedCaseInsensitiveCompare(second.name!) == .orderedAscending
+                        })
+                    }
+                }
+                
                // self.banks =  _banks
             }
             

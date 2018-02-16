@@ -25,7 +25,7 @@ public class RavePayManager: UIViewController,RavePayControllerDelegate {
     public var selectedIndex = 0
     public var meta:[[String:String]]?
     public var supportedPaymentMethods:[PaymentMethods]!
-    
+    public var blacklistBanks:[String]?
     
     
     
@@ -52,6 +52,7 @@ public class RavePayManager: UIViewController,RavePayControllerDelegate {
         raveController.saveCardsAllow = savedCardsAllow
         raveController.selectedIndex = selectedIndex
         raveController.currencyCode = currencyCode
+        raveController.blacklistBanks = blacklistBanks
         raveController.supportedPaymentMethods = supportedPaymentMethods
         controller.present(_controller, animated: true, completion: nil)
     }

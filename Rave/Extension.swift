@@ -123,7 +123,9 @@ extension String{
             return formatter.string(from: NSNumber(value: val))!
         }
     }
- 
+    func containsIgnoringCase(find: String) -> Bool{
+        return self.range(of: find, options: .caseInsensitive) != nil
+    }
     func index(of target: String) -> Int? {
             if let range = self.range(of: target) {
                 return characters.distance(from: startIndex, to: range.lowerBound)
