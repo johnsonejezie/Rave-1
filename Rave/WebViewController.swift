@@ -187,30 +187,30 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         }
     }
     private func addOrUpdateCardToken(cardNumber:String,data:[String:AnyObject], withFlwRef ref:String){
-      if let _data = data["data"] as? [String:AnyObject]{
-        if let card = _data["card"] as? [String:AnyObject]{
-            if let cards = card["card_tokens"] as? [[String:AnyObject]]{
-                let _cardToken = cards.last!
-                if let token = _cardToken["embedtoken"] as? String{
-                    let first6 = cardNumber.substring(to: cardNumber.index(cardNumber.startIndex, offsetBy: 6))
-                    let last4 = cardNumber.substring(from: cardNumber.index(cardNumber.endIndex, offsetBy: -4))
-                    let cardDetails = ["card_token":token,"first6":first6,"last4":last4,"flwRef":ref]
-                    if let cards  = UserDefaults.standard.object(forKey: "cards-\(email!)") as? [[String:String]]{
-                        var theCards = cards
-                        theCards = cards.filter({ (item) -> Bool in
-                            let _first6 = item["first6"]!
-                            return _first6 != first6
-                        })
-                        theCards.append(cardDetails)
-                        UserDefaults.standard.set(theCards, forKey: "cards-\(email!)")
-                        
-                    }else{
-                        UserDefaults.standard.set([cardDetails], forKey: "cards-\(email!)")
-                        
+        if let _data = data["data"] as? [String:AnyObject]{
+            if let card = _data["card"] as? [String:AnyObject]{
+                if let cards = card["card_tokens"] as? [[String:AnyObject]]{
+                    let _cardToken = cards.last!
+                    if let token = _cardToken["embedtoken"] as? String{
+                        let first6 = cardNumber.substring(to: cardNumber.index(cardNumber.startIndex, offsetBy: 6))
+                        let last4 = cardNumber.substring(from: cardNumber.index(cardNumber.endIndex, offsetBy: -4))
+                        let cardDetails = ["card_token":token,"first6":first6,"last4":last4,"flwRef":ref]
+                        if let cards  = UserDefaults.standard.object(forKey: "cards-\(email!)") as? [[String:String]]{
+                            var theCards = cards
+                            theCards = cards.filter({ (item) -> Bool in
+                                let _first6 = item["first6"]!
+                                return _first6 != first6
+                            })
+                            theCards.append(cardDetails)
+                            UserDefaults.standard.set(theCards, forKey: "cards-\(email!)")
+                            
+                        }else{
+                            UserDefaults.standard.set([cardDetails], forKey: "cards-\(email!)")
+                            
+                        }
                     }
                 }
             }
-        }
         }
     }
     
