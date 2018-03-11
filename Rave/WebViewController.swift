@@ -62,7 +62,7 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         
         let loadingLabel = UILabel(frame: shimmerView.bounds)
         loadingLabel.textAlignment = .center
-        loadingLabel.text = "Loading"
+        loadingLabel.text = "Processing..."
         loadingLabel.font = UIFont.systemFont(ofSize: 24)
         loadingLabel.textColor = .white
         shimmerView.contentView = loadingLabel

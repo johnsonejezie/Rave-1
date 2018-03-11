@@ -1059,6 +1059,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         switch string {
         case "PIN":
             self.showPin()
+        case "GTB_OTP":
+            self.showPin()
         case "AVS_VBVSECURECODE":
             self.showBillingView()
         case "VBVSECURECODE":
@@ -1215,6 +1217,11 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         if let authModel = auth{
             switch authModel {
             case "PIN":
+                if let flwRef = flwTransactionRef{
+                    self.hideOvelay()
+                    self.showOTPScreen(flwRef, isCard: true, message:chargeMessage)
+                }
+            case "GTB_OTP":
                 if let flwRef = flwTransactionRef{
                     self.hideOvelay()
                     self.showOTPScreen(flwRef, isCard: true, message:chargeMessage)
