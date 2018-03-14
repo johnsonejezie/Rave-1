@@ -6,7 +6,7 @@ target 'Rave' do
   use_frameworks!
 
   # Pods for Rave
-  # pod 'IQKeyboardManagerSwift'
+    pod 'IQKeyboardManagerSwift'
     pod 'Alamofire','~> 4.5.0'
     pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
     pod 'BSErrorMessageView', :git => 'https://github.com/BenjaminSarkisyan/BSErrorMessageView.git'
