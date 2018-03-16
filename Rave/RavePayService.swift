@@ -55,7 +55,7 @@ class RavePayService: NSObject {
             
             if(res.result.isSuccess){
                 let result = res.result.value as! [Dictionary<String,AnyObject>]
-                
+                print(result)
                 let banks = result.map({ (item) -> Bank in
                     BankConverter.convert(item)
                 })

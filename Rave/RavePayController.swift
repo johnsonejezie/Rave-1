@@ -1341,6 +1341,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                             return first.name!.localizedCaseInsensitiveCompare(second.name!) == .orderedAscending
                         })
                     }
+                }else{
+                    self.banks = _banks?.sorted(by: { (first, second) -> Bool in
+                        return first.name!.localizedCaseInsensitiveCompare(second.name!) == .orderedAscending
+                    })
                 }
                 
                // self.banks =  _banks
@@ -1429,9 +1433,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedBank = self.banks?[row]
-        
-        if let internetBanking = selectedBank?.isInternetBanking{
+        if let count = self.banks?.count,  count > 0{
+            selectedBank = self.banks?[row]
+            if let internetBanking = selectedBank?.isInternetBanking{
                 if(internetBanking == true){
                     phoneNUmber.isHidden = false
                     accountNumber.isHidden = true
@@ -1444,10 +1448,11 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                     validator.registerField(self.accountNumber, errorLabel: nil, rules: [RequiredRule(message:"Account number is required")])
                     
                 }
+            }
+            
+            
+            self.accountBank.text = self.banks?[row].name
         }
-    
-
-        self.accountBank.text = self.banks?[row].name
         //self.bankIcon.image = UIImage(named: "access")
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
