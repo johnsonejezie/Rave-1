@@ -866,7 +866,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 KVNProgress.dismiss()
                
                 let data = result?["data"] as? [String:AnyObject]
-                if let _fee =  data?["fee"] as? Float{
+                if let _fee =  data?["fee"] as? Double{
                     
                     let fee = "\(_fee)"
                     let chargeAmount = data?["charge_amount"] as? String
