@@ -12,7 +12,8 @@ import Alamofire
 class Constants: NSObject {
 
     class func baseURL () -> String{
-        return "http://flw-pms-dev.eu-west-1.elasticbeanstalk.com"
+       // return "http://flw-pms-dev.eu-west-1.elasticbeanstalk.com"
+        return "https://ravesandboxapi.flutterwave.com"
     }
     class func liveBaseURL() -> String{
         return "https://api.ravepay.co"

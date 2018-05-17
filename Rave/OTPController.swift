@@ -140,26 +140,22 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
             if let res =  result{
                 if let data = res ["data"] as? [String:AnyObject]{
                     if let flwRef = data["flwRef"] as? String{
-                        self.queryTransaction(flwRef: flwRef)
+                        if let chargeResponse = data["chargeResponseCode"] as? String{
+                            if chargeResponse == "02"{
+                                DispatchQueue.main.async {
+                                    KVNProgress.dismiss()
+                                    self.otpTextField.text = ""
+                                    self.otpTitle.text = data["chargeResponseMessage"] as? String
+                                }
+                            }else{
+                                self.queryTransaction(flwRef: flwRef)
+//                                let callbackResult = ["status":"success","payload":result!] as [String : Any]
+//                                self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
+//                                self.dismissView()
+                            }
+                        }
                     }
                 }
-
-//                if let status = res["status"] as? String{
-//                    if status == "success"{
-//                        DispatchQueue.main.async {
-//                            KVNProgress.showSuccess(completion: {
-//                                self.delegate?.raveOTP(self, didSucceedPaymentWithResult: res)
-//                                self.dismissView()
-//                            })
-//                        }
-//                    }else{
-//                        DispatchQueue.main.async {
-//                            self.delegate?.raveOTP(self, didFailPaymentWithResult: res)
-//                            KVNProgress.dismiss()
-//                            self.dismissView()
-//                        }
-//                    }
-//                }
             }
             
         }) { (err) in

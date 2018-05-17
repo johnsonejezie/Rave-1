@@ -28,7 +28,6 @@ public enum PaymentRoute: String {
      case card = "card", existingCard = "existing_card", bank = "bank", paypal = "paypal"
 }
 
-
 class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,ValidationDelegate{
     weak var delegate:RavePayControllerDelegate?
     var manager:RavePayManager!
@@ -45,6 +44,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     @IBOutlet var billingCodeView: UIView!
     @IBOutlet weak var billingCodeTextField: UITextField!
     @IBOutlet weak var billingButton: UIButton!
+    @IBOutlet weak var dobTextField: UITextField!
     
     @IBOutlet weak var payPalButton: UIButton!
     @IBOutlet weak var pinTextField: UITextField!
@@ -96,6 +96,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     var country:String!
     var narration:String?
     var saveCardsAllow = false
+    
     
     let validator = Validator()
     var isInCardMode = true
@@ -154,7 +155,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         billingOverLayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         billingOverLayView.isHidden = true
         
-        
+        let dp = UIDatePicker()
+        dp.datePickerMode = .date
+        dobTextField.inputView = dp
+        dp.addTarget(self, action: #selector(dobPickerValueChanged), for: .valueChanged)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideOvelay))
         overLayView.addGestureRecognizer(tap)
@@ -279,6 +283,14 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         bankIcV.addSubview(bankIcon)
         styleTextField(accountBank,leftView: bankIcV)
         
+        let dobIcon = UIButton(type: .system)
+        dobIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        dobIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
+        dobIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 15)
+        let dobIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        dobIcV.addSubview(dobIcon)
+        styleTextField(dobTextField,leftView: dobIcV)
+        
         bankPicker = UIPickerView()
         bankPicker.autoresizingMask  = [.flexibleWidth , .flexibleHeight]
         bankPicker.showsSelectionIndicator = true
@@ -365,6 +377,13 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         savedCardsButton.addTarget(self, action: #selector(showSavedCards), for: .touchUpInside)
         
        
+    }
+    
+    @objc func dobPickerValueChanged(_ sender: UIDatePicker){
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "ddMMyyyy"
+        let selectedDate: String = dateFormatter.string(from: sender.date)
+        self.dobTextField.text = selectedDate
     }
     
     @objc private func setupCardPopup(){
@@ -809,6 +828,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             if let narrate = narration{
                 param.merge(["narration":narrate])
             }
+            if let passcode = self.dobTextField.text , passcode != "" {
+                 param.merge(["passcode":passcode])
+            }
+            
             let jsonString  = param.jsonStringify()
             let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
             let data =  TripleDES.encrypt(string: jsonString, key:secret)
@@ -1452,6 +1475,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             
             
             self.accountBank.text = self.banks?[row].name
+            if let bank = self.accountBank.text{
+                if bank.containsIgnoringCase(find: "zenith"){
+                    self.dobTextField.isHidden = false
+                    containerHeight.constant = 419
+                }else{
+                    self.dobTextField.isHidden = true
+                    containerHeight.constant = 311
+                }
+            }
         }
         //self.bankIcon.image = UIImage(named: "access")
     }
