@@ -156,6 +156,8 @@ extension String{
             str = self.toCurrency(2,locale:"ak_GH")
         case "ZAR":
             str = self.toCurrency(2, locale: "en_ZA")
+        case "EUR":
+            str = self.toCurrency(2, locale: "de_DE")
         default:
             str = self.toCurrency(2)
            
