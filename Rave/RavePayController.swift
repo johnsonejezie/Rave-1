@@ -946,8 +946,11 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                         switch chargeResponse{
                         case "00":
                             let callbackResult = ["status":"success","payload":res!] as [String : Any]
-                            self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
-                            KVNProgress.showSuccess()
+                            KVNProgress.showSuccess(completion: {
+                                self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
+                                    self.navigationController?.dismiss(animated: true, completion: nil)
+                                
+                            })
                             break
                         case "02":
                             KVNProgress.dismiss()
@@ -990,8 +993,13 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                         switch chargeResponse{
                         case "00":
                             let callbackResult = ["status":"success","payload":res!] as [String : Any]
-                            self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
-                            KVNProgress.showSuccess()
+
+                            KVNProgress.showSuccess(completion: {
+                               self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
+                                    self.navigationController?.dismiss(animated: true, completion: nil)
+                                
+                            })
+                           
                             break
                         case "02":
                             KVNProgress.dismiss()
@@ -1039,8 +1047,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                                     switch chargeResponse{
                                         case "00":
                                             let callbackResult = ["status":"success","payload":res!] as [String : Any]
-                                            self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
-                                            KVNProgress.showSuccess()
+                                           
+                                            KVNProgress.showSuccess(completion: {
+                                                 self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
+                                                    self.navigationController?.dismiss(animated: true, completion: nil)
+                                                
+                                            })
                                             break
                                     case "02":
                                         KVNProgress.dismiss()
@@ -1073,7 +1085,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
    
-    
+   
+
     
     
     
