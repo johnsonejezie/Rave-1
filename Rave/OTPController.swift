@@ -127,9 +127,15 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
         }) { (err) in
             print(err)
             KVNProgress.dismiss()
-            showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                
-            })
+            if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                // })
+            }else{
+                showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                    
+                })
+            }
         }
     }
     
@@ -161,10 +167,17 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
         }) { (err) in
             print(err)
             KVNProgress.dismiss()
-            showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                
-            })
-
+            if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                DispatchQueue.main.async {
+                    self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                }
+               // })
+            }else{
+                showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                    
+                })
+            }
         }
     }
     func queryTransaction(flwRef:String?){
@@ -190,8 +203,9 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                         DispatchQueue.main.async {
                             let callbackResult = ["status":"success","payload":result!] as [String : Any]
                             self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
-                            KVNProgress.dismiss()
-                            self.dismissView()
+                            KVNProgress.dismiss(completion: {
+                                 self.dismissView()
+                            })
                             
                         }
                     }
@@ -200,9 +214,17 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                 
                 print(err)
                  KVNProgress.dismiss()
-                showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                    
-                })
+                if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                    DispatchQueue.main.async {
+                        self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                    }
+                    // })
+                }else{
+                    showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                        
+                    })
+                }
 
             })
         }

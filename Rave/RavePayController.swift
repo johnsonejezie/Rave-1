@@ -743,10 +743,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 
             }, errorCallback: { (err) in
                 KVNProgress.dismiss()
-                showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                    
-                })
-                
+                if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                    DispatchQueue.main.async {
+                        self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                    }
+                    //})
+                }else{
+                    showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                        
+                    })
+                }
                 print(err)
             })
         }
@@ -925,9 +932,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 }
             }, errorCallback: { (err) in
                 KVNProgress.dismiss()
-                showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                    
-                })
+                if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                    DispatchQueue.main.async {
+                        self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                    }
+                    //})
+                }else{
+                    showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                        
+                    })
+                }
             })
             
         }
@@ -973,9 +988,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             
         }, errorCallback: { (err) in
             KVNProgress.dismiss()
-            showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                
-            })
+            if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                DispatchQueue.main.async {
+                    self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                }
+                //})
+            }else{
+                showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                    
+                })
+            }
             
             print(err)
         })
@@ -1022,9 +1045,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             
         }, errorCallback: { (err) in
             KVNProgress.dismiss()
-            showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                
-            })
+            if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                DispatchQueue.main.async {
+                    self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                }
+                //})
+            }else{
+                showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                    
+                })
+            }
 
             print(err)
         })
@@ -1076,9 +1107,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
         }, errorCallback: { (err) in
             KVNProgress.dismiss()
-            showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                
-            })
+            if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                DispatchQueue.main.async {
+                    self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                }
+                // })
+            }else{
+                showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                    
+                })
+            }
 
             print(err)
         })
@@ -1148,9 +1187,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 
                 print(err)
                 KVNProgress.dismiss()
-                showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                    
-                })
+                if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                    DispatchQueue.main.async {
+                        self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                    }
+                   // })
+                }else{
+                    showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                        
+                    })
+                }
 
             })
         }
@@ -1229,12 +1276,21 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     
     private func determineBankAuthModelUsed(data:[String:AnyObject]){
         let flwTransactionRef = data["flwRef"] as? String
-        let chargeMessage = data["chargeResponseMessage"] as? String
+        //chargeResponseMessage
+        var _instruction:String? = "Pending OTP Validation"
+        if let instruction = data["validateInstructions"] as? [String:AnyObject]{
+            if let  _inst =  instruction["instruction"] as? String{
+                if _inst != ""{
+                    _instruction = _inst
+                }
+            }
+        }
+        //let chargeMessage = data["validateInstruction"] as? String
         if let _ = selectedBank{
             if (selectedBank!.isInternetBanking! == false){
                 if let flwRef = flwTransactionRef{
                     self.hideOvelay()
-                    self.showOTPScreen(flwRef,isCard: false, message: chargeMessage)
+                    self.showOTPScreen(flwRef,isCard: false, message: _instruction)
                 }
             }else{
                 if let authURL = data["authurl"] as? String{
@@ -1246,7 +1302,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
 
     private func determineAuthModelUsed(auth:String?, data:[String:AnyObject]){
         let flwTransactionRef = data["flwRef"] as? String
-        let chargeMessage = data["chargeResponseMessage"] as? String
+        //let chargeMessage = data["validateInstruction"] as? String
+        var _instruction:String? = "Pending OTP Validation"
+        if let instruction = data["validateInstructions"] as? [String:AnyObject]{
+            if let  _inst =  instruction["instruction"] as? String{
+                if _inst != ""{
+                    _instruction = _inst
+                }
+            }
+        }
         if (saveCardSwitch.isOn){
             addOrUpdateCardToken(cardNumber: cardNumber.text!, data: data)
         }
@@ -1255,12 +1319,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             case "PIN":
                 if let flwRef = flwTransactionRef{
                     self.hideOvelay()
-                    self.showOTPScreen(flwRef, isCard: true, message:chargeMessage)
+                    self.showOTPScreen(flwRef, isCard: true, message:_instruction)
                 }
             case "GTB_OTP":
                 if let flwRef = flwTransactionRef{
                     self.hideOvelay()
-                    self.showOTPScreen(flwRef, isCard: true, message:chargeMessage)
+                    self.showOTPScreen(flwRef, isCard: true, message:_instruction)
                 }
             case "VBVSECURECODE":
                 if let authURL = data["authurl"] as? String{
@@ -1392,8 +1456,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
     func ravePay(_ webController: WebViewController, didFailPaymentWithResult result: [String : AnyObject]) {
-        delegate?.ravePay(self, didFailPaymentWithResult: result)
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.delegate?.ravePay(self, didFailPaymentWithResult: result)
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }
     }
     func ravePay(_ webController: WebViewController, didSucceedPaymentWithResult result: [String : AnyObject]) {
         delegate?.ravePay(self, didSucceedPaymentWithResult: result)
@@ -1401,8 +1467,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
     func raveOTP(_ webController: OTPController, didFailPaymentWithResult result: [String : AnyObject]) {
-        delegate?.ravePay(self, didFailPaymentWithResult: result)
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.delegate?.ravePay(self, didFailPaymentWithResult: result)
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }
     }
     func raveOTP(_ webController: OTPController, didSucceedPaymentWithResult result: [String : AnyObject]) {
         delegate?.ravePay(self, didSucceedPaymentWithResult: result)

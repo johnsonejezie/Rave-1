@@ -181,8 +181,17 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
                     }
                 }
             }, errorCallback: { (err) in
-                
-                print(err)
+                if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                    DispatchQueue.main.async {
+                        self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                    }
+                    //})
+                }else{
+                    showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                        
+                    })
+                }
             })
         }
     }
