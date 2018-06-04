@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7C1765028929AE0B23474A81894CDD6B"
+               BlueprintIdentifier = "22F0A62EE5AC93B8F2A1CC53B4AC0246"
                BuildableName = "Pods_Rave.framework"
                BlueprintName = "Pods-Rave"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,7 +26,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -37,7 +36,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -47,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7C1765028929AE0B23474A81894CDD6B"
+            BlueprintIdentifier = "22F0A62EE5AC93B8F2A1CC53B4AC0246"
             BuildableName = "Pods_Rave.framework"
             BlueprintName = "Pods-Rave"
             ReferencedContainer = "container:Pods.xcodeproj">

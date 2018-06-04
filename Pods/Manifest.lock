@@ -2,6 +2,7 @@ PODS:
   - Alamofire (4.5.1)
   - BSErrorMessageView (1.1)
   - CreditCardValidator (0.4)
+  - IQKeyboardManagerSwift (6.0.3)
   - KVNProgress (2.3.1)
   - PopupDialog (0.5.4)
   - Shimmer (1.0.2)
@@ -11,10 +12,20 @@ DEPENDENCIES:
   - Alamofire (~> 4.5.0)
   - BSErrorMessageView (from `https://github.com/BenjaminSarkisyan/BSErrorMessageView.git`)
   - CreditCardValidator
+  - IQKeyboardManagerSwift
   - KVNProgress (~> 2.3.1)
   - PopupDialog (~> 0.5.4)
   - Shimmer
   - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - CreditCardValidator
+    - IQKeyboardManagerSwift
+    - KVNProgress
+    - PopupDialog
+    - Shimmer
 
 EXTERNAL SOURCES:
   BSErrorMessageView:
@@ -35,11 +46,12 @@ SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   BSErrorMessageView: 67cc7d172995fbc6df602c2b8923f48121ddf7a9
   CreditCardValidator: 9f0814dd61682c004071a250d89327ca83514a48
+  IQKeyboardManagerSwift: 04e8679f85e496bb2c474eeb9284052f1b3c391c
   KVNProgress: 8167b1f19e2758290c0b6143020ed9dcbb0477a1
   PopupDialog: 75cf955693590b0cb2fdde00223fb65d99c57247
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
 
-PODFILE CHECKSUM: 4223a0bb5b062ee7b9dbd272fe5d399513c2b74e
+PODFILE CHECKSUM: 2e00836f96e36c8f822493ba477050817765896d
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0
