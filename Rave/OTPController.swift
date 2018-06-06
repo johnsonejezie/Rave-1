@@ -101,27 +101,16 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                 if let data = res ["data"] as? [String:AnyObject]{
                     print(data)
                     if let tx = data["tx"] as? [String:AnyObject]{
-                        if let flwRef = tx["flwRef"] as? String{
-                            self.queryTransaction(flwRef: flwRef)
+                        if let _ = tx["flwRef"] as? String{
+                           // self.queryTransaction(flwRef: flwRef)
+                            let callbackResult = ["status":"success","payload":result!] as [String : Any]
+                            self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
+                            KVNProgress.dismiss(completion: {
+                                self.dismissView()
+                            })
                         }
                     }
                 }
-//                if let status = res["status"] as? String{
-//                    if status == "success"{
-//                        DispatchQueue.main.async {
-//                            KVNProgress.showSuccess(completion: {
-//                                self.delegate?.raveOTP(self, didSucceedPaymentWithResult: res)
-//                                self.dismissView()
-//                            })
-//                        }
-//                    }else{
-//                        DispatchQueue.main.async {
-//                            KVNProgress.dismiss()
-//                            self.delegate?.raveOTP(self, didFailPaymentWithResult: res)
-//                            self.dismissView()
-//                        }
-//                    }
-//                }
             }
             
         }) { (err) in
@@ -154,10 +143,15 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                                     self.otpTitle.text = data["chargeResponseMessage"] as? String
                                 }
                             }else{
-                                self.queryTransaction(flwRef: flwRef)
+ //                               self.queryTransaction(flwRef: flwRef)
 //                                let callbackResult = ["status":"success","payload":result!] as [String : Any]
 //                                self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
 //                                self.dismissView()
+                                let callbackResult = ["status":"success","payload":result!] as [String : Any]
+                                self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
+                                KVNProgress.dismiss(completion: {
+                                    self.dismissView()
+                                })
                             }
                         }
                     }
