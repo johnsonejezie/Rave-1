@@ -112,6 +112,11 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                             })
                         }
                     }
+                }else{
+                    KVNProgress.dismiss(completion: {
+                        let message = res ["message"] as? String
+                        self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : (message ?? "An error occured. Please contact support") as AnyObject])
+                    })
                 }
             }
             
@@ -124,7 +129,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                     // })
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                        
+                       self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     })
                 }
             })
@@ -136,6 +141,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
         RavePayService.validateAccountOTP(reqbody, resultCallback: { (result) in
             print(result ?? "nil")
             if let res =  result{
+              
                 if let data = res ["data"] as? [String:AnyObject]{
                     if let flwRef = data["flwRef"] as? String{
                         if let chargeResponse = data["chargeResponseCode"] as? String{
@@ -161,7 +167,15 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                             }
                         }
                     }
+                }else{
+                    KVNProgress.dismiss(completion: {
+                    let message = res ["message"] as? String
+                    self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : (message ?? "An error occured. Please contact support") as AnyObject])
+                    })
                 }
+                
+                
+                
             }
             
         }) { (err) in
@@ -175,7 +189,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                     // })
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                        
+                        self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     })
                 }
             })
@@ -225,7 +239,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                     // })
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                        
+                        self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     })
                 }
 
