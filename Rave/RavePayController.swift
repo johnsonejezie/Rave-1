@@ -531,7 +531,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
             //containerHeight.constant = 311
             validator.registerField(self.phoneNUmber, errorLabel: nil, rules: [RequiredRule(message:"Phone number is required")])
-            validator.registerField(self.expiry, errorLabel: nil, rules: [RequiredRule(message:"Enter expiration")])
+           validator.registerField(self.expiry, errorLabel: nil, rules: [RequiredRule(message:"Enter expiration")])
             validator.registerField(self.accountBank, errorLabel: nil, rules: [RequiredRule(message:"Bank account is required")])
             validator.unregisterField(cardNumber)
             validator.unregisterField(expiry)
@@ -893,7 +893,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
             
             RavePayService.getFee(param, resultCallback: { (result) in
-                KVNProgress.dismiss()
+                KVNProgress.dismiss(completion: {
                
                 let data = result?["data"] as? [String:AnyObject]
                 if let _fee =  data?["fee"] as? Double{
@@ -930,6 +930,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                         })
                     }
                 }
+            })
             }, errorCallback: { (err) in
                 KVNProgress.dismiss()
                 if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
@@ -1278,14 +1279,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         let flwTransactionRef = data["flwRef"] as? String
         //chargeResponseMessage
         var _instruction:String? = "Pending OTP Validation"
-        if let instruction = data["validateInstructions"] as? [String:AnyObject]{
-            if let  _inst =  instruction["instruction"] as? String{
-                if _inst != ""{
-                    _instruction = _inst
+        if let instruction = data["validateInstruction"] as? String{
+            _instruction = instruction
+        }else{
+            if let instruction = data["validateInstructions"] as? [String:AnyObject]{
+                if let  _inst =  instruction["instruction"] as? String{
+                    if _inst != ""{
+                        _instruction = _inst
+                    }
                 }
             }
         }
-        //let chargeMessage = data["validateInstruction"] as? String
         if let _ = selectedBank{
             if (selectedBank!.isInternetBanking! == false){
                 if let flwRef = flwTransactionRef{
@@ -1304,10 +1308,14 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         let flwTransactionRef = data["flwRef"] as? String
         //let chargeMessage = data["validateInstruction"] as? String
         var _instruction:String? = "Pending OTP Validation"
-        if let instruction = data["validateInstructions"] as? [String:AnyObject]{
-            if let  _inst =  instruction["instruction"] as? String{
-                if _inst != ""{
-                    _instruction = _inst
+        if let instruction = data["validateInstruction"] as? String{
+            _instruction = instruction
+        }else{
+            if let instruction = data["validateInstructions"] as? [String:AnyObject]{
+                if let  _inst =  instruction["instruction"] as? String{
+                    if _inst != ""{
+                        _instruction = _inst
+                    }
                 }
             }
         }

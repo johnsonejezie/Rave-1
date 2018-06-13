@@ -14,8 +14,8 @@ DEPENDENCIES:
   - CreditCardValidator
   - IQKeyboardManagerSwift
   - KVNProgress (~> 2.3.1)
-  - PopupDialog (~> 0.5.4)
-  - Shimmer
+  - PopupDialog
+  - Shimmer (~> 1.0.2)
   - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
 
 SPEC REPOS:
@@ -52,6 +52,6 @@ SPEC CHECKSUMS:
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
 
-PODFILE CHECKSUM: 2e00836f96e36c8f822493ba477050817765896d
+PODFILE CHECKSUM: 48ac72b204f3a826cac40da0a7aba27edb9f4d99
 
 COCOAPODS: 1.5.0

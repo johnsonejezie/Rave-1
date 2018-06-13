@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		04D5413712BCE3661795F3D0 /* Pods_RaveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A450EB78B91554DA8D08AC2F /* Pods_RaveTests.framework */; };
-		7815757D202856D70043B587 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7815757E202856D70043B587 /* Alamofire.framework */; };
 		785D84701F336653003B8B26 /* Rave.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 785D84661F336653003B8B26 /* Rave.framework */; };
 		785D84751F336653003B8B26 /* RaveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D84741F336653003B8B26 /* RaveTests.swift */; };
 		785D84771F336653003B8B26 /* Rave.h in Headers */ = {isa = PBXBuildFile; fileRef = 785D84691F336653003B8B26 /* Rave.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -28,12 +27,13 @@
 		785D84A11F336AFC003B8B26 /* OTPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785D84A01F336AFC003B8B26 /* OTPController.swift */; };
 		785D84A41F336B24003B8B26 /* Rave.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 785D84A31F336B24003B8B26 /* Rave.storyboard */; };
 		785D84A71F336E06003B8B26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 785D84A61F336E06003B8B26 /* Assets.xcassets */; };
-		7873281A20172C6A0012C5A0 /* BSErrorMessageView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7873282020172C6A0012C5A0 /* BSErrorMessageView.framework */; };
-		7873281B20172C6A0012C5A0 /* KVNProgress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7873282120172C6A0012C5A0 /* KVNProgress.framework */; };
-		7873281C20172C6A0012C5A0 /* PopupDialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7873282220172C6A0012C5A0 /* PopupDialog.framework */; };
-		7873281E20172C6A0012C5A0 /* SwiftValidator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7873282420172C6A0012C5A0 /* SwiftValidator.framework */; };
-		788B58A82031E9FF00E31B1C /* CreditCardValidator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 788B58A92031E9FF00E31B1C /* CreditCardValidator.framework */; };
-		789D92F72029FD450047DFC3 /* Shimmer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789D92F82029FD450047DFC3 /* Shimmer.framework */; };
+		789CBACA20D0096700DA2526 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBAC920D0096700DA2526 /* Alamofire.framework */; };
+		789CBACC20D0096700DA2526 /* BSErrorMessageView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBACB20D0096700DA2526 /* BSErrorMessageView.framework */; };
+		789CBAD020D0096700DA2526 /* CreditCardValidator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBACF20D0096700DA2526 /* CreditCardValidator.framework */; };
+		789CBAD620D0096700DA2526 /* KVNProgress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBAD520D0096700DA2526 /* KVNProgress.framework */; };
+		789CBAD820D0096700DA2526 /* PopupDialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBAD720D0096700DA2526 /* PopupDialog.framework */; };
+		789CBADA20D0096700DA2526 /* Shimmer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBAD920D0096700DA2526 /* Shimmer.framework */; };
+		789CBADC20D0096700DA2526 /* SwiftValidator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBADB20D0096700DA2526 /* SwiftValidator.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +81,26 @@
 		7873282320172C6A0012C5A0 /* Shimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7873282420172C6A0012C5A0 /* SwiftValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		788B58A92031E9FF00E31B1C /* CreditCardValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CreditCardValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAAF20CFD61100DA2526 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAB120CFD61100DA2526 /* BSErrorMessageView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BSErrorMessageView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAB320CFD61100DA2526 /* CountryPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAB520CFD61100DA2526 /* CreditCardValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CreditCardValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAB720CFD61100DA2526 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAB920CFD61100DA2526 /* KVNProgress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KVNProgress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBABB20CFD61100DA2526 /* PopupDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBABD20CFD61100DA2526 /* Shimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBABF20CFD67600DA2526 /* SwiftValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAC920D0096700DA2526 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBACB20D0096700DA2526 /* BSErrorMessageView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BSErrorMessageView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBACD20D0096700DA2526 /* CountryPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBACF20D0096700DA2526 /* CreditCardValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CreditCardValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAD120D0096700DA2526 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAD320D0096700DA2526 /* DynamicBlurView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DynamicBlurView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAD520D0096700DA2526 /* KVNProgress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KVNProgress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAD720D0096700DA2526 /* PopupDialog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PopupDialog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAD920D0096700DA2526 /* Shimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBADB20D0096700DA2526 /* SwiftValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBAE120D00D8700DA2526 /* ThrivesendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThrivesendUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		789D92F82029FD450047DFC3 /* Shimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78EDC15B1F345B530087CCEB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84055437D4D503261431AB3D /* Pods_Rave.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rave.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,13 +114,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				788B58A82031E9FF00E31B1C /* CreditCardValidator.framework in Frameworks */,
-				789D92F72029FD450047DFC3 /* Shimmer.framework in Frameworks */,
-				7815757D202856D70043B587 /* Alamofire.framework in Frameworks */,
-				7873281A20172C6A0012C5A0 /* BSErrorMessageView.framework in Frameworks */,
-				7873281B20172C6A0012C5A0 /* KVNProgress.framework in Frameworks */,
-				7873281C20172C6A0012C5A0 /* PopupDialog.framework in Frameworks */,
-				7873281E20172C6A0012C5A0 /* SwiftValidator.framework in Frameworks */,
+				789CBACA20D0096700DA2526 /* Alamofire.framework in Frameworks */,
+				789CBACC20D0096700DA2526 /* BSErrorMessageView.framework in Frameworks */,
+				789CBAD020D0096700DA2526 /* CreditCardValidator.framework in Frameworks */,
+				789CBAD620D0096700DA2526 /* KVNProgress.framework in Frameworks */,
+				789CBAD820D0096700DA2526 /* PopupDialog.framework in Frameworks */,
+				789CBADA20D0096700DA2526 /* Shimmer.framework in Frameworks */,
+				789CBADC20D0096700DA2526 /* SwiftValidator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +130,13 @@
 			files = (
 				785D84701F336653003B8B26 /* Rave.framework in Frameworks */,
 				04D5413712BCE3661795F3D0 /* Pods_RaveTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		789CBADE20D00D8700DA2526 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +170,7 @@
 			children = (
 				785D84661F336653003B8B26 /* Rave.framework */,
 				785D846F1F336653003B8B26 /* RaveTests.xctest */,
+				789CBAE120D00D8700DA2526 /* ThrivesendUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,6 +276,25 @@
 		B2E99C65C2C7BE488B609EF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				789CBAC920D0096700DA2526 /* Alamofire.framework */,
+				789CBACB20D0096700DA2526 /* BSErrorMessageView.framework */,
+				789CBACD20D0096700DA2526 /* CountryPicker.framework */,
+				789CBACF20D0096700DA2526 /* CreditCardValidator.framework */,
+				789CBAD120D0096700DA2526 /* CryptoSwift.framework */,
+				789CBAD320D0096700DA2526 /* DynamicBlurView.framework */,
+				789CBAD520D0096700DA2526 /* KVNProgress.framework */,
+				789CBAD720D0096700DA2526 /* PopupDialog.framework */,
+				789CBAD920D0096700DA2526 /* Shimmer.framework */,
+				789CBADB20D0096700DA2526 /* SwiftValidator.framework */,
+				789CBABF20CFD67600DA2526 /* SwiftValidator.framework */,
+				789CBAAF20CFD61100DA2526 /* Alamofire.framework */,
+				789CBAB120CFD61100DA2526 /* BSErrorMessageView.framework */,
+				789CBAB320CFD61100DA2526 /* CountryPicker.framework */,
+				789CBAB520CFD61100DA2526 /* CreditCardValidator.framework */,
+				789CBAB720CFD61100DA2526 /* CryptoSwift.framework */,
+				789CBAB920CFD61100DA2526 /* KVNProgress.framework */,
+				789CBABB20CFD61100DA2526 /* PopupDialog.framework */,
+				789CBABD20CFD61100DA2526 /* Shimmer.framework */,
 				788B58A92031E9FF00E31B1C /* CreditCardValidator.framework */,
 				789D92F82029FD450047DFC3 /* Shimmer.framework */,
 				7815757E202856D70043B587 /* Alamofire.framework */,
@@ -319,13 +366,30 @@
 			productReference = 785D846F1F336653003B8B26 /* RaveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		789CBAE020D00D8700DA2526 /* ThrivesendUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 789CBAE620D00D8700DA2526 /* Build configuration list for PBXNativeTarget "ThrivesendUITests" */;
+			buildPhases = (
+				789CBADD20D00D8700DA2526 /* Sources */,
+				789CBADE20D00D8700DA2526 /* Frameworks */,
+				789CBADF20D00D8700DA2526 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ThrivesendUITests;
+			productName = ThrivesendUITests;
+			productReference = 789CBAE120D00D8700DA2526 /* ThrivesendUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		785D845D1F336653003B8B26 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Olusegun Solaja";
 				TargetAttributes = {
@@ -338,6 +402,10 @@
 					785D846E1F336653003B8B26 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = EEN5SMD5RF;
+						ProvisioningStyle = Automatic;
+					};
+					789CBAE020D00D8700DA2526 = {
+						CreatedOnToolsVersion = 9.4;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -356,6 +424,7 @@
 			targets = (
 				785D84651F336653003B8B26 /* Rave */,
 				785D846E1F336653003B8B26 /* RaveTests */,
+				789CBAE020D00D8700DA2526 /* ThrivesendUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -371,6 +440,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		785D846D1F336653003B8B26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		789CBADF20D00D8700DA2526 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -477,6 +553,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				785D84751F336653003B8B26 /* RaveTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		789CBADD20D00D8700DA2526 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,7 +722,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = flutterwave.Rave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -679,6 +762,60 @@
 			};
 			name = Release;
 		};
+		789CBAE720D00D8700DA2526 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ThrivesendUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flutterwave.ThrivesendUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		789CBAE820D00D8700DA2526 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ThrivesendUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flutterwave.ThrivesendUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -705,6 +842,15 @@
 			buildConfigurations = (
 				785D847E1F336653003B8B26 /* Debug */,
 				785D847F1F336653003B8B26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		789CBAE620D00D8700DA2526 /* Build configuration list for PBXNativeTarget "ThrivesendUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				789CBAE720D00D8700DA2526 /* Debug */,
+				789CBAE820D00D8700DA2526 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
