@@ -21,11 +21,11 @@ protocol RavePayControllerDelegate:class {
 }
 
 public enum PaymentMethods: String {
-     case card = "CARD", account = "ACCOUNT", paypal = "PAYPAL", mpesa = "MPESA" , mobileMoney = "MOBILE MONEY"
+    case card = "CARD", account = "ACCOUNT", paypal = "PAYPAL", mpesa = "MPESA" , mobileMoney = "MOBILE MONEY"
 }
 
 public enum PaymentRoute: String {
-     case card = "card", existingCard = "existing_card", bank = "bank", paypal = "paypal"
+    case card = "card", existingCard = "existing_card", bank = "bank", paypal = "paypal"
 }
 
 class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,ValidationDelegate{
@@ -71,7 +71,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     var bankPicker:UIPickerView!
     var banks:[Bank]? = [] {
         didSet{
-           bankPicker.reloadAllComponents()
+            bankPicker.reloadAllComponents()
         }
     }
     var blacklistBanks:[String]?
@@ -82,7 +82,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             cardSavedTable.reloadData()
         }
     }
-     let identifier = Bundle(identifier: "flutterwave.Rave")
+    let identifier = Bundle(identifier: "flutterwave.Rave")
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
     @IBOutlet weak var cardSavedDoneButton: UIButton!
     
@@ -121,21 +121,21 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     private var savedCardOverLayView:UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-//        IQKeyboardManager.sharedManager().enable = false
+        //        IQKeyboardManager.sharedManager().enable = false
         configureView()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     private func  configureView(){
-         let count = supportedPaymentMethods.count
+        let count = supportedPaymentMethods.count
         if count > 0 {
-                self.paymentMethods = supportedPaymentMethods
+            self.paymentMethods = supportedPaymentMethods
         }
-       
+        
         
         cardList =  UserDefaults.standard.object(forKey: "cards-\(self.email!)") as? [[String:String]]
         
@@ -167,7 +167,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         pinView.layer.cornerRadius = 6
         
         self.view.addSubview(overLayView)
-
+        
         overLayView.addSubview(pinView)
         
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(hideBillingOvelay))
@@ -185,9 +185,6 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         savedCardOverLayView.isHidden = true
         
         
-        
-        //let cardTap = UITapGestureRecognizer(target: self, action: #selector(hideCardOvelay))
-        //savedCardOverLayView.addGestureRecognizer(cardTap)
         savedCardOverLayView.isUserInteractionEnabled = true
         savedCardOverLayView.addSubview(savedCardPopup)
         savedCardPopup.translatesAutoresizingMaskIntoConstraints = false
@@ -224,7 +221,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         let accountAmountIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
         accountAmountIcV.addSubview(accountAmountIcon)
         styleTextField(accountAmountTextField,leftView: accountAmountIcV)
-
+        
         
         let billingIcon = UIButton(type: .system)
         billingIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
@@ -323,7 +320,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         containerView.layer.cornerRadius = 6
         containerView.layer.borderWidth = 1
         containerView.layer.borderColor =  RavePayConfig.sharedConfig().secondaryThemeColor.cgColor
-      //  IQKeyboardManager.sharedManager().enable = true
+        //  IQKeyboardManager.sharedManager().enable = true
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissV))
         self.navigationItem.leftBarButtonItem = barButton
@@ -346,7 +343,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         mpesaPayButton.layer.borderColor =  RavePayConfig.sharedConfig().themeColor.cgColor
         mpesaPayButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
         setPayButtonTitle(code: currencyCode, button: mpesaPayButton)
-
+        
         pinButton.addTarget(self, action: #selector(pinButtonTapped), for: .touchUpInside)
         pinButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
         
@@ -365,9 +362,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         saveCardSwitch.onTintColor =  RavePayConfig.sharedConfig().themeColor
         if let count = cardList?.count{
             if(count > 0){
-                  isCardSaved = true
-             }else{
-                 isCardSaved = false
+                isCardSaved = true
+            }else{
+                isCardSaved = false
             }
         }else{
             isCardSaved = false
@@ -376,7 +373,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         savedCardsButton.addTarget(self, action: #selector(showSavedCards), for: .touchUpInside)
         
-       
+        
     }
     
     @objc func dobPickerValueChanged(_ sender: UIDatePicker){
@@ -394,21 +391,6 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
     private func setPayButtonTitle(code:String, button:UIButton){
-//        switch code {
-//        case "NGN":
-//             button.setTitle("PAY \(amount!.toCurrency(0))", for: .normal)
-//        case "USD":
-//            button.setTitle("PAY \(amount!.toCurrency(0,locale:"en_US"))", for: .normal)
-//        case "GBP":
-//             button.setTitle("PAY \(amount!.toCurrency(0,locale:"en_GB"))", for: .normal)
-//        case "KES":
-//             button.setTitle("PAY \(amount!.toCurrency(0,locale:"kam_KE"))", for: .normal)
-//        case "GHS":
-//            button.setTitle("PAY \(amount!.toCurrency(0,locale:"ak_GH"))", for: .normal)
-//        default:
-//            button.setTitle("PAY \(amount!.toCurrency(0))", for: .normal)
-//        }
-        
         button.setTitle("PAY \(amount!.toCountryCurrency(code:  self.currencyCode))", for: .normal)
     }
     
@@ -437,10 +419,6 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     @objc func doneButtonPressed(){
         self.hideCardOvelay()
-//        if let token  = selectedCard?["card_token"]{
-//            KVNProgress.show(withStatus: "Processing...")
-//           self.doPayWithCardToken(token: token)
-//        }
         if let ref  = selectedCard?["flwRef"]{
             KVNProgress.show(withStatus: "Processing...")
             self.queryTransaction(flwRef: ref)
@@ -497,8 +475,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 validator.registerField(self.amountTextField, errorLabel: nil, rules: [RequiredRule(message:"Amount  is required")])
                 validator.unregisterField(accountAmountTextField)
             }else{
-                 validator.unregisterField(accountAmountTextField)
-                 validator.unregisterField(amountTextField)
+                validator.unregisterField(accountAmountTextField)
+                validator.unregisterField(amountTextField)
                 amountTextField.isHidden = true
                 containerHeight.constant = 356
             }
@@ -509,7 +487,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             validator.unregisterField(phoneNUmber)
             validator.unregisterField(accountBank)
             validator.unregisterField(accountNumber)
-
+            
             
         case .account :
             isInCardMode = false
@@ -529,9 +507,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 validator.unregisterField(accountAmountTextField)
                 validator.unregisterField(amountTextField)
             }
-            //containerHeight.constant = 311
+            
             validator.registerField(self.phoneNUmber, errorLabel: nil, rules: [RequiredRule(message:"Phone number is required")])
-           validator.registerField(self.expiry, errorLabel: nil, rules: [RequiredRule(message:"Enter expiration")])
+            validator.registerField(self.expiry, errorLabel: nil, rules: [RequiredRule(message:"Enter expiration")])
             validator.registerField(self.accountBank, errorLabel: nil, rules: [RequiredRule(message:"Bank account is required")])
             validator.unregisterField(cardNumber)
             validator.unregisterField(expiry)
@@ -606,8 +584,6 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         // turn the fields to red
         for (field, error) in errors {
             if let field = field as? UITextField {
-                //  field.layer.borderColor = UIColor(hex: "#FB4F3B").cgColor
-                // field.layer.borderWidth = 1.0
                 field.bs_setupErrorMessageView(withMessage: error.errorMessage)
                 field.bs_showError()
             }
@@ -619,11 +595,11 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     
     
     func doCardPayButtonTapped(){
-       // showOTPScreen()
+        // showOTPScreen()
         self.view.endEditing(true)
         paymentRoute = .card
         self.getFee()
-
+        
     }
     @objc func doPayPalButtonTapped(){
         // showOTPScreen()
@@ -639,17 +615,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             let first2 = expiry.text!.substring(to: expiry.text!.index(expiry.text!.startIndex, offsetBy: 2))
             let last2 = expiry.text!.substring(from: expiry.text!.index(expiry.text!.endIndex, offsetBy: -2))
             var param:[String:Any] = ["PBFPubKey":pubkey ,
-                         "cardno":cardNumber.text!,
-                         "cvv":cvv.text!,
-                         "amount":amount!,
-                         "expiryyear":last2,
-                         "expirymonth": first2,
-                         "email": email!,
-                         "currency": currencyCode,
-                         "country":country!,
-                         "IP": getIFAddresses().first!,
-                         "txRef": merchantTransRef!,
-                         "device_fingerprint": (UIDevice.current.identifierForVendor?.uuidString)!]
+                                      "cardno":cardNumber.text!,
+                                      "cvv":cvv.text!,
+                                      "amount":amount!,
+                                      "expiryyear":last2,
+                                      "expirymonth": first2,
+                                      "email": email!,
+                                      "currency": currencyCode,
+                                      "country":country!,
+                                      "IP": getIFAddresses().first!,
+                                      "txRef": merchantTransRef!,
+                                      "device_fingerprint": (UIDevice.current.identifierForVendor?.uuidString)!]
             if let narrate = narration{
                 param.merge(["narration":narrate])
             }
@@ -674,24 +650,24 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
     func doPayWithCardToken(token:String){
-       // "firstname":"Kola",
-       // "lastname":"Oyekole",
-         paymentRoute = .existingCard
-         self.getFee(token)
+        // "firstname":"Kola",
+        // "lastname":"Oyekole",
+        paymentRoute = .existingCard
+        self.getFee(token)
     }
     
     private func cardTokenPayAction(_ token:String){
-      KVNProgress.show(withStatus: "Processing..")
+        KVNProgress.show(withStatus: "Processing..")
         amount = amount != .none ? (amount! != "0" ? amount : amountTextField.text) : amountTextField.text
         if let secKey = RavePayConfig.sharedConfig().secretKey{
             var param:[String:Any] = ["currency":currencyCode,
-                         "SECKEY":secKey,
-                         "token":token,
-                         "country":country!,
-                         "amount":amount!,
-                         "email":email!,
-                         "IP": getIFAddresses().first!,
-                         "txRef":merchantTransRef!]
+                                      "SECKEY":secKey,
+                                      "token":token,
+                                      "country":country!,
+                                      "amount":amount!,
+                                      "email":email!,
+                                      "IP": getIFAddresses().first!,
+                                      "txRef":merchantTransRef!]
             if let narrate = narration{
                 param.merge(["narration":narrate])
             }
@@ -711,7 +687,6 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                                 switch chargeResponse{
                                 case "00":
                                     let callbackResult = ["status":"success","payload":res!] as [String : Any]
-                                    //self.updateExistingCardToken(selectedCard: self.selectedCard, data: res!)
                                     KVNProgress.showSuccess(completion: {
                                         self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
                                         self.dismissV()
@@ -744,11 +719,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }, errorCallback: { (err) in
                 KVNProgress.dismiss()
                 if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
                     DispatchQueue.main.async {
                         self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     }
-                    //})
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
                         
@@ -757,7 +730,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 print(err)
             })
         }
-
+        
     }
     
     @objc func showSavedCards(){
@@ -770,7 +743,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     
     func dobankPayButtonTapped(){
         self.view.endEditing(true)
-         paymentRoute = .bank
+        paymentRoute = .bank
         self.getFee()
     }
     
@@ -836,7 +809,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 param.merge(["narration":narrate])
             }
             if let passcode = self.dobTextField.text , passcode != "" {
-                 param.merge(["passcode":passcode])
+                param.merge(["passcode":passcode])
             }
             
             let jsonString  = param.jsonStringify()
@@ -851,7 +824,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             ]
             self.chargeAccount(reqbody: reqbody)
         }
-
+        
     }
     
     func getFee(_ token:String = ""){
@@ -859,15 +832,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         amount = amount != .none ? (amount! != "0" ? amount : amountTextField.text) : amountTextField.text
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
             var param:[String:String] = [:]
-             switch(self.paymentRoute){
-             case .card:
+            switch(self.paymentRoute){
+            case .card:
                 let first6 = cardNumber.text!.substring(to: cardNumber.text!.index(cardNumber.text!.startIndex, offsetBy: 6))
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
                     "currency": currencyCode,
                     "card6": first6]
-             case .existingCard:
+            case .existingCard:
                 let first6  = selectedCard?["first6"]
                 param = [
                     "PBFPubKey": pubkey,
@@ -875,70 +848,68 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                     "currency": currencyCode,
                     "card6": first6!]
                 
-             case .bank:
+            case .bank:
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
                     "currency": currencyCode,
                     "ptype": "2"]
                 
-             case .paypal:
+            case .paypal:
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
                     "currency": currencyCode,
                     "ptype": "paypal"]
-             default:
+            default:
                 break
             }
             
             RavePayService.getFee(param, resultCallback: { (result) in
                 KVNProgress.dismiss(completion: {
-               
-                let data = result?["data"] as? [String:AnyObject]
-                if let _fee =  data?["fee"] as? Double{
                     
-                    let fee = "\(_fee)"
-                    let chargeAmount = data?["charge_amount"] as? String
-                    DispatchQueue.main.async {
-                        let popup = PopupDialog(title: "Confirm", message: "You will be charged a transaction fee of \(fee.toCountryCurrency(code:  self.currencyCode)), Total amount to be charged will be \(chargeAmount!.toCountryCurrency(code: self.currencyCode)). Do you wish to continue?")
-                        let cancel = CancelButton(title: "Cancel") {
-                            
-                        }
-                        let proceed = DefaultButton(title: "Proceed") {
-                            switch(self.paymentRoute){
-                            case .card:
-                                self.cardPayAction()
-                            case .existingCard:
-                                self.cardTokenPayAction(token)
-                            case .bank:
-                                self.bankPayAction()
-                            case .paypal:
-                                self.paypalAction()
-                            default:
-                                break
+                    let data = result?["data"] as? [String:AnyObject]
+                    if let _fee =  data?["fee"] as? Double{
+                        
+                        let fee = "\(_fee)"
+                        let chargeAmount = data?["charge_amount"] as? String
+                        DispatchQueue.main.async {
+                            let popup = PopupDialog(title: "Confirm", message: "You will be charged a transaction fee of \(fee.toCountryCurrency(code:  self.currencyCode)), Total amount to be charged will be \(chargeAmount!.toCountryCurrency(code: self.currencyCode)). Do you wish to continue?")
+                            let cancel = CancelButton(title: "Cancel") {
+                                
                             }
+                            let proceed = DefaultButton(title: "Proceed") {
+                                switch(self.paymentRoute){
+                                case .card:
+                                    self.cardPayAction()
+                                case .existingCard:
+                                    self.cardTokenPayAction(token)
+                                case .bank:
+                                    self.bankPayAction()
+                                case .paypal:
+                                    self.paypalAction()
+                                default:
+                                    break
+                                }
+                            }
+                            popup.addButtons([cancel,proceed])
+                            popup.buttonAlignment = .horizontal
+                            self.present(popup, animated: true, completion: nil)
                         }
-                        popup.addButtons([cancel,proceed])
-                        popup.buttonAlignment = .horizontal
-                        self.present(popup, animated: true, completion: nil)
+                    }else{
+                        if let err = result?["message"] as? String{
+                            showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                                
+                            })
+                        }
                     }
-                }else{
-                    if let err = result?["message"] as? String{
-                        showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                            
-                        })
-                    }
-                }
-            })
+                })
             }, errorCallback: { (err) in
                 KVNProgress.dismiss()
                 if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
                     DispatchQueue.main.async {
                         self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     }
-                    //})
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
                         
@@ -964,13 +935,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                             let callbackResult = ["status":"success","payload":res!] as [String : Any]
                             KVNProgress.showSuccess(completion: {
                                 self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
-                                    self.navigationController?.dismiss(animated: true, completion: nil)
+                                self.navigationController?.dismiss(animated: true, completion: nil)
                                 
                             })
                             break
                         case "02":
                             KVNProgress.dismiss()
-                           // self.determineAuthModelUsed(data: result!)
                         default:
                             break
                         }
@@ -990,11 +960,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         }, errorCallback: { (err) in
             KVNProgress.dismiss()
             if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
                 DispatchQueue.main.async {
                     self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                 }
-                //})
             }else{
                 showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
                     
@@ -1012,33 +980,33 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             if let status = res?["status"] as? String{
                 if status == "success"{
                     let result = res?["data"] as? Dictionary<String,AnyObject>
-            
+                    
                     if let chargeResponse = result?["chargeResponseCode"] as? String{
                         switch chargeResponse{
                         case "00":
                             let callbackResult = ["status":"success","payload":res!] as [String : Any]
-
+                            
                             KVNProgress.showSuccess(completion: {
-                               self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
-                                    self.navigationController?.dismiss(animated: true, completion: nil)
+                                self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
+                                self.navigationController?.dismiss(animated: true, completion: nil)
                                 
                             })
-                           
+                            
                             break
                         case "02":
                             KVNProgress.dismiss()
                             self.determineBankAuthModelUsed(data: result!)
                         default:
-                        break
+                            break
                         }
                     }
                 }else{
                     if let message = res?["message"] as? String{
-                     KVNProgress.dismiss()
-                    showMessageDialog("Error", message: message, image: nil, axis: .horizontal, viewController: self, handler: {
+                        KVNProgress.dismiss()
+                        showMessageDialog("Error", message: message, image: nil, axis: .horizontal, viewController: self, handler: {
                             
                         })
-
+                        
                     }
                 }
             }
@@ -1047,17 +1015,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         }, errorCallback: { (err) in
             KVNProgress.dismiss()
             if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
                 DispatchQueue.main.async {
                     self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                 }
-                //})
             }else{
                 showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
                     
                 })
             }
-
+            
             print(err)
         })
     }
@@ -1069,32 +1035,32 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             (res) in
             if let status = res?["status"] as? String{
                 if status == "success"{
-                        let result = res?["data"] as? Dictionary<String,AnyObject>
-                            if let suggestedAuth = result?["suggested_auth"] as? String{
+                    let result = res?["data"] as? Dictionary<String,AnyObject>
+                    if let suggestedAuth = result?["suggested_auth"] as? String{
+                        KVNProgress.dismiss()
+                        self.determineSuggestedAuthModelUsed(string: suggestedAuth,data:result!)
+                        
+                    }else{
+                        if let chargeResponse = result?["chargeResponseCode"] as? String{
+                            switch chargeResponse{
+                            case "00":
+                                let callbackResult = ["status":"success","payload":res!] as [String : Any]
+                                
+                                KVNProgress.showSuccess(completion: {
+                                    self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
+                                    self.navigationController?.dismiss(animated: true, completion: nil)
+                                    
+                                })
+                                break
+                            case "02":
                                 KVNProgress.dismiss()
-                                self.determineSuggestedAuthModelUsed(string: suggestedAuth,data:result!)
-                
-                            }else{
-                                if let chargeResponse = result?["chargeResponseCode"] as? String{
-                                    switch chargeResponse{
-                                        case "00":
-                                            let callbackResult = ["status":"success","payload":res!] as [String : Any]
-                                           
-                                            KVNProgress.showSuccess(completion: {
-                                                 self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
-                                                    self.navigationController?.dismiss(animated: true, completion: nil)
-                                                
-                                            })
-                                            break
-                                    case "02":
-                                        KVNProgress.dismiss()
-                                        let authModelUsed = result?["authModelUsed"] as? String
-                                        self.determineAuthModelUsed(auth: authModelUsed, data: result!)
-                                    default:
-                                        break
-                                    }
-                                }
-                
+                                let authModelUsed = result?["authModelUsed"] as? String
+                                self.determineAuthModelUsed(auth: authModelUsed, data: result!)
+                            default:
+                                break
+                            }
+                        }
+                        
                     }
                 }else{
                     if let message = res?["message"] as? String{
@@ -1102,31 +1068,29 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                         showMessageDialog("Error", message: message, image: nil, axis: .horizontal, viewController: self, handler: {
                             
                         })
-
+                        
                     }
                 }
             }
         }, errorCallback: { (err) in
             KVNProgress.dismiss()
             if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
                 DispatchQueue.main.async {
                     self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                 }
-                // })
             }else{
                 showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
                     
                 })
             }
-
+            
             print(err)
         })
     }
     
-   
-   
-
+    
+    
+    
     
     
     
@@ -1148,31 +1112,26 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         }
     }
     func queryTransaction(flwRef:String?){
-        //KVNProgress.show(withStatus: "Processing..")
         if let secret = RavePayConfig.sharedConfig().secretKey ,let  ref = flwRef{
             let param = ["SECKEY":secret,"flw_ref":ref]
             RavePayService.queryTransaction(param, resultCallback: { (result) in
                 if let  status = result?["status"] as? String{
                     if (status == "success"){
                         DispatchQueue.main.async {
-                           // KVNProgress.showSuccess(completion: {
-
-                                print(result!)
-                                let token = self.getToken(result: result!)
-                                if let tk = token{
-                                    self.doPayWithCardToken(token: tk)
-                                }else{
-                                    DispatchQueue.main.async {
-                                        KVNProgress.dismiss()
-                                        showMessageDialog("Error", message: "Could not acquire your card token for processing", image: nil, axis: .horizontal, viewController: self, handler: {
-                                            
-                                        })
-
-                                    }
-                                
+                            print(result!)
+                            let token = self.getToken(result: result!)
+                            if let tk = token{
+                                self.doPayWithCardToken(token: tk)
+                            }else{
+                                DispatchQueue.main.async {
+                                    KVNProgress.dismiss()
+                                    showMessageDialog("Error", message: "Could not acquire your card token for processing", image: nil, axis: .horizontal, viewController: self, handler: {
+                                        
+                                    })
+                                    
                                 }
-                        
-                           // })
+                                
+                            }
                         }
                     }else{
                         DispatchQueue.main.async {
@@ -1180,7 +1139,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                             showMessageDialog("Error", message: "Something went wrong please try again.", image: nil, axis: .horizontal, viewController: self, handler: {
                                 
                             })
-
+                            
                         }
                     }
                 }
@@ -1189,17 +1148,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 print(err)
                 KVNProgress.dismiss()
                 if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
                     DispatchQueue.main.async {
                         self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     }
-                   // })
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
                         
                     })
                 }
-
+                
             })
         }
     }
@@ -1219,33 +1176,31 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
     private func addOrUpdateCardToken(cardNumber:String,data:[String:AnyObject]){
-       // if let customer = data["customer"] as? [String:AnyObject]{
-            if let chargeToken = data["chargeToken"] as? [String:AnyObject]{
-                if let token = chargeToken["embed_token"] as? String{
-                    let first6 = cardNumber.substring(to: cardNumber.index(cardNumber.startIndex, offsetBy: 6))
-                    let last4 = cardNumber.substring(from: cardNumber.index(cardNumber.endIndex, offsetBy: -4))
-                    let cardDetails = ["card_token":token,"first6":first6,"last4":last4]
-                    if let cards  = UserDefaults.standard.object(forKey: "cards-\(email!)") as? [[String:String]]{
-                        var theCards = cards
-                        theCards = cards.filter({ (item) -> Bool in
-                             let _first6 = item["first6"]!
-                            return _first6 != first6
-                        })
-                        theCards.append(cardDetails)
-                        UserDefaults.standard.set(theCards, forKey: "cards-\(email!)")
-                        cardList = theCards
-                        
-                    }else{
-                        UserDefaults.standard.set([cardDetails], forKey: "cards-\(email!)")
-                        cardList = [cardDetails]
-
-                    }
+        if let chargeToken = data["chargeToken"] as? [String:AnyObject]{
+            if let token = chargeToken["embed_token"] as? String{
+                let first6 = cardNumber.substring(to: cardNumber.index(cardNumber.startIndex, offsetBy: 6))
+                let last4 = cardNumber.substring(from: cardNumber.index(cardNumber.endIndex, offsetBy: -4))
+                let cardDetails = ["card_token":token,"first6":first6,"last4":last4]
+                if let cards  = UserDefaults.standard.object(forKey: "cards-\(email!)") as? [[String:String]]{
+                    var theCards = cards
+                    theCards = cards.filter({ (item) -> Bool in
+                        let _first6 = item["first6"]!
+                        return _first6 != first6
+                    })
+                    theCards.append(cardDetails)
+                    UserDefaults.standard.set(theCards, forKey: "cards-\(email!)")
+                    cardList = theCards
+                    
+                }else{
+                    UserDefaults.standard.set([cardDetails], forKey: "cards-\(email!)")
+                    cardList = [cardDetails]
+                    
                 }
             }
-       // }
+        }
+        // }
     }
     private func updateExistingCardToken(selectedCard:[String:String]?,data:[String:AnyObject]){
-        // if let customer = data["customer"] as? [String:AnyObject]{
         if let _selectedCard = selectedCard{
             if let _data = data["data"] as? [String:AnyObject]{
                 if let chargeToken = _data["chargeToken"] as? [String:AnyObject]{
@@ -1261,18 +1216,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                             theCards.append(cardDetails)
                             UserDefaults.standard.set(theCards, forKey: "cards-\(email!)")
                             cardList = theCards
-                    
+                            
                         }
-//                else{
-//                    UserDefaults.standard.set([cardDetails], forKey: "cards")
-//                    cardList = [cardDetails]
-//                    
-//                }
                     }
                 }
             }
         }
-        // }
     }
     
     private func determineBankAuthModelUsed(data:[String:AnyObject]){
@@ -1303,7 +1252,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
         }
     }
-
+    
     private func determineAuthModelUsed(auth:String?, data:[String:AnyObject]){
         let flwTransactionRef = data["flwRef"] as? String
         //let chargeMessage = data["validateInstruction"] as? String
@@ -1380,7 +1329,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         validator.registerField(self.pinTextField, errorLabel: nil, rules: [RequiredRule(message:"Pin is required")])
     }
     @objc private func pinButtonTapped(){
-         validator.validate(self)
+        validator.validate(self)
     }
     
     @objc private func dopinButtonTapped(){
@@ -1454,8 +1403,6 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                         return first.name!.localizedCaseInsensitiveCompare(second.name!) == .orderedAscending
                     })
                 }
-                
-               // self.banks =  _banks
             }
             
         }) { (err) in
@@ -1471,7 +1418,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     func ravePay(_ webController: WebViewController, didSucceedPaymentWithResult result: [String : AnyObject]) {
         delegate?.ravePay(self, didSucceedPaymentWithResult: result)
-         self.navigationController?.dismiss(animated: true, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     func raveOTP(_ webController: OTPController, didFailPaymentWithResult result: [String : AnyObject]) {
@@ -1489,8 +1436,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         if textField == accountBank{
             if let count = self.banks?.count{
                 if count != 0 {
-                bankPicker.selectRow(0, inComponent: 0, animated: true)
-                self.pickerView(bankPicker, didSelectRow: 0, inComponent: 0)
+                    bankPicker.selectRow(0, inComponent: 0, animated: true)
+                    self.pickerView(bankPicker, didSelectRow: 0, inComponent: 0)
                 }
             }
         }
@@ -1502,8 +1449,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         if let type = creditCardValidator.type(from: textField.text!){
             print(type.name)
             //let image = self.getCardImage(scheme: type.name.lowercased())
-             cardIcon = UIButton(type: .custom)
-             //cardIcon.tintColor =
+            cardIcon = UIButton(type: .custom)
+            //cardIcon.tintColor =
             cardIcon.setImage(UIImage(named: type.name.lowercased(), in: identifier ,compatibleWith: nil), for: .normal)
         }else{
             print("Couldnt determing type")
@@ -1536,7 +1483,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         if let count = self.banks?.count{
             return count
         }else{
-          return 0
+            return 0
         }
         
     }
@@ -1574,13 +1521,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 }
             }
         }
-        //self.bankIcon.image = UIImage(named: "access")
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-
+    
 }
 
 extension RavePayController: UITableViewDelegate,UITableViewDataSource{
@@ -1637,6 +1583,6 @@ extension RavePayController: UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCard = cardList?[indexPath.row]
-
+        
     }
 }

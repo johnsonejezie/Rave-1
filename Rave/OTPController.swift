@@ -49,10 +49,10 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
         validator.registerField(self.otpTextField, errorLabel: nil, rules: [RequiredRule(message:"OTP is required")])
         otpTextField.delegate = self
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -79,7 +79,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                 "transaction_reference": transactionReference!,
                 "otp": otp
             ]
-
+            
             self.validateCard(reqbody: reqbody)
         }else{
             let reqbody = [
@@ -87,7 +87,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                 "transactionreference": transactionReference!,
                 "otp": otp
             ]
-
+            
             self.validateAccount(reqbody: reqbody)
         }
     }
@@ -102,7 +102,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                     print(data)
                     if let tx = data["tx"] as? [String:AnyObject]{
                         if let _ = tx["flwRef"] as? String{
-                           // self.queryTransaction(flwRef: flwRef)
+                            
                             let callbackResult = ["status":"success","payload":result!] as [String : Any]
                             self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
                             KVNProgress.dismiss(completion: {
@@ -124,12 +124,12 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
             print(err)
             KVNProgress.dismiss(completion:{
                 if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
+                    
                     self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
-                    // })
+                    
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
-                       self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                        self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     })
                 }
             })
@@ -141,7 +141,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
         RavePayService.validateAccountOTP(reqbody, resultCallback: { (result) in
             print(result ?? "nil")
             if let res =  result{
-              
+                
                 if let data = res ["data"] as? [String:AnyObject]{
                     if let flwRef = data["flwRef"] as? String{
                         if let chargeResponse = data["chargeResponseCode"] as? String{
@@ -152,10 +152,6 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                                     self.otpTitle.text = data["chargeResponseMessage"] as? String
                                 }
                             }else{
- //                               self.queryTransaction(flwRef: flwRef)
-//                                let callbackResult = ["status":"success","payload":result!] as [String : Any]
-//                                self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
-//                                self.dismissView()
                                 KVNProgress.dismiss(completion: {
                                     DispatchQueue.main.async {
                                         let callbackResult = ["status":"success","payload":result!] as [String : Any]
@@ -169,8 +165,8 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                     }
                 }else{
                     KVNProgress.dismiss(completion: {
-                    let message = res ["message"] as? String
-                    self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : (message ?? "An error occured. Please contact support") as AnyObject])
+                        let message = res ["message"] as? String
+                        self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : (message ?? "An error occured. Please contact support") as AnyObject])
                     })
                 }
                 
@@ -182,11 +178,9 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
             print(err)
             KVNProgress.dismiss(completion:{
                 if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
                     DispatchQueue.main.async {
                         self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     }
-                    // })
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
                         self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
@@ -203,8 +197,8 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                 if let  status = result?["status"] as? String{
                     if (status == "success"){
                         DispatchQueue.main.async {
-                             KVNProgress.showSuccess(completion: {
-                            
+                            KVNProgress.showSuccess(completion: {
+                                
                                 print(result!)
                                 let callbackResult = ["status":"success","payload":result!] as [String : Any]
                                 if (self.saveCard){
@@ -219,8 +213,8 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                             let callbackResult = ["status":"success","payload":result!] as [String : Any]
                             self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
                             KVNProgress.dismiss(completion: {
-                                 DispatchQueue.main.async {
-                                  self.dismissView()
+                                DispatchQueue.main.async {
+                                    self.dismissView()
                                 }
                             })
                             
@@ -230,19 +224,17 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
             }, errorCallback: { (err) in
                 
                 print(err)
-                 KVNProgress.dismiss()
+                KVNProgress.dismiss()
                 if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
                     DispatchQueue.main.async {
                         self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     }
-                    // })
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
                         self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     })
                 }
-
+                
             })
         }
     }
@@ -255,8 +247,6 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
         // turn the fields to red
         for (field, error) in errors {
             if let field = field as? UITextField {
-                //  field.layer.borderColor = UIColor(hex: "#FB4F3B").cgColor
-                // field.layer.borderWidth = 1.0
                 field.bs_setupErrorMessageView(withMessage: error.errorMessage)
                 field.bs_showError()
             }
@@ -267,43 +257,43 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
     }
     
     private func addOrUpdateCardToken(cardNumber:String,data:[String:AnyObject], withFlwRef ref:String){
-    if let _data = data["data"] as? [String:AnyObject]{
-        if let card = _data["card"] as? [String:AnyObject]{
-            if let cards = card["card_tokens"] as? [[String:AnyObject]]{
-            let _cardToken = cards.last!
-            if let token = _cardToken["embedtoken"] as? String{
-                let first6 = cardNumber.substring(to: cardNumber.index(cardNumber.startIndex, offsetBy: 6))
-                let last4 = cardNumber.substring(from: cardNumber.index(cardNumber.endIndex, offsetBy: -4))
-                let cardDetails = ["card_token":token,"first6":first6,"last4":last4, "flwRef":ref]
-                if let cards  = UserDefaults.standard.object(forKey: "cards-\(email!)") as? [[String:String]]{
-                    var theCards = cards
-                    theCards = cards.filter({ (item) -> Bool in
-                        let _first6 = item["first6"]!
-                        return _first6 != first6
-                    })
-                    theCards.append(cardDetails)
-                    UserDefaults.standard.set(theCards, forKey: "cards-\(email!)")
-                    
-                }else{
-                    UserDefaults.standard.set([cardDetails], forKey: "cards-\(email!)")
-                    
+        if let _data = data["data"] as? [String:AnyObject]{
+            if let card = _data["card"] as? [String:AnyObject]{
+                if let cards = card["card_tokens"] as? [[String:AnyObject]]{
+                    let _cardToken = cards.last!
+                    if let token = _cardToken["embedtoken"] as? String{
+                        let first6 = cardNumber.substring(to: cardNumber.index(cardNumber.startIndex, offsetBy: 6))
+                        let last4 = cardNumber.substring(from: cardNumber.index(cardNumber.endIndex, offsetBy: -4))
+                        let cardDetails = ["card_token":token,"first6":first6,"last4":last4, "flwRef":ref]
+                        if let cards  = UserDefaults.standard.object(forKey: "cards-\(email!)") as? [[String:String]]{
+                            var theCards = cards
+                            theCards = cards.filter({ (item) -> Bool in
+                                let _first6 = item["first6"]!
+                                return _first6 != first6
+                            })
+                            theCards.append(cardDetails)
+                            UserDefaults.standard.set(theCards, forKey: "cards-\(email!)")
+                            
+                        }else{
+                            UserDefaults.standard.set([cardDetails], forKey: "cards-\(email!)")
+                            
+                        }
+                    }
                 }
-              }
             }
         }
-         }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.bs_hideError()
         
     }
-
+    
     
     func dismissView(){
         self.navigationController?.popViewController(animated: true)
     }
-
     
-
+    
+    
 }

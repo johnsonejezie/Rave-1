@@ -21,8 +21,7 @@ class RavePayService: NSObject {
             
             if(res.result.isSuccess){
                 let result = res.result.value as? Dictionary<String,AnyObject>
-              //  let data = result?["data"] as? Dictionary<String,AnyObject>
-               
+                
                 resultCallback(result)
                 
                 
@@ -42,7 +41,6 @@ class RavePayService: NSObject {
             
             if(res.result.isSuccess){
                 let result = res.result.value as? Dictionary<String,AnyObject>
-                //  let data = result?["data"] as? Dictionary<String,AnyObject>
                 
                 resultCallback(result)
                 
@@ -63,7 +61,7 @@ class RavePayService: NSObject {
             
             if(res.result.isSuccess){
                 let result = res.result.value as! [Dictionary<String,AnyObject>]
-                print(result)
+                //print(result)
                 let banks = result.map({ (item) -> Bank in
                     BankConverter.convert(item)
                 })
@@ -83,22 +81,20 @@ class RavePayService: NSObject {
         manager.session.configuration.timeoutIntervalForResource = 30
         manager.request(URLHelper.getURL("CHARGE_CARD"),method: .post, parameters: bodyParam).responseJSON {
             (res) -> Void in
-        
-                if(res.result.isSuccess){
-                    let result = res.result.value as! Dictionary<String,AnyObject>
-                    print(result)
-                    
-                       // let data = result["data"] as? Dictionary<String,AnyObject>
-                        resultCallback(result)
-                    
-                    
-                }else{
-                    errorCallback( res.result.error!.localizedDescription)
-                }
+            
+            if(res.result.isSuccess){
+                let result = res.result.value as! Dictionary<String,AnyObject>
+                // print(result)
+                resultCallback(result)
+                
+                
+            }else{
+                errorCallback( res.result.error!.localizedDescription)
             }
+        }
         
         
-     }
+    }
     class func chargeWithToken(_ bodyParam:Dictionary<String,Any>,resultCallback:@escaping (_ Result:Dictionary<String,AnyObject>?) -> Void ,errorCallback:@escaping (_ err:String) -> Void ){
         let manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = 30
@@ -108,9 +104,8 @@ class RavePayService: NSObject {
             
             if(res.result.isSuccess){
                 let result = res.result.value as! Dictionary<String,AnyObject>
-                print(result)
+                //print(result)
                 
-                // let data = result["data"] as? Dictionary<String,AnyObject>
                 resultCallback(result)
                 
                 
@@ -131,9 +126,6 @@ class RavePayService: NSObject {
             
             if(res.result.isSuccess){
                 let result = res.result.value as! Dictionary<String,AnyObject>
-                //print(result)
-                
-              //  let data = result["data"] as? Dictionary<String,AnyObject>
                 resultCallback(result)
                 
                 
@@ -152,9 +144,6 @@ class RavePayService: NSObject {
             
             if(res.result.isSuccess){
                 let result = res.result.value as! Dictionary<String,AnyObject>
-                //print(result)
-                
-                //let data = result["data"] as? Dictionary<String,AnyObject>
                 resultCallback(result)
                 
                 

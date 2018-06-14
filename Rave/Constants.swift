@@ -10,22 +10,22 @@ import UIKit
 import Alamofire
 
 class Constants: NSObject {
-
+    
     class func baseURL () -> String{
-       // return "http://flw-pms-dev.eu-west-1.elasticbeanstalk.com"
+        // return "http://flw-pms-dev.eu-west-1.elasticbeanstalk.com"
         return "https://ravesandboxapi.flutterwave.com"
     }
     class func liveBaseURL() -> String{
         return "https://api.ravepay.co"
     }
-   
-
+    
+    
     
     class func isConnectedToInternet() ->Bool {
         return NetworkReachabilityManager()!.isReachable
     }
-   
- 
+    
+    
     class func relativeURL()->Dictionary<String,String>{
         return [
             "CHARGE_CARD" :"/flwv3-pug/getpaidx/api/charge",
@@ -38,25 +38,13 @@ class Constants: NSObject {
         ]
     }
     
-   
-    class func headerConstants(_ headerParam:Dictionary<String,String>)->Dictionary<String,String> {
-     
-       /* var defaultsDict:Dictionary<String,String>  =  [
-            "apikey":apiKey,
-            "secret": apiSecret]*/
-      
-        
-//        if(headerParam.isEmpty){
-//            return defaultsDict
-//        }else{
-//            defaultsDict.merge(headerParam)
-//            return defaultsDict
-//        }
-        
-       return  headerParam
-
-    }
-
     
-
+    class func headerConstants(_ headerParam:Dictionary<String,String>)->Dictionary<String,String> {
+        
+        return  headerParam
+        
+    }
+    
+    
+    
 }

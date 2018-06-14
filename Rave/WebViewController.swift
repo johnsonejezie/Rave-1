@@ -25,13 +25,6 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         return web
     }()
     
-//    let blurView:UIVisualEffectView = {
-//        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-//        let visualEffect = UIVisualEffectView(effect: blurEffect)
-//        visualEffect.translatesAutoresizingMaskIntoConstraints = false
-//        return visualEffect
-//    }()
-    
     let loadingView:UIView = {
         let load = UIView()
         load.isHidden = true
@@ -56,7 +49,6 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         super.viewDidLoad()
         self.view.addSubview(webView)
         self.view.addSubview(loadingView)
-        //loadingView.addSubview(blurView)
         loadingView.addSubview(shimmerView)
         setupConstraints()
         
@@ -67,10 +59,6 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         loadingLabel.textColor = .white
         shimmerView.contentView = loadingLabel
         
-        
-       // let urlStr : NSString =   url!.addingPercentEncoding(withAllowedCharacters:  .urlHostAllowed)! as NSString
-       // let urlStr:Ns  = url!.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
-        //let _URL : NSURL? = NSURL(string: url! as String)
         if let _URL = url{
             let ur = _URL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
             if let _d = ur{
@@ -96,7 +84,7 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
-
+    
     
     func popView(){
         _ = self.navigationController?.dismiss(animated: true, completion: nil)
@@ -107,18 +95,18 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-       // let urlStr : NSString = url!.addingPercentEscapes(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))! as NSString
+        // let urlStr : NSString = url!.addingPercentEscapes(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))! as NSString
         print("doneLoading")
         print(webView.url!.absoluteString)
-            if (webView.url!.absoluteString.contains("/complete") || webView.url!.absoluteString.contains("submitting_mock_form")){
-                print("success page")
-                self.queryTransaction()
-            }else{
-                loadingView.isHidden = true
-                shimmerView.isShimmering = false
- 
-            }
-  
+        if (webView.url!.absoluteString.contains("/complete") || webView.url!.absoluteString.contains("submitting_mock_form")){
+            print("success page")
+            self.queryTransaction()
+        }else{
+            loadingView.isHidden = true
+            shimmerView.isShimmering = false
+            
+        }
+        
     }
     
     func queryTransaction(){
@@ -167,26 +155,24 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
                                 
                             }
                         }
-                       
+                        
                     }else{
                         DispatchQueue.main.async {
                             self.loadingView.isHidden = true
                             self.shimmerView.isShimmering = false
-
+                            
                             let callbackResult = ["status":"error","payload":result!] as [String : Any]
                             self.delegate?.ravePay(self, didFailPaymentWithResult: callbackResult as [String : AnyObject])
                             self.navigationController?.popViewController(animated: true)
-
-                     }
+                            
+                        }
                     }
                 }
             }, errorCallback: { (err) in
                 if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
-                    //showMessageDialog("Error", message: "Request timed out", image: nil, axis: .horizontal, viewController: self, handler: {
                     DispatchQueue.main.async {
                         self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     }
-                    //})
                 }else{
                     showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
                         
@@ -224,30 +210,26 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
     }
     
     func setupConstraints(){
-         webView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-         webView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-         webView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-         webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        webView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        webView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        webView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         shimmerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         shimmerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         shimmerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         shimmerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-//        blurView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-//        blurView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-//        blurView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//        blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         loadingView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         loadingView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         loadingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-
+    
 }

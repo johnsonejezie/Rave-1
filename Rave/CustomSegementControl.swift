@@ -38,7 +38,7 @@ class CustomSegementControl: UIControl {
     @IBInspectable
     var buttonTitles:String = ""{
         didSet{
-           self.updateView()
+            self.updateView()
         }
     }
     @IBInspectable
@@ -103,7 +103,7 @@ class CustomSegementControl: UIControl {
         sv.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         sv.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         
-       
+        
     }
     
     override func draw(_ rect: CGRect) {
@@ -111,29 +111,29 @@ class CustomSegementControl: UIControl {
     }
     
     @objc func buttonTapped(_ sender:UIButton){
-       
+        
         for (buttonIndex,button) in buttons.enumerated(){
             button.setTitleColor(buttonTitleColor, for: .normal)
             
             if(button == sender){
                 selectedIndex = buttonIndex
                 let xOrigin = ( frame.width / CGFloat(buttons.count) ) * CGFloat(selectedIndex)
-                    UIView.animate(withDuration: 0.3) {
-                        self.selectorView.frame.origin = CGPoint(x: xOrigin, y: 0)
+                UIView.animate(withDuration: 0.3) {
+                    self.selectorView.frame.origin = CGPoint(x: xOrigin, y: 0)
                 }
                 sender.setTitleColor(selectedTitleColor, for: .normal)
-            
+                
             }
             
         }
         
         sendActions(for: .valueChanged)
-       
+        
         
     }
     override var intrinsicContentSize: CGSize {
         return self.frame.size
-       // return UILayoutFittingExpandedSize
+        // return UILayoutFittingExpandedSize
     }
-
+    
 }
