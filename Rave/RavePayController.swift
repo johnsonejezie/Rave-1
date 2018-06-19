@@ -92,6 +92,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     var merchantTransRef:String? = "RaveMobileiOS"
     var email:String? = "segun.solaja@gmail.com"
     var amount:String? = "500"
+    var paymentPlan:Int?
     var currencyCode:String = "NGN"
     var country:String!
     var narration:String?
@@ -631,6 +632,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
             if let meta = meta{
                 param.merge(["meta":meta])
+            }
+            if let plan = paymentPlan {
+                param.merge(["payment_plan":"\(plan)"])
             }
             
             let jsonString  = param.jsonStringify()

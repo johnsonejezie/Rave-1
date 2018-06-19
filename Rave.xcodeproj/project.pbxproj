@@ -34,6 +34,7 @@
 		789CBAD820D0096700DA2526 /* PopupDialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBAD720D0096700DA2526 /* PopupDialog.framework */; };
 		789CBADA20D0096700DA2526 /* Shimmer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBAD920D0096700DA2526 /* Shimmer.framework */; };
 		789CBADC20D0096700DA2526 /* SwiftValidator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBADB20D0096700DA2526 /* SwiftValidator.framework */; };
+		789CBB4E20D7AB7400DA2526 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789CBB4D20D7AB7400DA2526 /* IQKeyboardManagerSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		789CBAD920D0096700DA2526 /* Shimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		789CBADB20D0096700DA2526 /* SwiftValidator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftValidator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		789CBAE120D00D8700DA2526 /* ThrivesendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThrivesendUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		789CBB4D20D7AB7400DA2526 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = IQKeyboardManagerSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		789D92F82029FD450047DFC3 /* Shimmer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shimmer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78EDC15B1F345B530087CCEB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84055437D4D503261431AB3D /* Pods_Rave.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rave.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				789CBB4E20D7AB7400DA2526 /* IQKeyboardManagerSwift.framework in Frameworks */,
 				789CBACA20D0096700DA2526 /* Alamofire.framework in Frameworks */,
 				789CBACC20D0096700DA2526 /* BSErrorMessageView.framework in Frameworks */,
 				789CBAD020D0096700DA2526 /* CreditCardValidator.framework in Frameworks */,
@@ -276,6 +279,7 @@
 		B2E99C65C2C7BE488B609EF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				789CBB4D20D7AB7400DA2526 /* IQKeyboardManagerSwift.framework */,
 				789CBAC920D0096700DA2526 /* Alamofire.framework */,
 				789CBACB20D0096700DA2526 /* BSErrorMessageView.framework */,
 				789CBACD20D0096700DA2526 /* CountryPicker.framework */,
