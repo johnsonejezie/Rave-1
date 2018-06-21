@@ -103,10 +103,10 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                     if let tx = data["tx"] as? [String:AnyObject]{
                         if let _ = tx["flwRef"] as? String{
                             
-                            let callbackResult = ["status":"success","payload":result!] as [String : Any]
-                            self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
                             KVNProgress.dismiss(completion: {
                                 DispatchQueue.main.async {
+                                    let callbackResult = ["status":"success","payload":result!] as [String : Any]
+                                    self.delegate?.raveOTP(self, didSucceedPaymentWithResult:  callbackResult as [String : AnyObject])
                                     self.dismissView()
                                 }
                             })
@@ -224,7 +224,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
             }, errorCallback: { (err) in
                 
                 print(err)
-                KVNProgress.dismiss()
+                KVNProgress.dismiss(completion:{
                 if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
                     DispatchQueue.main.async {
                         self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
@@ -234,7 +234,7 @@ class OTPController: UIViewController,UITextFieldDelegate,ValidationDelegate{
                         self.delegate?.raveOTP(self, didFailPaymentWithResult: ["error" : err as AnyObject])
                     })
                 }
-                
+                })
             })
         }
     }

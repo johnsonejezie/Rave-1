@@ -1245,9 +1245,13 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         }
         if let _ = selectedBank{
             if (selectedBank!.isInternetBanking! == false){
-                if let flwRef = flwTransactionRef{
-                    self.hideOvelay()
-                    self.showOTPScreen(flwRef,isCard: false, message: _instruction)
+                if let authURL = data["authurl"] as? String{
+                    self.showWebView(url: authURL, ref:flwTransactionRef!, isCard: false)
+                }else{
+                    if let flwRef = flwTransactionRef{
+                        self.hideOvelay()
+                        self.showOTPScreen(flwRef,isCard: false, message: _instruction)
+                    }
                 }
             }else{
                 if let authURL = data["authurl"] as? String{
