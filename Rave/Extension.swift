@@ -76,7 +76,7 @@ func styleTextField(_ textField:UITextField, leftView:UIView? = nil){
         textField.leftView = v
         textField.leftViewMode = .always
     }else{
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 1))
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 4, width: 12, height: 1))
         textField.leftViewMode = .always
     }
 }

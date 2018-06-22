@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gs5-LK-kss">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gs5-LK-kss">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -72,6 +72,12 @@
                         <outlet property="amountTextField" destination="74j-1j-rWy" id="8Yh-YA-qxG"/>
                         <outlet property="bankPayButton" destination="26e-3S-BgA" id="w5y-ae-Dpr"/>
                         <outlet property="bankView" destination="lE9-A3-6go" id="gMW-gy-DKM"/>
+                        <outlet property="billingAddress" destination="wba-7C-enQ" id="0eD-aA-B1I"/>
+                        <outlet property="billingAddressCity" destination="fqF-R8-wFI" id="PhC-3m-nHK"/>
+                        <outlet property="billingAddressContinueButton" destination="VJv-gI-joL" id="evQ-oF-UdF"/>
+                        <outlet property="billingAddressCountry" destination="DkW-Nc-Q11" id="98W-BZ-lVg"/>
+                        <outlet property="billingAddressState" destination="4Fk-jk-xjQ" id="gti-U4-ols"/>
+                        <outlet property="billingAddressView" destination="kPq-HJ-JEe" id="3DZ-HW-405"/>
                         <outlet property="billingButton" destination="MMe-JG-8vV" id="Dz0-FQ-cge"/>
                         <outlet property="billingCodeTextField" destination="BEN-1a-eav" id="cOg-aE-pNc"/>
                         <outlet property="billingCodeView" destination="sbd-Of-zQz" id="gif-YI-xvL"/>
@@ -100,6 +106,7 @@
                         <outlet property="savedCardConstants" destination="20t-eL-B5n" id="FAJ-Q4-5IE"/>
                         <outlet property="savedCardPopup" destination="GCZ-j6-fS9" id="4Dv-81-6Hc"/>
                         <outlet property="savedCardsButton" destination="Ahi-OT-6Ia" id="ALH-pv-zvl"/>
+                        <outlet property="zipCode" destination="P5C-PK-TYg" id="rH6-RI-Ofb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oq4-AY-af7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -273,6 +280,100 @@
                         <constraint firstItem="oRj-fp-VTq" firstAttribute="top" secondItem="0jP-6W-XjS" secondAttribute="bottom" constant="22" id="mDZ-L6-UeC"/>
                         <constraint firstItem="4Yl-q7-WfH" firstAttribute="leading" secondItem="aoV-Oa-BpS" secondAttribute="leading" constant="16" id="rXn-Hv-ND2"/>
                         <constraint firstItem="0jP-6W-XjS" firstAttribute="top" secondItem="aoV-Oa-BpS" secondAttribute="top" constant="29" id="tui-F2-yEr"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" id="kPq-HJ-JEe">
+                    <rect key="frame" x="0.0" y="0.0" width="350" height="349"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Billing Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5kq-1p-1J0">
+                            <rect key="frame" x="78.5" y="20" width="193.5" height="25.5"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
+                            <color key="textColor" red="0.21960784310000001" green="0.18039215689999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="54j-QN-yB3">
+                            <rect key="frame" x="21" y="61.5" width="308" height="174"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BILLING ADDRESS" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wba-7C-enQ" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="308" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="QaK-Im-hxr"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="sK2-4l-w8I">
+                                    <rect key="frame" x="0.0" y="62" width="308" height="50"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CITY" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqF-R8-wFI" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="148" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="lOd-60-KZg"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="STATE (CA)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Fk-jk-xjQ" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                                            <rect key="frame" x="160" y="0.0" width="148" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="YDz-bG-hOp"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-zE-SFW">
+                                    <rect key="frame" x="0.0" y="124" width="308" height="50"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="ZIP CODE" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P5C-PK-TYg" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="148" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="Ior-UG-LyN"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="COUNTRY  (US)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DkW-Nc-Q11" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                                            <rect key="frame" x="160" y="0.0" width="148" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="DWK-cy-qj1"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VJv-gI-joL">
+                            <rect key="frame" x="16" y="279" width="318" height="50"/>
+                            <color key="backgroundColor" red="0.0" green="0.63921568630000003" blue="0.51764705879999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="w58-pu-9ik"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <state key="normal" title="CONTINUE">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="54j-QN-yB3" secondAttribute="trailing" constant="21" id="DR8-PP-bNf"/>
+                        <constraint firstItem="54j-QN-yB3" firstAttribute="leading" secondItem="kPq-HJ-JEe" secondAttribute="leading" constant="21" id="Xgh-jp-pEq"/>
+                        <constraint firstItem="VJv-gI-joL" firstAttribute="leading" secondItem="kPq-HJ-JEe" secondAttribute="leading" constant="16" id="fE2-5y-GRy"/>
+                        <constraint firstItem="54j-QN-yB3" firstAttribute="top" secondItem="5kq-1p-1J0" secondAttribute="bottom" constant="16" id="mki-iS-eWZ"/>
+                        <constraint firstItem="VJv-gI-joL" firstAttribute="top" secondItem="54j-QN-yB3" secondAttribute="bottom" constant="43.5" id="oWl-nS-eIO"/>
+                        <constraint firstAttribute="trailing" secondItem="VJv-gI-joL" secondAttribute="trailing" constant="16" id="pn6-PA-2Zd"/>
+                        <constraint firstItem="5kq-1p-1J0" firstAttribute="top" secondItem="kPq-HJ-JEe" secondAttribute="top" constant="20" id="t1V-5M-hLh"/>
+                        <constraint firstItem="5kq-1p-1J0" firstAttribute="centerX" secondItem="kPq-HJ-JEe" secondAttribute="centerX" id="uUT-Yz-IcC"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" id="sbd-Of-zQz">

@@ -18,7 +18,9 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
     weak var delegate:RavePayWebControllerDelegate?
     var email:String?
     lazy var webView:WKWebView = {
-        let web = WKWebView()
+        let configuration = WKWebViewConfiguration()
+        configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+        let web = WKWebView(frame: .zero, configuration: configuration)
         web.uiDelegate = self
         web.navigationDelegate = self
         web.translatesAutoresizingMaskIntoConstraints = false

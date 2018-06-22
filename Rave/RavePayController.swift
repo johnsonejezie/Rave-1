@@ -40,7 +40,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     
     @IBOutlet weak var mpesaPayButton: UIButton!
     @IBOutlet weak var mpesaAccountNumber: UILabel!
+    @IBOutlet var billingAddressView: UIView!
+    @IBOutlet weak var billingAddress: VSTextField!
+    @IBOutlet weak var billingAddressCity: VSTextField!
+    @IBOutlet weak var billingAddressState: VSTextField!
     
+    @IBOutlet weak var billingAddressCountry: VSTextField!
+    @IBOutlet weak var zipCode: VSTextField!
+    
+    @IBOutlet weak var billingAddressContinueButton: UIButton!
     @IBOutlet var billingCodeView: UIView!
     @IBOutlet weak var billingCodeTextField: UITextField!
     @IBOutlet weak var billingButton: UIButton!
@@ -103,6 +111,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     var isInCardMode = true
     var isPinMode = false
     var isBillingCodeMode = false
+    var isBillingAddressMode = false
     var segcontrol:CustomSegementControl!
     var paymentRoute:PaymentRoute!
     var selectedIndex:Int!
@@ -119,6 +128,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     
     private var overLayView:UIView!
     private var billingOverLayView:UIView!
+    private var billingAddressOverLayView:UIView!
     private var savedCardOverLayView:UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,6 +166,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         billingOverLayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         billingOverLayView.isHidden = true
         
+        billingAddressOverLayView = UIView(frame:self.view.frame)
+        billingAddressOverLayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        billingAddressOverLayView.isHidden = true
+        
         let dp = UIDatePicker()
         dp.datePickerMode = .date
         dobTextField.inputView = dp
@@ -179,7 +193,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         
         self.view.addSubview(billingOverLayView)
         
+        let tap3 = UITapGestureRecognizer(target: self, action: #selector(hideBillingOvelay))
+        billingAddressOverLayView.addGestureRecognizer(tap3)
+        billingAddressOverLayView.isUserInteractionEnabled = true
+        billingAddressView.center = CGPoint(x: billingAddressOverLayView.center.x, y: billingAddressOverLayView.center.y - 100)
+        billingAddressView.layer.cornerRadius = 6
+        
+        self.view.addSubview(billingAddressOverLayView)
+        billingAddressOverLayView.addSubview(billingAddressView)
+        
         billingOverLayView.addSubview(billingCodeView)
+        
         
         savedCardOverLayView =  UIView(frame:self.view.frame)
         savedCardOverLayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
@@ -198,6 +222,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         cardPayButton.layer.cornerRadius =  cardPayButton.frame.height / 2
         cardPayButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
         pinButton.layer.cornerRadius =  pinButton.frame.height / 2
+        billingAddressContinueButton.layer.cornerRadius =  billingAddressContinueButton.frame.height / 2
         billingButton.layer.cornerRadius =  billingButton.frame.height / 2
         bankPayButton.layer.cornerRadius =  bankPayButton.frame.height / 2
         bankPayButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
@@ -241,6 +266,51 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         pinIcV.addSubview(pinIcon)
         
         styleTextField(pinTextField,leftView: pinIcV)
+        
+        let billingAddressIcon = UIButton(type: .system)
+        billingAddressIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        billingAddressIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
+        billingAddressIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let billingAddressIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        billingAddressIcV.addSubview(billingAddressIcon)
+        
+        styleTextField(billingAddress,leftView: nil)
+        
+        let billingAddressCountryIcon = UIButton(type: .system)
+        billingAddressCountryIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        billingAddressCountryIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
+        billingAddressCountryIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let billingAddressCountryIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        billingAddressCountryIcV.addSubview(billingAddressCountryIcon)
+        
+        styleTextField(billingAddressCountry,leftView: nil)
+        
+        let billingAddressZipIcon = UIButton(type: .system)
+        billingAddressZipIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        billingAddressZipIcon.setImage(UIImage(named: "", in: identifier ,compatibleWith: nil), for: .normal)
+        billingAddressZipIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let billingAddressZipIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        billingAddressZipIcV.addSubview(billingAddressZipIcon)
+        
+        styleTextField(zipCode,leftView: nil)
+        
+        let billingAddressStateIcon = UIButton(type: .system)
+        billingAddressStateIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        billingAddressStateIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
+        billingAddressStateIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let billingAddressStateIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        billingAddressStateIcV.addSubview(billingAddressStateIcon)
+        
+        styleTextField(billingAddressState,leftView:nil)
+        
+        let billingAddressCityIcon = UIButton(type: .system)
+        billingAddressCityIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        billingAddressCityIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
+        billingAddressCityIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let billingAddressCityIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        billingAddressCityIcV.addSubview(billingAddressCityIcon)
+        
+        styleTextField(billingAddressCity,leftView: nil)
         
         cardIcon = UIButton(type: .system)
         cardIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
@@ -348,6 +418,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         pinButton.addTarget(self, action: #selector(pinButtonTapped), for: .touchUpInside)
         pinButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
         
+        billingAddressContinueButton.addTarget(self, action: #selector(billingAddressButtonTapped), for: .touchUpInside)
+        billingAddressContinueButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
+        
         billingButton.addTarget(self, action: #selector(billingButtonTapped), for: .touchUpInside)
         billingButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
         
@@ -409,6 +482,15 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         self.billingOverLayView.isHidden = true
         isBillingCodeMode = false
         validator.unregisterField(billingCodeTextField)
+    }
+    @objc func hideBillingAddressOvelay(){
+        self.billingAddressOverLayView.isHidden = true
+        isBillingAddressMode = false
+        validator.unregisterField(billingAddressCountry)
+        validator.unregisterField(billingAddressState)
+        validator.unregisterField(billingAddress)
+        validator.unregisterField(zipCode)
+        validator.unregisterField(billingAddressCity)
     }
     
     override func viewDidLayoutSubviews() {
@@ -569,6 +651,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         }else if(isBillingCodeMode){
             self.hideBillingOvelay()
             self.doBillingButtonTapped()
+        }
+        else if(isBillingAddressMode){
+            self.hideBillingAddressOvelay()
+            self.doBillingAddressButtonTapped()
         }
         else{
             if(isInCardMode){
@@ -1107,6 +1193,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             self.showPin()
         case "AVS_VBVSECURECODE":
             self.showBillingView()
+        case "NOAUTH_INTERNATIONAL":
+            self.showBillingAddressView()
         case "VBVSECURECODE":
             if let authURL = data["authurl"] as? String {
                 self.showWebView(url: authURL,ref:flwTransactionRef!)
@@ -1295,7 +1383,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 if let authURL = data["authurl"] as? String{
                     self.showWebView(url: authURL, ref:flwTransactionRef!)
                 }
-            case "AVS_VBVSECURECODE":
+            case "AVS_VBVSECURECODE" ,"NOAUTH_INTERNATIONAL" :
                 if let authURL = data["authurl"] as? String {
                     self.showWebView(url: authURL,ref:flwTransactionRef!)
                 }
@@ -1325,6 +1413,25 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         billingOverLayView.isHidden = false
         isBillingCodeMode = true
         validator.registerField(self.billingCodeTextField, errorLabel: nil, rules: [RequiredRule(message:"Billing code is required")])
+    }
+    
+    private func showBillingAddressView(){
+        billingAddressCountry.text = ""
+        billingAddressState.text = ""
+        billingAddressCity.text = ""
+        billingAddress.text = ""
+        zipCode.text = ""
+        billingAddressOverLayView.isHidden = false
+        isBillingAddressMode = true
+        validator.registerField(self.billingAddressCountry, errorLabel: nil, rules: [RequiredRule(message:"Country is required")])
+         validator.registerField(self.billingAddressState, errorLabel: nil, rules: [RequiredRule(message:"State is required")])
+         validator.registerField(self.billingAddressCity, errorLabel: nil, rules: [RequiredRule(message:"City is required")])
+         validator.registerField(self.billingAddress, errorLabel: nil, rules: [RequiredRule(message:"Address is required")])
+         validator.registerField(self.zipCode, errorLabel: nil, rules: [RequiredRule(message:"Code is required")])
+    }
+    
+    @objc private func billingAddressButtonTapped(){
+        validator.validate(self)
     }
     @objc private func billingButtonTapped(){
         validator.validate(self)
@@ -1358,6 +1465,24 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     @objc private func doBillingButtonTapped(){
         guard let zip = self.billingCodeTextField.text else {return}
         bodyParam?.merge(["suggested_auth":"AVS_VBVSECURECODE","billingzip":zip])
+        let jsonString  = bodyParam!.jsonStringify()
+        let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
+        let data =  TripleDES.encrypt(string: jsonString, key:secret)
+        let base64String = data?.base64EncodedString()
+        
+        let reqbody = [
+            "PBFPubKey": RavePayConfig.sharedConfig().publicKey!,
+            "client": base64String!,
+            "alg": "3DES-24"
+        ]
+        self.chargeCard(reqbody: reqbody)
+    }
+    
+    @objc private func doBillingAddressButtonTapped(){
+        guard let zip = self.zipCode.text, let city = self.billingAddressCity.text,
+        let address = self.billingAddress.text, let country = self.billingAddressCountry.text , let state = self.billingAddressState.text else {return}
+        bodyParam?.merge(["suggested_auth":"NOAUTH_INTERNATIONAL","billingzip":zip,"billingcity":city,
+                          "billingaddress":address,"billingstate":state, "billingcountry":country])
         let jsonString  = bodyParam!.jsonStringify()
         let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
         let data =  TripleDES.encrypt(string: jsonString, key:secret)
