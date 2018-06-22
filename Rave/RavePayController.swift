@@ -1333,7 +1333,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         }
         if let _ = selectedBank{
             if (selectedBank!.isInternetBanking! == false){
-                if let authURL = data["authurl"] as? String, authURL != ""{
+                if let authURL = data["authurl"] as? String, authURL != "NO-URL"{
                     self.showWebView(url: authURL, ref:flwTransactionRef!, isCard: false)
                 }else{
                     if let flwRef = flwTransactionRef{
