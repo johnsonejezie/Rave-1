@@ -13,7 +13,8 @@ class Constants: NSObject {
     
     class func baseURL () -> String{
         // return "http://flw-pms-dev.eu-west-1.elasticbeanstalk.com"
-        return "https://ravesandboxapi.flutterwave.com"
+        //return "https://ravesandboxapi.flutterwave.com"
+        return "https://ravesandbox.azurewebsites.net"
     }
     class func liveBaseURL() -> String{
         return "https://api.ravepay.co"

@@ -84,7 +84,7 @@ class RavePayService: NSObject {
             
             if(res.result.isSuccess){
                 let result = res.result.value as! Dictionary<String,AnyObject>
-                // print(result)
+                 print(result)
                 resultCallback(result)
                 
                 
@@ -126,6 +126,7 @@ class RavePayService: NSObject {
             
             if(res.result.isSuccess){
                 let result = res.result.value as! Dictionary<String,AnyObject>
+                print(result)
                 resultCallback(result)
                 
                 
