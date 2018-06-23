@@ -17,7 +17,8 @@ class Constants: NSObject {
         return "https://ravesandbox.azurewebsites.net"
     }
     class func liveBaseURL() -> String{
-        return "https://api.ravepay.co"
+        //return "https://api.ravepay.co"
+        return "https://raveapi.azurewebsites.net"
     }
     
     
