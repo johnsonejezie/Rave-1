@@ -25,7 +25,7 @@ public enum PaymentMethods: String {
 }
 
 public enum PaymentRoute: String {
-    case card = "card", existingCard = "existing_card", bank = "bank", paypal = "paypal"
+    case card = "card", existingCard = "existing_card", bank = "bank", paypal = "paypal",mpesa = "mpesa"
 }
 
 class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,ValidationDelegate{
@@ -38,6 +38,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     @IBOutlet var mpesaContainer: UIView!
     @IBOutlet weak var mpesaBusinessNumber: UILabel!
     
+    @IBOutlet weak var mpesaPhoneNumber: VSTextField!
     @IBOutlet weak var mpesaPayButton: UIButton!
     @IBOutlet weak var mpesaAccountNumber: UILabel!
     @IBOutlet var billingAddressView: UIView!
@@ -110,6 +111,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     let validator = Validator()
     var isInCardMode = true
     var isPinMode = false
+    var isMpesaMode = false
     var isBillingCodeMode = false
     var isBillingAddressMode = false
     var segcontrol:CustomSegementControl!
@@ -142,11 +144,14 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
     private func  configureView(){
-        let count = supportedPaymentMethods.count
-        if count > 0 {
-            self.paymentMethods = supportedPaymentMethods
-        }
-        
+//        let count = supportedPaymentMethods.count
+//        if count > 0 {
+//            self.paymentMethods = supportedPaymentMethods
+//        }
+        self.paymentMethods = self.getPaymentMethodsForCurrency()
+        self.paymentMethods.forEach({ (item) in
+            print( item.rawValue)
+        })
         
         cardList =  UserDefaults.standard.object(forKey: "cards-\(self.email!)") as? [[String:String]]
         
@@ -388,6 +393,16 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         styleTextField(phoneNUmber,leftView:phoneNumberIcV)
         phoneNUmber.delegate = self
         
+        
+        let mpesaPhoneNumberIcon = UIButton(type: .system)
+        mpesaPhoneNumberIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        mpesaPhoneNumberIcon.setImage(UIImage(named: "phone", in: identifier ,compatibleWith: nil), for: .normal)
+        mpesaPhoneNumberIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let mpesaPhonephoneNumberIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        mpesaPhonephoneNumberIcV.addSubview(mpesaPhoneNumberIcon)
+        styleTextField(mpesaPhoneNumber,leftView:mpesaPhonephoneNumberIcV)
+        phoneNUmber.delegate = self
+        
         containerView.layer.cornerRadius = 6
         containerView.layer.borderWidth = 1
         containerView.layer.borderColor =  RavePayConfig.sharedConfig().secondaryThemeColor.cgColor
@@ -409,10 +424,11 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         payPalButton.addTarget(self, action: #selector(doPayPalButtonTapped), for: .touchUpInside)
         setPayButtonTitle(code: currencyCode, button: payPalButton)
         
-        mpesaPayButton.layer.cornerRadius =  payPalButton.frame.height / 2
+        mpesaPayButton.layer.cornerRadius =  mpesaPayButton.frame.height / 2
         mpesaPayButton.layer.borderWidth = 0.5
         mpesaPayButton.layer.borderColor =  RavePayConfig.sharedConfig().themeColor.cgColor
         mpesaPayButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
+        mpesaPayButton.addTarget(self, action: #selector(mpesaPayButtonTapped), for: .touchUpInside)
         setPayButtonTitle(code: currencyCode, button: mpesaPayButton)
         
         pinButton.addTarget(self, action: #selector(pinButtonTapped), for: .touchUpInside)
@@ -448,6 +464,26 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         savedCardsButton.addTarget(self, action: #selector(showSavedCards), for: .touchUpInside)
         
         
+    }
+    
+    func getPaymentMethodsForCurrency() -> [PaymentMethods]{
+        switch (currencyCode) {
+        case "NGN":
+//            if supportedPaymentMethods.count > 0{
+//                return supportedPaymentMethods.filter({ (item) -> Bool in
+//                    return item == .mpesa
+//                })
+//            }else{
+                return  [.card,.account]
+            //
+        //}
+        case "KES":
+            return  [.card,.mpesa]
+        case "GHS":
+            return  [.card]
+        default:
+            return  [.card,.account]
+        }
     }
     
     @objc func dobPickerValueChanged(_ sender: UIDatePicker){
@@ -574,6 +610,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             
         case .account :
             isInCardMode = false
+            isMpesaMode = false
             carView.isHidden = true
             bankView.isHidden = false
             paypalView.isHidden = true
@@ -582,6 +619,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             if(amount == .none){
                 validator.registerField(self.accountAmountTextField, errorLabel: nil, rules: [RequiredRule(message:"Amount  is required")])
                 validator.unregisterField(amountTextField)
+                validator.unregisterField(mpesaPhoneNumber)
                 accountAmountTextField.isHidden = false
                 containerHeight.constant = 370
             }else{
@@ -589,6 +627,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 containerHeight.constant = 311
                 validator.unregisterField(accountAmountTextField)
                 validator.unregisterField(amountTextField)
+                 validator.unregisterField(mpesaPhoneNumber)
             }
             
             validator.registerField(self.phoneNUmber, errorLabel: nil, rules: [RequiredRule(message:"Phone number is required")])
@@ -598,6 +637,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             validator.unregisterField(expiry)
             validator.unregisterField(cvv)
             validator.unregisterField(pinTextField)
+            validator.unregisterField(mpesaPhoneNumber)
             
         case .paypal:
             carView.isHidden = true
@@ -606,11 +646,23 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             mpesaContainer.isHidden = true
             containerHeight.constant = 128
         case .mpesa:
+             isInCardMode = false
+            isMpesaMode = true
+            validator.registerField(self.mpesaPhoneNumber, errorLabel: nil, rules: [RequiredRule(message:"Phone number is required")])
+            validator.unregisterField(cardNumber)
+            validator.unregisterField(expiry)
+            validator.unregisterField(cvv)
+            validator.unregisterField(accountAmountTextField)
+            validator.unregisterField(amountTextField)
+            validator.unregisterField(pinTextField)
+            validator.unregisterField(phoneNUmber)
+            validator.unregisterField(accountBank)
+            validator.unregisterField(accountNumber)
             carView.isHidden = true
             bankView.isHidden = true
             paypalView.isHidden = true
             mpesaContainer.isHidden = false
-            containerHeight.constant =  243
+            containerHeight.constant =  204
         default:
             break
         }
@@ -656,6 +708,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             self.hideBillingAddressOvelay()
             self.doBillingAddressButtonTapped()
         }
+        else if(isMpesaMode){
+            self.doMpesaButtonTapped()
+        }
         else{
             if(isInCardMode){
                 self.doCardPayButtonTapped()
@@ -665,6 +720,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         }
         
         
+    }
+    @objc func mpesaPayButtonTapped(){
+        validator.validate(self)
     }
     
     func validationFailed(_ errors:[(Validatable ,ValidationError)]) {
@@ -694,6 +752,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         paymentRoute = .paypal
         self.getFee()
         
+    }
+    @objc func doMpesaButtonTapped(){
+        // showOTPScreen()
+        self.view.endEditing(true)
+        paymentRoute = .mpesa
+        self.getFee()
     }
     
     private func cardPayAction(){
@@ -870,6 +934,39 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         }
     }
     
+    private func mpesaAction(){
+        amount = amount != .none ? (amount! != "0" ? amount : accountAmountTextField.text) : accountAmountTextField.text
+        if let pubkey = RavePayConfig.sharedConfig().publicKey{
+            let param:[String:Any] = [
+                "PBFPubKey": pubkey,
+                "amount": amount!,
+                "email": email!,
+                "is_mpesa":"1",
+                "is_mpesa_lipa":"1",
+                "phonenumber":self.mpesaPhoneNumber.text!,
+                "currency": currencyCode,
+                "payment_type": "mpesa",
+                "country":country!,
+                "meta":"",
+                "IP": getIFAddresses().first!,
+                "txRef": merchantTransRef!,
+                "device_fingerprint": (UIDevice.current.identifierForVendor?.uuidString)!
+            ]
+            let jsonString  = param.jsonStringify()
+            let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
+            let data =  TripleDES.encrypt(string: jsonString, key:secret)
+            let base64String = data?.base64EncodedString()
+            
+            let reqbody = [
+                "PBFPubKey": pubkey,
+                "client": base64String!, // Encrypted $data payload here.
+                "alg": "3DES-24"
+            ]
+            self.charge(reqbody: reqbody)
+            
+        }
+    }
+    
     private func bankPayAction(){
         amount = amount != .none ? (amount! != "0" ? amount : accountAmountTextField.text) : accountAmountTextField.text
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
@@ -951,6 +1048,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                     "amount": amount!,
                     "currency": currencyCode,
                     "ptype": "paypal"]
+            case .mpesa:
+                param = [
+                    "PBFPubKey": pubkey,
+                    "amount": amount!,
+                    "currency": currencyCode,
+                    "ptype": "3"]
             default:
                 break
             }
@@ -978,6 +1081,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                                     self.bankPayAction()
                                 case .paypal:
                                     self.paypalAction()
+                                case .mpesa:
+                                    self.mpesaAction()
                                 default:
                                     break
                                 }
@@ -1030,7 +1135,22 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                             })
                             break
                         case "02":
-                            KVNProgress.dismiss()
+                             KVNProgress.dismiss()
+                            if let type =  result?["paymentType"] as? String {
+                                if (type.containsIgnoringCase(find: "mpesa")) {
+                                    if let status =  result?["status"] as? String{
+                                        if (status.containsIgnoringCase(find: "pending")){
+                                            KVNProgress.dismiss()
+                                            showMessageDialog("Transaction Processing", message: "A push notification has been sent to your phone, please complete the transaction by entering your pin.\n Please do not close this page until transaction is completed", image: nil, axis: .horizontal, viewController: self, handler: {
+                                                if let txRef = result?["txRef"] as? String{
+                                                    self.queryMpesaTransaction(txRef: txRef)
+                                                }
+                                            })
+                                            
+                                        }
+                                    }
+                                }
+                            }
                         default:
                             break
                         }
@@ -1252,6 +1372,59 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             })
         }
     }
+    func queryMpesaTransaction(txRef:String?){
+        if let secret = RavePayConfig.sharedConfig().secretKey ,let  ref = txRef{
+            let param = ["SECKEY":secret,"txref":ref]
+            RavePayService.queryMpesaTransaction(param, resultCallback: { (result) in
+        //        print(result)
+                if let  status = result?["status"] as? String{
+                    if (status == "success"){
+                        if let data = result?["data"] as? [String:AnyObject]{
+                       // if let meta = data["flwMeta"] as? [String:AnyObject]{
+                            if let chargeCode = data["chargeCode"] as?  String{
+                                switch chargeCode{
+                                case "00":
+                                    DispatchQueue.main.async {
+                                        let callbackResult = ["status":"success","payload":result!] as [String : Any]
+                                        self.delegate?.ravePay(self, didSucceedPaymentWithResult: callbackResult as [String : AnyObject])
+                                        self.navigationController?.dismiss(animated: true, completion: nil)
+                                    }
+                                default:
+                                    self.queryMpesaTransaction(txRef: ref)
+                                }
+                            }else{
+                                 self.queryMpesaTransaction(txRef: ref)
+                            }
+                            
+                        //    }
+                        }
+                    }else{
+                        DispatchQueue.main.async {
+                            KVNProgress.dismiss()
+                            showMessageDialog("Error", message: "Something went wrong please try again.", image: nil, axis: .horizontal, viewController: self, handler: {
+                                
+                            })
+                            
+                        }
+                    }
+                }
+            }, errorCallback: { (err) in
+                
+                print(err)
+                KVNProgress.dismiss()
+                if (err.containsIgnoringCase(find: "serialize") || err.containsIgnoringCase(find: "JSON")){
+                    DispatchQueue.main.async {
+                        self.delegate?.ravePay(self, didFailPaymentWithResult: ["error" : err as AnyObject])
+                    }
+                }else{
+                    showMessageDialog("Error", message: err, image: nil, axis: .horizontal, viewController: self, handler: {
+                        
+                    })
+                }
+                
+            })
+        }
+    }
     private func getToken(result:[String:AnyObject])->String?{
         var token:String?
         if let _data = result["data"] as? [String:AnyObject]{
@@ -1332,8 +1505,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
         }
         if let _ = selectedBank{
-            if (selectedBank!.isInternetBanking! == false){
-                if let authURL = data["authurl"] as? String, authURL != "NO-URL"{
+            //if (selectedBank!.isInternetBanking! == false){
+                if let authURL = data["authurl"] as? String, authURL != "NO-URL", authURL != "N/A"{
                     self.showWebView(url: authURL, ref:flwTransactionRef!, isCard: false)
                 }else{
                     if let flwRef = flwTransactionRef{
@@ -1341,18 +1514,18 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                         self.showOTPScreen(flwRef,isCard: false, message: _instruction)
                     }
                 }
-            }else{
-                if let authURL = data["authurl"] as? String{
-                    self.showWebView(url: authURL, ref:flwTransactionRef!, isCard: false)
-                }
-            }
+//            }else{
+//                if let authURL = data["authurl"] as? String{
+//                    self.showWebView(url: authURL, ref:flwTransactionRef!, isCard: false)
+//                }
+//            }
         }
     }
     
     private func determineAuthModelUsed(auth:String?, data:[String:AnyObject]){
         let flwTransactionRef = data["flwRef"] as? String
         //let chargeMessage = data["validateInstruction"] as? String
-        var _instruction:String? = "Pending OTP Validation"
+        var _instruction:String? =  data["chargeResponseMessage"] as? String
         if let instruction = data["validateInstruction"] as? String{
             _instruction = instruction
         }else{
@@ -1367,31 +1540,42 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         if (saveCardSwitch.isOn){
             addOrUpdateCardToken(cardNumber: cardNumber.text!, data: data)
         }
-        if let authModel = auth{
-            switch authModel {
-            case "PIN":
-                if let flwRef = flwTransactionRef{
-                    self.hideOvelay()
-                    self.showOTPScreen(flwRef, isCard: true, message:_instruction)
-                }
-            case "GTB_OTP":
-                if let flwRef = flwTransactionRef{
-                    self.hideOvelay()
-                    self.showOTPScreen(flwRef, isCard: true, message:_instruction)
-                }
-            case "VBVSECURECODE":
-                if let authURL = data["authurl"] as? String{
-                    self.showWebView(url: authURL, ref:flwTransactionRef!)
-                }
-            case "AVS_VBVSECURECODE" ,"NOAUTH_INTERNATIONAL" :
-                if let authURL = data["authurl"] as? String {
-                    self.showWebView(url: authURL,ref:flwTransactionRef!)
-                }
-                
-            default:
-                break
+        
+        if let authURL = data["authurl"] as? String, authURL != "NO-URL", authURL != "N/A" {
+            self.showWebView(url: authURL, ref:flwTransactionRef!, isCard: false)
+        }else{
+            if let flwRef = flwTransactionRef{
+                self.hideOvelay()
+                self.showOTPScreen(flwRef,isCard: false, message: _instruction)
             }
         }
+        
+        
+//        if let authModel = auth{
+//            switch authModel {
+//            case "PIN","OTP":
+//                if let flwRef = flwTransactionRef{
+//                    self.hideOvelay()
+//                    self.showOTPScreen(flwRef, isCard: true, message:_instruction)
+//                }
+//            case "GTB_OTP":
+//                if let flwRef = flwTransactionRef{
+//                    self.hideOvelay()
+//                    self.showOTPScreen(flwRef, isCard: true, message:_instruction)
+//                }
+//            case "VBVSECURECODE","REDIRECT":
+//                if let authURL = data["authurl"] as? String{
+//                    self.showWebView(url: authURL, ref:flwTransactionRef!)
+//                }
+//            case "AVS_VBVSECURECODE" ,"NOAUTH_INTERNATIONAL" :
+//                if let authURL = data["authurl"] as? String {
+//                    self.showWebView(url: authURL,ref:flwTransactionRef!)
+//                }
+//
+//            default:
+//                break
+//            }
+//        }
         
     }
     

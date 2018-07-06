@@ -21,6 +21,11 @@ class WebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate {
         let configuration = WKWebViewConfiguration()
         configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
         let web = WKWebView(frame: .zero, configuration: configuration)
+        var scriptContent = "var meta = document.createElement('meta');"
+        scriptContent += "meta.name='viewport';"
+        scriptContent += "meta.content='width=device-width';"
+        scriptContent += "document.getElementsByTagName('head')[0].appendChild(meta);"
+        web.evaluateJavaScript(scriptContent, completionHandler: nil)
         web.uiDelegate = self
         web.navigationDelegate = self
         web.translatesAutoresizingMaskIntoConstraints = false

@@ -36,6 +36,7 @@ class Constants: NSObject {
             "BANK_LIST":"/flwv3-pug/getpaidx/api/flwpbf-banks.js?json=1",
             "CHARGE_WITH_TOKEN":"/flwv3-pug/getpaidx/api/tokenized/charge",
             "QUERY_TRANSACTION":"/flwv3-pug/getpaidx/api/verify",
+            "QUERY_TRANSACTION_V2":"/flwv3-pug/getpaidx/api/v2/verify",
             "SAVED_CARDS_LOOKUP":"/v2/gpx/users/lookup",
             "FEE":"/flwv3-pug/getpaidx/api/fee"
         ]

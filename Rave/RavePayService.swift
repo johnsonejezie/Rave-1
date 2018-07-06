@@ -32,6 +32,26 @@ class RavePayService: NSObject {
         
         
     }
+    class func queryMpesaTransaction(_ bodyParam:Dictionary<String,String>,resultCallback:@escaping (_ result:Dictionary<String,AnyObject>?) -> Void ,errorCallback:@escaping (_ err:String) -> Void ){
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = 30
+        manager.session.configuration.timeoutIntervalForResource = 30
+        manager.request(URLHelper.getURL("QUERY_TRANSACTION_V2"),method: .post, parameters: bodyParam).responseJSON {
+            (res) -> Void in
+            
+            if(res.result.isSuccess){
+                let result = res.result.value as? Dictionary<String,AnyObject>
+                
+                resultCallback(result)
+                
+                
+            }else{
+                errorCallback( res.result.error!.localizedDescription)
+            }
+        }
+        
+        
+    }
     class func getFee(_ bodyParam:Dictionary<String,String>,resultCallback:@escaping (_ result:Dictionary<String,AnyObject>?) -> Void ,errorCallback:@escaping (_ err:String) -> Void ){
         let manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = 30
