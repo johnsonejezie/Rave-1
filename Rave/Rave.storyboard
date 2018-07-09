@@ -92,6 +92,9 @@
                         <outlet property="cvv" destination="WDH-Wk-IQn" id="Xq5-Nf-M7N"/>
                         <outlet property="dobTextField" destination="7hn-Ah-pYA" id="cwA-dj-IPZ"/>
                         <outlet property="expiry" destination="LdC-4x-bLX" id="g59-TY-FNu"/>
+                        <outlet property="mobileMoneyContainer" destination="U2U-bR-LS6" id="PbY-Mn-Hp0"/>
+                        <outlet property="mobileMoneyPayButton" destination="oiW-6W-sp5" id="lTQ-1W-3pF"/>
+                        <outlet property="mobileMoneyPhoneNumber" destination="sDs-QY-kgp" id="nqj-OG-few"/>
                         <outlet property="mpesaContainer" destination="B35-5R-hQf" id="USg-rp-hOe"/>
                         <outlet property="mpesaPayButton" destination="yAm-cT-UnS" id="r4r-Yn-tZ8"/>
                         <outlet property="mpesaPhoneNumber" destination="5LN-qs-pjn" id="vIX-uk-CDo"/>
@@ -306,6 +309,52 @@
                         <constraint firstAttribute="trailing" secondItem="VJv-gI-joL" secondAttribute="trailing" constant="16" id="pn6-PA-2Zd"/>
                         <constraint firstItem="5kq-1p-1J0" firstAttribute="top" secondItem="kPq-HJ-JEe" secondAttribute="top" constant="20" id="t1V-5M-hLh"/>
                         <constraint firstItem="5kq-1p-1J0" firstAttribute="centerX" secondItem="kPq-HJ-JEe" secondAttribute="centerX" id="uUT-Yz-IcC"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" id="U2U-bR-LS6">
+                    <rect key="frame" x="0.0" y="0.0" width="333" height="204"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiW-6W-sp5">
+                            <rect key="frame" x="33" y="134" width="268" height="50"/>
+                            <color key="backgroundColor" red="0.0" green="0.63921568630000003" blue="0.51764705879999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="G0g-hK-KXU"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <state key="normal" title="USE MOBILE MONEY">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PHONE NUMBER" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sDs-QY-kgp" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                            <rect key="frame" x="32" y="68" width="269" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="jXv-kJ-a7s"/>
+                            </constraints>
+                            <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOBILE MONEY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTx-dd-bdS">
+                            <rect key="frame" x="92" y="20" width="149" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="5Af-CW-qNO"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                            <color key="textColor" red="0.21960784310000001" green="0.18039215689999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="NTx-dd-bdS" firstAttribute="top" secondItem="U2U-bR-LS6" secondAttribute="top" constant="20" id="6SH-fa-g75"/>
+                        <constraint firstItem="oiW-6W-sp5" firstAttribute="leading" secondItem="U2U-bR-LS6" secondAttribute="leading" constant="33" id="Q9O-pz-7Cq"/>
+                        <constraint firstAttribute="trailing" secondItem="sDs-QY-kgp" secondAttribute="trailing" constant="32" id="QtP-04-Uvm"/>
+                        <constraint firstItem="oiW-6W-sp5" firstAttribute="top" secondItem="sDs-QY-kgp" secondAttribute="bottom" constant="16" id="YZs-yT-BNy"/>
+                        <constraint firstItem="sDs-QY-kgp" firstAttribute="top" secondItem="NTx-dd-bdS" secondAttribute="bottom" constant="24" id="Zdc-qx-Uyh"/>
+                        <constraint firstItem="sDs-QY-kgp" firstAttribute="leading" secondItem="U2U-bR-LS6" secondAttribute="leading" constant="32" id="anO-3E-YBc"/>
+                        <constraint firstAttribute="trailing" secondItem="oiW-6W-sp5" secondAttribute="trailing" constant="32" id="gFA-a5-2Ah"/>
+                        <constraint firstItem="NTx-dd-bdS" firstAttribute="centerX" secondItem="U2U-bR-LS6" secondAttribute="centerX" id="qaW-wJ-xGh"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" id="sbd-Of-zQz">
