@@ -26,7 +26,8 @@ func MD5(string: String) -> Data? {
 }
 
 func showMessageDialog (_ title:String, message:String , image:UIImage?, axis:UILayoutConstraintAxis,viewController:UIViewController, handler:(() -> Void)?){
-    let popUp = PopupDialog(title: title, message: message, image: image, buttonAlignment: axis, transitionStyle: PopupDialogTransitionStyle.zoomIn, gestureDismissal: true, completion: handler)
+   //let popUp = PopupDialog(title: title, message: message, image: image, buttonAlignment: axis, transitionStyle: PopupDialogTransitionStyle.zoomIn, gestureDismissal: true, completion: handler)
+    let popUp = PopupDialog(title: title, message: message, image:image, buttonAlignment: axis, transitionStyle: PopupDialogTransitionStyle.zoomIn, completion: handler)
     
     if let  _ = handler{
         let button =  DefaultButton(title: "OK"){
