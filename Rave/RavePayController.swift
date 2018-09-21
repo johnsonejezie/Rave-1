@@ -1121,14 +1121,14 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
             var param:[String:String] = [:]
             switch(self.paymentRoute){
-            case .card:
+            case .card?:
                 let first6 = cardNumber.text!.substring(to: cardNumber.text!.index(cardNumber.text!.startIndex, offsetBy: 6))
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
                     "currency": currencyCode,
                     "card6": first6]
-            case .existingCard:
+            case .existingCard?:
                 let first6  = selectedCard?["first6"]
                 param = [
                     "PBFPubKey": pubkey,
@@ -1136,26 +1136,26 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                     "currency": currencyCode,
                     "card6": first6!]
                 
-            case .bank:
+            case .bank?:
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
                     "currency": currencyCode,
                     "ptype": "2"]
                 
-            case .paypal:
+            case .paypal?:
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
                     "currency": currencyCode,
                     "ptype": "paypal"]
-            case .mpesa:
+            case .mpesa?:
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
                     "currency": currencyCode,
                     "ptype": "3"]
-            case .mobileMoney:
+            case .mobileMoney?:
                 param = [
                     "PBFPubKey": pubkey,
                     "amount": amount!,
@@ -1180,17 +1180,17 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                             }
                             let proceed = DefaultButton(title: "Proceed") {
                                 switch(self.paymentRoute){
-                                case .card:
+                                case .card?:
                                     self.cardPayAction()
-                                case .existingCard:
+                                case .existingCard?:
                                     self.cardTokenPayAction(token)
-                                case .bank:
+                                case .bank?:
                                     self.bankPayAction()
-                                case .paypal:
+                                case .paypal?:
                                     self.paypalAction()
-                                case .mpesa:
+                                case .mpesa?:
                                     self.mpesaAction()
-                                case .mobileMoney:
+                                case .mobileMoney?:
                                     self.mobileMoneyGhAction()
                                 default:
                                     break
@@ -1655,36 +1655,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         }else{
             if let flwRef = flwTransactionRef{
                 self.hideOvelay()
-                self.showOTPScreen(flwRef,isCard: false, message: _instruction)
+                self.showOTPScreen(flwRef, isCard: true, message: _instruction)
+               
             }
         }
-        
-        
-//        if let authModel = auth{
-//            switch authModel {
-//            case "PIN","OTP":
-//                if let flwRef = flwTransactionRef{
-//                    self.hideOvelay()
-//                    self.showOTPScreen(flwRef, isCard: true, message:_instruction)
-//                }
-//            case "GTB_OTP":
-//                if let flwRef = flwTransactionRef{
-//                    self.hideOvelay()
-//                    self.showOTPScreen(flwRef, isCard: true, message:_instruction)
-//                }
-//            case "VBVSECURECODE","REDIRECT":
-//                if let authURL = data["authurl"] as? String{
-//                    self.showWebView(url: authURL, ref:flwTransactionRef!)
-//                }
-//            case "AVS_VBVSECURECODE" ,"NOAUTH_INTERNATIONAL" :
-//                if let authURL = data["authurl"] as? String {
-//                    self.showWebView(url: authURL,ref:flwTransactionRef!)
-//                }
-//
-//            default:
-//                break
-//            }
-//        }
         
     }
     
