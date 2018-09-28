@@ -125,6 +125,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     var paymentMethods:[PaymentMethods] = [.card,.account,.paypal]
     var supportedPaymentMethods:[PaymentMethods] = []
     var meta:[[String:String]]?
+    var subAccounts:[SubAccount]?
     var cardList:[[String:String]]? {
         didSet{
             cardSavedTable.reloadData()
@@ -852,6 +853,31 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             if let meta = meta{
                 param.merge(["meta":meta])
             }
+            if let subAccounts = subAccounts{
+              let subAccountDict =  subAccounts.map { (subAccount) -> [String:String] in
+                    var dict = ["id":subAccount.id]
+                    if let ratio = subAccount.ratio{
+                        dict.merge(["transaction_split_ratio":"\(ratio)"])
+                    }
+                    if let chargeType = subAccount.charge_type{
+                        switch chargeType{
+                            case .flat :
+                            dict.merge(["transaction_charge_type":"flat"])
+                            if let charge = subAccount.charge{
+                                 dict.merge(["transaction_charge":"\(charge)"])
+                            }
+                            case .percentage:
+                            dict.merge(["transaction_charge_type":"percentage"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\((charge / 100))"])
+                            }
+                        }
+                    }
+                
+                    return dict
+                }
+                param.merge(["subaccounts":subAccountDict])
+            }
             if let plan = paymentPlan {
                 param.merge(["payment_plan":"\(plan)"])
             }
@@ -896,6 +922,31 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
             if let meta = meta{
                 param.merge(["meta":meta])
+            }
+            if let subAccounts = subAccounts{
+                let subAccountDict =  subAccounts.map { (subAccount) -> [String:String] in
+                    var dict = ["id":subAccount.id]
+                    if let ratio = subAccount.ratio{
+                        dict.merge(["transaction_split_ratio":"\(ratio)"])
+                    }
+                    if let chargeType = subAccount.charge_type{
+                        switch chargeType{
+                        case .flat :
+                            dict.merge(["transaction_charge_type":"flat"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\(charge)"])
+                            }
+                        case .percentage:
+                            dict.merge(["transaction_charge_type":"percentage"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\((charge / 100))"])
+                            }
+                        }
+                    }
+                    
+                    return dict
+                }
+                param.merge(["subaccounts":subAccountDict])
             }
             RavePayService.chargeWithToken(param, resultCallback: { (res) in
                 if let status = res?["status"] as? String{
@@ -973,7 +1024,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     private func paypalAction(){
         amount = amount != .none ? (amount! != "0" ? amount : accountAmountTextField.text) : accountAmountTextField.text
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
-            let param:[String:Any] = [
+            var param:[String:Any] = [
                 "PBFPubKey": pubkey,
                 "is_paypal": "true",
                 "payment_type":"paypal",
@@ -988,6 +1039,34 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 "txRef": merchantTransRef!,
                 "device_fingerprint": (UIDevice.current.identifierForVendor?.uuidString)!
             ]
+            if let meta = meta{
+                param.merge(["meta":meta])
+            }
+            if let subAccounts = subAccounts{
+                let subAccountDict =  subAccounts.map { (subAccount) -> [String:String] in
+                    var dict = ["id":subAccount.id]
+                    if let ratio = subAccount.ratio{
+                        dict.merge(["transaction_split_ratio":"\(ratio)"])
+                    }
+                    if let chargeType = subAccount.charge_type{
+                        switch chargeType{
+                        case .flat :
+                            dict.merge(["transaction_charge_type":"flat"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\(charge)"])
+                            }
+                        case .percentage:
+                            dict.merge(["transaction_charge_type":"percentage"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\((charge / 100))"])
+                            }
+                        }
+                    }
+                    
+                    return dict
+                }
+                param.merge(["subaccounts":subAccountDict])
+            }
             let jsonString  = param.jsonStringify()
             let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
             let data =  TripleDES.encrypt(string: jsonString, key:secret)
@@ -1006,7 +1085,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     private func mpesaAction(){
         amount = amount != .none ? (amount! != "0" ? amount : accountAmountTextField.text) : accountAmountTextField.text
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
-            let param:[String:Any] = [
+            var param:[String:Any] = [
                 "PBFPubKey": pubkey,
                 "amount": amount!,
                 "email": email!,
@@ -1021,6 +1100,34 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 "txRef": merchantTransRef!,
                 "device_fingerprint": (UIDevice.current.identifierForVendor?.uuidString)!
             ]
+            if let meta = meta{
+                param.merge(["meta":meta])
+            }
+            if let subAccounts = subAccounts{
+                let subAccountDict =  subAccounts.map { (subAccount) -> [String:String] in
+                    var dict = ["id":subAccount.id]
+                    if let ratio = subAccount.ratio{
+                        dict.merge(["transaction_split_ratio":"\(ratio)"])
+                    }
+                    if let chargeType = subAccount.charge_type{
+                        switch chargeType{
+                        case .flat :
+                            dict.merge(["transaction_charge_type":"flat"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\(charge)"])
+                            }
+                        case .percentage:
+                            dict.merge(["transaction_charge_type":"percentage"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\((charge / 100))"])
+                            }
+                        }
+                    }
+                    
+                    return dict
+                }
+                param.merge(["subaccounts":subAccountDict])
+            }
             let jsonString  = param.jsonStringify()
             let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
             let data =  TripleDES.encrypt(string: jsonString, key:secret)
@@ -1039,7 +1146,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     private func mobileMoneyGhAction(){
         amount = amount != .none ? (amount! != "0" ? amount : accountAmountTextField.text) : accountAmountTextField.text
         if let pubkey = RavePayConfig.sharedConfig().publicKey{
-            let param:[String:Any] = [
+            var param:[String:Any] = [
                 "PBFPubKey": pubkey,
                 "amount": amount!,
                 "email": email!,
@@ -1053,6 +1160,34 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 "txRef": merchantTransRef!,
                 "device_fingerprint": (UIDevice.current.identifierForVendor?.uuidString)!
             ]
+            if let meta = meta{
+                param.merge(["meta":meta])
+            }
+            if let subAccounts = subAccounts{
+                let subAccountDict =  subAccounts.map { (subAccount) -> [String:String] in
+                    var dict = ["id":subAccount.id]
+                    if let ratio = subAccount.ratio{
+                        dict.merge(["transaction_split_ratio":"\(ratio)"])
+                    }
+                    if let chargeType = subAccount.charge_type{
+                        switch chargeType{
+                        case .flat :
+                            dict.merge(["transaction_charge_type":"flat"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\(charge)"])
+                            }
+                        case .percentage:
+                            dict.merge(["transaction_charge_type":"percentage"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\((charge / 100))"])
+                            }
+                        }
+                    }
+                    
+                    return dict
+                }
+                param.merge(["subaccounts":subAccountDict])
+            }
             let jsonString  = param.jsonStringify()
             let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
             let data =  TripleDES.encrypt(string: jsonString, key:secret)
@@ -1092,6 +1227,31 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             }
             if let meta = meta{
                 param.merge(["meta":meta])
+            }
+            if let subAccounts = subAccounts{
+                let subAccountDict =  subAccounts.map { (subAccount) -> [String:String] in
+                    var dict = ["id":subAccount.id]
+                    if let ratio = subAccount.ratio{
+                        dict.merge(["transaction_split_ratio":"\(ratio)"])
+                    }
+                    if let chargeType = subAccount.charge_type{
+                        switch chargeType{
+                        case .flat :
+                            dict.merge(["transaction_charge_type":"flat"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\(charge)"])
+                            }
+                        case .percentage:
+                            dict.merge(["transaction_charge_type":"percentage"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\((charge / 100))"])
+                            }
+                        }
+                    }
+                    
+                    return dict
+                }
+                param.merge(["subaccounts":subAccountDict])
             }
             if let narrate = narration{
                 param.merge(["narration":narrate])

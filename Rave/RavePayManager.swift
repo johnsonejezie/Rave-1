@@ -7,6 +7,22 @@
 //
 
 import UIKit
+public enum SubAccountChargeType:String {
+    case flat = "flat" , percentage = "percentage"
+}
+public class SubAccount{
+    public let id:String
+    public let ratio:Double?
+    public let charge_type:SubAccountChargeType?
+    public let charge:Double?
+    
+    public init(id:String , ratio:Double?, charge_type:SubAccountChargeType? ,charge:Double?) {
+        self.id = id
+        self.ratio = ratio
+        self.charge_type = charge_type
+        self.charge = charge
+    }
+}
 public protocol RavePaymentManagerDelegate:class {
     func ravePaymentManagerDidCancel(_ ravePaymentManager:RavePayManager)
     func ravePaymentManager(_ ravePaymentManager:RavePayManager, didSucceedPaymentWithResult result:[String:AnyObject])
@@ -27,6 +43,7 @@ public class RavePayManager: UIViewController,RavePayControllerDelegate {
     public var meta:[[String:String]]?
     public var supportedPaymentMethods:[PaymentMethods]!
     public var blacklistBanks:[String]?
+    public var subAccounts:[SubAccount]?
     
     
     
@@ -56,6 +73,7 @@ public class RavePayManager: UIViewController,RavePayControllerDelegate {
         raveController.currencyCode = currencyCode
         raveController.blacklistBanks = blacklistBanks
         raveController.supportedPaymentMethods = supportedPaymentMethods
+        raveController.subAccounts = subAccounts
         controller.present(_controller, animated: true, completion: nil)
     }
     
