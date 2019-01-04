@@ -21,11 +21,11 @@ protocol RavePayControllerDelegate:class {
 }
 
 public enum PaymentMethods: String {
-    case card = "CARD", account = "ACCOUNT", paypal = "PAYPAL", mpesa = "MPESA" , mobileMoney = "MOBILE MONEY"
+    case card = "CARD", account = "ACCOUNT", paypal = "PAYPAL", mpesa = "MPESA" , mobileMoney = "MOBILE MONEY", mobileMoneyUganda = "MOBILE MONEY UG"
 }
 
 public enum PaymentRoute: String {
-    case card = "card", existingCard = "existing_card", bank = "bank", paypal = "paypal",mpesa = "mpesa", mobileMoney = "mobileMoney"
+    case card = "card", existingCard = "existing_card", bank = "bank", paypal = "paypal",mpesa = "mpesa", mobileMoney = "mobileMoney", mobileMoneyUganda = "mobileMoneyUganda"
 }
 
 class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,ValidationDelegate{
@@ -77,8 +77,20 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     @IBOutlet weak var accountBank: UITextField!
     @IBOutlet weak var accountNumber: UITextField!
     @IBOutlet weak var phoneNUmber: UITextField!
+    
+    @IBOutlet weak var mobileMoneyTitle: UILabel!
+    
+    @IBOutlet weak var mobileMobileChooseNetwork: VSTextField!
+    
+    @IBOutlet weak var mobileMoneyVoucher: VSTextField!
     let creditCardValidator = CreditCardValidator()
     @IBOutlet weak var savedCardConstants: NSLayoutConstraint!
+    
+    @IBOutlet var mobilMoneyUgandaContainer: UIView!
+    
+    @IBOutlet weak var mobileMoneyPhoneUganda: VSTextField!
+    
+    @IBOutlet weak var mobileMoneyUgandaPayButton: UIButton!
     var cardIcon:UIButton!
     var cardIcV:UIView!
     var bankPicker:UIPickerView!
@@ -117,6 +129,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     var isPinMode = false
     var isMpesaMode = false
     var isMobileMoneyMode = false
+    var isMobileMoneyUgandaMode = false
     var isBillingCodeMode = false
     var isBillingAddressMode = false
     var segcontrol:CustomSegementControl!
@@ -126,6 +139,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     var supportedPaymentMethods:[PaymentMethods] = []
     var meta:[[String:String]]?
     var subAccounts:[SubAccount]?
+    var ghsMobileMoneyPicker:UIPickerView!
     var cardList:[[String:String]]? {
         didSet{
             cardSavedTable.reloadData()
@@ -169,7 +183,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         containerView.addSubview(bankView)
         containerView.addSubview(paypalView)
         containerView.addSubview(mpesaContainer)
-         containerView.addSubview(mobileMoneyContainer)
+        containerView.addSubview(mobileMoneyContainer)
+        containerView.addSubview(mobilMoneyUgandaContainer)
+        
         overLayView = UIView(frame:self.view.frame)
         overLayView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         overLayView.isHidden = true
@@ -418,6 +434,39 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         mobileMoneyPhonephoneNumberIcV.addSubview(mobileMoneyPhoneNumberIcon)
         styleTextField(mobileMoneyPhoneNumber,leftView:mobileMoneyPhonephoneNumberIcV)
         
+        let mobileMoneyPhoneNumberUGIcon = UIButton(type: .system)
+        mobileMoneyPhoneNumberUGIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        mobileMoneyPhoneNumberUGIcon.setImage(UIImage(named: "phone", in: identifier ,compatibleWith: nil), for: .normal)
+        mobileMoneyPhoneNumberUGIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let mobileMoneyPhonephoneNumberUGIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        mobileMoneyPhonephoneNumberUGIcV.addSubview(mobileMoneyPhoneNumberUGIcon)
+        styleTextField(mobileMoneyPhoneUganda,leftView:mobileMoneyPhonephoneNumberUGIcV)
+        
+        
+        ghsMobileMoneyPicker = UIPickerView()
+        ghsMobileMoneyPicker.autoresizingMask  = [.flexibleWidth , .flexibleHeight]
+        ghsMobileMoneyPicker.showsSelectionIndicator = true
+        ghsMobileMoneyPicker.delegate = self
+        ghsMobileMoneyPicker.dataSource = self
+        ghsMobileMoneyPicker.tag = 13
+        self.mobileMobileChooseNetwork.delegate = self
+        self.mobileMobileChooseNetwork.inputView = ghsMobileMoneyPicker
+        let mobileMobileChooseNetworkIcon = UIButton(type: .system)
+        mobileMobileChooseNetworkIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        mobileMobileChooseNetworkIcon.setImage(UIImage(named: "calender", in: identifier ,compatibleWith: nil), for: .normal)
+        mobileMobileChooseNetworkIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let mobileMobileChooseNetworkIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        mobileMobileChooseNetworkIcV.addSubview(mobileMobileChooseNetworkIcon)
+        styleTextField(mobileMobileChooseNetwork, leftView:mobileMobileChooseNetworkIcV)
+
+        let mobileMoneyVoucherIcon = UIButton(type: .system)
+        mobileMoneyVoucherIcon.tintColor =  RavePayConfig.sharedConfig().themeColor
+        mobileMoneyVoucherIcon.setImage(UIImage(named: "new_card", in: identifier ,compatibleWith: nil), for: .normal)
+        mobileMoneyVoucherIcon.frame = CGRect(x: 12, y: 5, width: 20, height: 20)
+        let mobileMoneyVoucherIcV = UIView(frame: CGRect(x: 0, y: 0, width: 45, height: 30))
+        mobileMoneyVoucherIcV.addSubview(mobileMoneyVoucherIcon)
+        styleTextField(mobileMoneyVoucher,leftView:mobileMoneyVoucherIcV)
+        
         phoneNUmber.delegate = self
         
         containerView.layer.cornerRadius = 6
@@ -454,6 +503,13 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         mobileMoneyPayButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
         mobileMoneyPayButton.addTarget(self, action: #selector(mobileMoneyPayButtonTapped), for: .touchUpInside)
         setPayButtonTitle(code: currencyCode, button: mobileMoneyPayButton)
+        
+        mobileMoneyUgandaPayButton.layer.cornerRadius =  mobileMoneyUgandaPayButton.frame.height / 2
+        mobileMoneyUgandaPayButton.layer.borderWidth = 0.5
+        mobileMoneyUgandaPayButton.layer.borderColor =  RavePayConfig.sharedConfig().themeColor.cgColor
+        mobileMoneyUgandaPayButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
+        mobileMoneyUgandaPayButton.addTarget(self, action: #selector(mobileMoneyUgandaPayButtonTapped), for: .touchUpInside)
+        setPayButtonTitle(code: currencyCode, button: mobileMoneyUgandaPayButton)
         
         pinButton.addTarget(self, action: #selector(pinButtonTapped), for: .touchUpInside)
         pinButton.backgroundColor = RavePayConfig.sharedConfig().buttonThemeColor
@@ -505,6 +561,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             return  [.card,.mpesa]
         case "GHS":
             return  [.card,.mobileMoney]
+        case "UGX":
+            return  [.card,.mobileMoneyUganda]
         default:
             return  [.card,.account]
         }
@@ -560,6 +618,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         paypalView.frame = containerView.bounds
         mpesaContainer.frame = containerView.bounds
         mobileMoneyContainer.frame = containerView.bounds
+        mobilMoneyUgandaContainer.frame = containerView.bounds
     }
     @objc func doneButtonPressed(){
         self.hideCardOvelay()
@@ -614,6 +673,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             paypalView.isHidden = true
             mpesaContainer.isHidden = true
             mobileMoneyContainer.isHidden = true
+             mobilMoneyUgandaContainer.isHidden = true
             if(amount == .none){
                 amountTextField.isHidden = false
                 containerHeight.constant = 415
@@ -636,6 +696,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             validator.unregisterField(accountNumber)
             validator.unregisterField(mpesaPhoneNumber)
             validator.unregisterField(mobileMoneyPhoneNumber)
+            validator.unregisterField(mobileMoneyPhoneUganda)
+            validator.unregisterField(mobileMobileChooseNetwork)
             
             
         case .account :
@@ -647,6 +709,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             paypalView.isHidden = true
             mpesaContainer.isHidden = true
             mobileMoneyContainer.isHidden = true
+             mobilMoneyUgandaContainer.isHidden = true
             //containerHeight.constant = 233
             if(amount == .none){
                 validator.registerField(self.accountAmountTextField, errorLabel: nil, rules: [RequiredRule(message:"Amount  is required")])
@@ -671,6 +734,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             validator.unregisterField(pinTextField)
             validator.unregisterField(mpesaPhoneNumber)
             validator.unregisterField(mobileMoneyPhoneNumber)
+            validator.unregisterField(mobileMoneyPhoneUganda)
+            validator.unregisterField(mobileMobileChooseNetwork)
             
         case .paypal:
             carView.isHidden = true
@@ -694,17 +759,22 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             validator.unregisterField(accountBank)
             validator.unregisterField(accountNumber)
              validator.unregisterField(mobileMoneyPhoneNumber)
+             validator.unregisterField(mobileMoneyPhoneUganda)
+             validator.unregisterField(mobileMobileChooseNetwork)
             carView.isHidden = true
             bankView.isHidden = true
             paypalView.isHidden = true
             mpesaContainer.isHidden = false
              mobileMoneyContainer.isHidden = true
+              mobilMoneyUgandaContainer.isHidden = true
             containerHeight.constant =  204
         case .mobileMoney:
             isInCardMode = false
             isMpesaMode = false
             isMobileMoneyMode = true
             validator.registerField(self.mobileMoneyPhoneNumber, errorLabel: nil, rules: [RequiredRule(message:"Phone number is required")])
+            validator.registerField(self.mobileMobileChooseNetwork, errorLabel: nil, rules: [RequiredRule(message:"Network is required")])
+            validator.unregisterField(mobileMoneyPhoneUganda)
             validator.unregisterField(mpesaPhoneNumber)
             validator.unregisterField(cardNumber)
             validator.unregisterField(expiry)
@@ -720,9 +790,34 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             paypalView.isHidden = true
             mpesaContainer.isHidden = true
             mobileMoneyContainer.isHidden = false
-            containerHeight.constant =  204
-        default:
-            break
+             mobilMoneyUgandaContainer.isHidden = true
+            containerHeight.constant =  320
+        case .mobileMoneyUganda:
+            isInCardMode = false
+            isMpesaMode = false
+            isMobileMoneyMode = false
+            isMobileMoneyUgandaMode = true
+            validator.registerField(self.mobileMoneyPhoneUganda, errorLabel: nil, rules: [RequiredRule(message:"Phone number is required")])
+            validator.unregisterField(mobileMoneyPhoneNumber)
+            validator.unregisterField(mobileMobileChooseNetwork)
+            validator.unregisterField(mpesaPhoneNumber)
+            validator.unregisterField(cardNumber)
+            validator.unregisterField(expiry)
+            validator.unregisterField(cvv)
+            validator.unregisterField(accountAmountTextField)
+            validator.unregisterField(amountTextField)
+            validator.unregisterField(pinTextField)
+            validator.unregisterField(phoneNUmber)
+            validator.unregisterField(accountBank)
+            validator.unregisterField(accountNumber)
+            carView.isHidden = true
+            bankView.isHidden = true
+            paypalView.isHidden = true
+            mpesaContainer.isHidden = true
+            mobileMoneyContainer.isHidden = true
+            mobilMoneyUgandaContainer.isHidden = false
+            containerHeight.constant =  300
+        
         }
     }
     
@@ -772,6 +867,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         else if(isMobileMoneyMode){
             self.doMobileMoneyButtonTapped()
         }
+        else if(isMobileMoneyUgandaMode){
+            self.doMobileMoneyUgandaButtonTapped()
+        }
         else{
             if(isInCardMode){
                 self.doCardPayButtonTapped()
@@ -786,6 +884,10 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         validator.validate(self)
     }
     @objc func mobileMoneyPayButtonTapped(){
+        validator.validate(self)
+    }
+    
+    @objc func mobileMoneyUgandaPayButtonTapped(){
         validator.validate(self)
     }
     
@@ -827,6 +929,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
         // showOTPScreen()
         self.view.endEditing(true)
         paymentRoute = .mobileMoney
+        self.getFee()
+    }
+    @objc func doMobileMoneyUgandaButtonTapped(){
+        // showOTPScreen()
+        self.view.endEditing(true)
+        paymentRoute = .mobileMoneyUganda
         self.getFee()
     }
     
@@ -1142,6 +1250,65 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             
         }
     }
+    private func mobileMoneyUGAction(){
+        amount = amount != .none ? (amount! != "0" ? amount : accountAmountTextField.text) : accountAmountTextField.text
+        if let pubkey = RavePayConfig.sharedConfig().publicKey{
+            var param:[String:Any] = [
+                "PBFPubKey": pubkey,
+                "amount": amount!,
+                "email": email!,
+                "is_mobile_money_ug":"1",
+                "phonenumber":self.mobileMoneyPhoneUganda.text!,
+                "currency": currencyCode,
+                "payment_type": "mobilemoneyuganda",
+                "country":country!,
+                "meta":"",
+                "IP": getIFAddresses().first!,
+                "txRef": merchantTransRef!,
+                "device_fingerprint": (UIDevice.current.identifierForVendor?.uuidString)!
+            ]
+            if let meta = meta{
+                param.merge(["meta":meta])
+            }
+            if let subAccounts = subAccounts{
+                let subAccountDict =  subAccounts.map { (subAccount) -> [String:String] in
+                    var dict = ["id":subAccount.id]
+                    if let ratio = subAccount.ratio{
+                        dict.merge(["transaction_split_ratio":"\(ratio)"])
+                    }
+                    if let chargeType = subAccount.charge_type{
+                        switch chargeType{
+                        case .flat :
+                            dict.merge(["transaction_charge_type":"flat"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\(charge)"])
+                            }
+                        case .percentage:
+                            dict.merge(["transaction_charge_type":"percentage"])
+                            if let charge = subAccount.charge{
+                                dict.merge(["transaction_charge":"\((charge / 100))"])
+                            }
+                        }
+                    }
+                    
+                    return dict
+                }
+                param.merge(["subaccounts":subAccountDict])
+            }
+            let jsonString  = param.jsonStringify()
+            let secret = getEncryptionKey(RavePayConfig.sharedConfig().secretKey!)
+            let data =  TripleDES.encrypt(string: jsonString, key:secret)
+            let base64String = data?.base64EncodedString()
+            
+            let reqbody = [
+                "PBFPubKey": pubkey,
+                "client": base64String!, // Encrypted $data payload here.
+                "alg": "3DES-24"
+            ]
+            self.charge(reqbody: reqbody)
+            
+        }
+    }
     
     private func mobileMoneyGhAction(){
         amount = amount != .none ? (amount! != "0" ? amount : accountAmountTextField.text) : accountAmountTextField.text
@@ -1155,6 +1322,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 "currency": currencyCode,
                 "payment_type": "mobilemoneygh",
                 "country":country!,
+                "network":self.mobileMobileChooseNetwork.text!,
                 "meta":"",
                 "IP": getIFAddresses().first!,
                 "txRef": merchantTransRef!,
@@ -1162,6 +1330,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
             ]
             if let meta = meta{
                 param.merge(["meta":meta])
+            }
+            if let _voucher = self.mobileMoneyVoucher.text , _voucher != ""{
+                param.merge(["voucher":_voucher])
             }
             if let subAccounts = subAccounts{
                 let subAccountDict =  subAccounts.map { (subAccount) -> [String:String] in
@@ -1321,6 +1492,12 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                     "amount": amount!,
                     "currency": currencyCode,
                     "ptype": "2"]
+            case .mobileMoneyUganda?:
+                param = [
+                    "PBFPubKey": pubkey,
+                    "amount": amount!,
+                    "currency": currencyCode,
+                    "ptype": "3"]
             default:
                 break
             }
@@ -1352,6 +1529,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                                     self.mpesaAction()
                                 case .mobileMoney?:
                                     self.mobileMoneyGhAction()
+                                case .mobileMoneyUganda?:
+                                    self.mobileMoneyUGAction()
                                 default:
                                     break
                                 }
@@ -1405,8 +1584,8 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                             break
                         case "02":
                              KVNProgress.dismiss()
-                            if let type =  result?["paymentType"] as? String {
-                                if (type.containsIgnoringCase(find: "mpesa") || type.containsIgnoringCase(find: "mobilemoneygh")) {
+                            if let type =  result?["paymentType"] as? String, let currency = result?["currency"] as? String {
+                                if (type.containsIgnoringCase(find: "mpesa") || currency.containsIgnoringCase(find: "UGX") ) {
                                     if let status =  result?["status"] as? String{
                                         if (status.containsIgnoringCase(find: "pending")){
                                             KVNProgress.dismiss()
@@ -1419,6 +1598,25 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                                         }
                                     }
                                 }
+                                else if (type.containsIgnoringCase(find: "mobilemoneygh")) {
+                                    if let status =  result?["status"] as? String{
+                                        if (status.containsIgnoringCase(find: "pending")){
+                                            KVNProgress.dismiss()
+                                            let customMessage = Constants.ghsMobileNetworks.filter({ (it) -> Bool in
+                                                return it.0 == self.mobileMobileChooseNetwork.text!
+                                            }).first?.2
+                                            
+                                            //print(customMessage ?? "")
+                                            showMessageDialog("Transaction Processing", message: (customMessage ?? ""), image: nil, axis: .horizontal, viewController: self, handler: {
+                                                if let txRef = result?["txRef"] as? String{
+                                                    self.queryMpesaTransaction(txRef: txRef)
+                                                }
+                                            })
+                                            
+                                        }
+                                    }
+                                }
+                                
                             }
                         default:
                             break
@@ -2040,46 +2238,65 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if let count = self.banks?.count{
-            return count
+        if pickerView.tag == 13{
+            return Constants.ghsMobileNetworks.count
         }else{
-            return 0
+            if let count = self.banks?.count{
+                return count
+            }else{
+                return 0
+            }
         }
-        
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.banks?[row].name
-        
+        if pickerView.tag == 13{
+            return Constants.ghsMobileNetworks[row].0
+        }else{
+            return self.banks?[row].name
+        }
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if let count = self.banks?.count,  count > 0{
-            selectedBank = self.banks?[row]
-            if let internetBanking = selectedBank?.isInternetBanking{
-                if(internetBanking == true){
-                    phoneNUmber.isHidden = false
-                    accountNumber.isHidden = true
-                    containerHeight.constant = 233
-                    validator.unregisterField(accountNumber)
-                }else{
-                    phoneNUmber.isHidden = false
-                    accountNumber.isHidden = false
-                    containerHeight.constant = 311
-                    validator.registerField(self.accountNumber, errorLabel: nil, rules: [RequiredRule(message:"Account number is required")])
-                    
+        if pickerView.tag == 13{
+            self.mobileMobileChooseNetwork.text = Constants.ghsMobileNetworks[row].0
+            self.mobileMoneyTitle.text = Constants.ghsMobileNetworks[row].1
+            
+            if (Constants.ghsMobileNetworks[row].0 == "VODAFONE"){
+                mobileMoneyVoucher.isHidden = false
+            }else{
+                mobileMoneyVoucher.isHidden = true
+            }
+    
+        }else{
+            if let count = self.banks?.count,  count > 0{
+                selectedBank = self.banks?[row]
+                if let internetBanking = selectedBank?.isInternetBanking{
+                    if(internetBanking == true){
+                        phoneNUmber.isHidden = false
+                        accountNumber.isHidden = true
+                        containerHeight.constant = 233
+                        validator.unregisterField(accountNumber)
+                    }else{
+                        phoneNUmber.isHidden = false
+                        accountNumber.isHidden = false
+                        containerHeight.constant = 311
+                        validator.registerField(self.accountNumber, errorLabel: nil, rules: [RequiredRule(message:"Account number is required")])
+                        
+                    }
+                }
+                
+                
+                self.accountBank.text = self.banks?[row].name
+                if let bank = self.accountBank.text{
+                    if bank.containsIgnoringCase(find: "zenith"){
+                        self.dobTextField.isHidden = false
+                        containerHeight.constant = 419
+                    }else{
+                        self.dobTextField.isHidden = true
+                        containerHeight.constant = 311
+                    }
                 }
             }
             
-            
-            self.accountBank.text = self.banks?[row].name
-            if let bank = self.accountBank.text{
-                if bank.containsIgnoringCase(find: "zenith"){
-                    self.dobTextField.isHidden = false
-                    containerHeight.constant = 419
-                }else{
-                    self.dobTextField.isHidden = true
-                    containerHeight.constant = 311
-                }
-            }
         }
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

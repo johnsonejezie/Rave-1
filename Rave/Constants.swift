@@ -21,6 +21,33 @@ class Constants: NSObject {
         return "https://raveapi.azurewebsites.net"
     }
     
+    static let ghsMobileNetworks = [("MTN","Please Dial *170#, click on Pay and wait for instructions on the next screen",
+                                     """
+                                        Complete payment process
+                                        1. Dial *170#
+                                        2. Choose option: 7) Wallet
+                                        3. Choose option: 3) My Approvals
+                                        4. Enter your MOMO pin to retrieve your pending approval list
+                                        5. Choose a pending transaction
+                                        6. Choose option 1 to approve
+                                        7. Tap button to continue)
+                                        """),
+                                    ("TIGO","Please Dial *501*5#, click on Pay and wait for instructions on the next screen",
+                                     """
+                                        Complete payment process
+                                        1. Dial *501*5# to approve your transaction.
+                                        2. Select the transaction to approve and click on send.
+                                        3. Select YES to confirm your payment.
+                                        """),
+                                    ("VODAFONE","Please Dial *110# and follow the instructions to generate your transaction voucher.",
+                                     """
+                                        Complete payment process
+                                        1. Dial  *110# to generate your transaction voucher.
+                                        2. Select option) 6 to generate the voucher.
+                                        3. Enter your PIN in next prompt.
+                                        4. Input the voucher generated in the payment modal
+                                        """),
+                                    ("AIRTEL","","")]
     
     
     class func isConnectedToInternet() ->Bool {

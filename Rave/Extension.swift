@@ -130,6 +130,8 @@ extension String{
             str = self.toCurrency(2, locale: "en_ZA")
         case "EUR":
             str = self.toCurrency(2, locale: "de_DE")
+        case "UGX":
+            str = self.toCurrency(2, locale: "nyn_UG")
         default:
             str = self.toCurrency(2)
             

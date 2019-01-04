@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gs5-LK-kss">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gs5-LK-kss">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -92,9 +92,15 @@
                         <outlet property="cvv" destination="WDH-Wk-IQn" id="Xq5-Nf-M7N"/>
                         <outlet property="dobTextField" destination="7hn-Ah-pYA" id="cwA-dj-IPZ"/>
                         <outlet property="expiry" destination="LdC-4x-bLX" id="g59-TY-FNu"/>
+                        <outlet property="mobilMoneyUgandaContainer" destination="7gJ-L5-YLh" id="hcP-bd-kF7"/>
+                        <outlet property="mobileMobileChooseNetwork" destination="Zh4-lC-KqL" id="L50-XT-GGf"/>
                         <outlet property="mobileMoneyContainer" destination="U2U-bR-LS6" id="PbY-Mn-Hp0"/>
                         <outlet property="mobileMoneyPayButton" destination="oiW-6W-sp5" id="lTQ-1W-3pF"/>
                         <outlet property="mobileMoneyPhoneNumber" destination="sDs-QY-kgp" id="nqj-OG-few"/>
+                        <outlet property="mobileMoneyPhoneUganda" destination="mZN-8r-LNR" id="i6v-ta-1In"/>
+                        <outlet property="mobileMoneyTitle" destination="NTx-dd-bdS" id="jiE-Kn-VUM"/>
+                        <outlet property="mobileMoneyUgandaPayButton" destination="zwS-YB-ILq" id="ReW-dV-6Qo"/>
+                        <outlet property="mobileMoneyVoucher" destination="Nep-4b-R7q" id="iMA-9q-Fun"/>
                         <outlet property="mpesaContainer" destination="B35-5R-hQf" id="USg-rp-hOe"/>
                         <outlet property="mpesaPayButton" destination="yAm-cT-UnS" id="r4r-Yn-tZ8"/>
                         <outlet property="mpesaPhoneNumber" destination="5LN-qs-pjn" id="vIX-uk-CDo"/>
@@ -217,6 +223,49 @@
                         <constraint firstItem="0jP-6W-XjS" firstAttribute="top" secondItem="aoV-Oa-BpS" secondAttribute="top" constant="29" id="tui-F2-yEr"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" id="7gJ-L5-YLh">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="247"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PHONE" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mZN-8r-LNR" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                            <rect key="frame" x="21" y="85" width="258" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="aiH-Qy-p8o"/>
+                            </constraints>
+                            <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile Money Uganda" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0S-D2-mxc">
+                            <rect key="frame" x="45" y="37" width="210.5" height="26"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
+                            <color key="textColor" red="0.21960784310000001" green="0.18039215689999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zwS-YB-ILq">
+                            <rect key="frame" x="16" y="159" width="268" height="50"/>
+                            <color key="backgroundColor" red="0.0" green="0.63921568630000003" blue="0.51764705879999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="OaR-BB-5oa"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <state key="normal" title="CONTINUE">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="mZN-8r-LNR" firstAttribute="top" secondItem="f0S-D2-mxc" secondAttribute="bottom" constant="22" id="8D4-gF-15Y"/>
+                        <constraint firstItem="mZN-8r-LNR" firstAttribute="leading" secondItem="7gJ-L5-YLh" secondAttribute="leading" constant="21" id="N1M-SJ-aA5"/>
+                        <constraint firstItem="f0S-D2-mxc" firstAttribute="centerX" secondItem="7gJ-L5-YLh" secondAttribute="centerX" id="Vew-7z-bqV"/>
+                        <constraint firstItem="f0S-D2-mxc" firstAttribute="top" secondItem="7gJ-L5-YLh" secondAttribute="top" constant="37" id="cOC-Lk-vgw"/>
+                        <constraint firstAttribute="trailing" secondItem="mZN-8r-LNR" secondAttribute="trailing" constant="21" id="guR-K7-oyo"/>
+                        <constraint firstItem="zwS-YB-ILq" firstAttribute="top" secondItem="mZN-8r-LNR" secondAttribute="bottom" constant="24" id="hq8-dV-PBz"/>
+                        <constraint firstItem="zwS-YB-ILq" firstAttribute="leading" secondItem="7gJ-L5-YLh" secondAttribute="leading" constant="16" id="kOC-fW-RDI"/>
+                        <constraint firstAttribute="trailing" secondItem="zwS-YB-ILq" secondAttribute="trailing" constant="16" id="zal-fI-pcE"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" id="kPq-HJ-JEe">
                     <rect key="frame" x="0.0" y="0.0" width="350" height="349"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -312,49 +361,70 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" id="U2U-bR-LS6">
-                    <rect key="frame" x="0.0" y="0.0" width="333" height="204"/>
+                    <rect key="frame" x="0.0" y="0.0" width="333" height="419"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiW-6W-sp5">
-                            <rect key="frame" x="33" y="134" width="268" height="50"/>
-                            <color key="backgroundColor" red="0.0" green="0.63921568630000003" blue="0.51764705879999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="50" id="G0g-hK-KXU"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                            <state key="normal" title="USE MOBILE MONEY">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PHONE NUMBER" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sDs-QY-kgp" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
-                            <rect key="frame" x="32" y="68" width="269" height="50"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="50" id="jXv-kJ-a7s"/>
-                            </constraints>
-                            <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Dial *170#, click on Pay and wait for instructions on the next screen" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTx-dd-bdS">
+                            <rect key="frame" x="24" y="20" width="285" height="31.5"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                        </textField>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOBILE MONEY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTx-dd-bdS">
-                            <rect key="frame" x="92" y="20" width="149" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="24" id="5Af-CW-qNO"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                             <color key="textColor" red="0.21960784310000001" green="0.18039215689999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiW-6W-sp5">
+                            <rect key="frame" x="29" y="203.5" width="275" height="50"/>
+                            <color key="backgroundColor" red="0.0" green="0.63921568630000003" blue="0.51764705879999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="K53-TU-AZn"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <state key="normal" title="PAY">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Duu-5s-Eaj">
+                            <rect key="frame" x="29" y="59.5" width="275" height="112"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CHOOSE NETWORK" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zh4-lC-KqL" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="275" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="rZS-zy-jvM"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                </textField>
+                                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="VOUCHER" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nep-4b-R7q" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="56" width="275" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="Eyx-5S-Lfo"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                </textField>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PHONE NUMBER" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sDs-QY-kgp" customClass="VSTextField" customModule="Rave" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="62" width="275" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="suu-HA-3k7"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.29026708010000002" green="0.27853813770000002" blue="0.27460539340000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                </textField>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="NTx-dd-bdS" firstAttribute="top" secondItem="U2U-bR-LS6" secondAttribute="top" constant="20" id="6SH-fa-g75"/>
-                        <constraint firstItem="oiW-6W-sp5" firstAttribute="leading" secondItem="U2U-bR-LS6" secondAttribute="leading" constant="33" id="Q9O-pz-7Cq"/>
-                        <constraint firstAttribute="trailing" secondItem="sDs-QY-kgp" secondAttribute="trailing" constant="32" id="QtP-04-Uvm"/>
-                        <constraint firstItem="oiW-6W-sp5" firstAttribute="top" secondItem="sDs-QY-kgp" secondAttribute="bottom" constant="16" id="YZs-yT-BNy"/>
-                        <constraint firstItem="sDs-QY-kgp" firstAttribute="top" secondItem="NTx-dd-bdS" secondAttribute="bottom" constant="24" id="Zdc-qx-Uyh"/>
-                        <constraint firstItem="sDs-QY-kgp" firstAttribute="leading" secondItem="U2U-bR-LS6" secondAttribute="leading" constant="32" id="anO-3E-YBc"/>
-                        <constraint firstAttribute="trailing" secondItem="oiW-6W-sp5" secondAttribute="trailing" constant="32" id="gFA-a5-2Ah"/>
-                        <constraint firstItem="NTx-dd-bdS" firstAttribute="centerX" secondItem="U2U-bR-LS6" secondAttribute="centerX" id="qaW-wJ-xGh"/>
+                        <constraint firstItem="oiW-6W-sp5" firstAttribute="top" secondItem="Duu-5s-Eaj" secondAttribute="bottom" constant="32" id="8sz-Q8-rCl"/>
+                        <constraint firstItem="Duu-5s-Eaj" firstAttribute="leading" secondItem="U2U-bR-LS6" secondAttribute="leading" constant="29" id="IrQ-71-Ez5"/>
+                        <constraint firstItem="NTx-dd-bdS" firstAttribute="top" secondItem="U2U-bR-LS6" secondAttribute="top" constant="20" id="KbI-NO-9O5"/>
+                        <constraint firstAttribute="trailing" secondItem="Duu-5s-Eaj" secondAttribute="trailing" constant="29" id="Ngj-fw-gCV"/>
+                        <constraint firstItem="oiW-6W-sp5" firstAttribute="leading" secondItem="U2U-bR-LS6" secondAttribute="leading" constant="29" id="c4z-5Y-h0M"/>
+                        <constraint firstItem="Duu-5s-Eaj" firstAttribute="top" secondItem="NTx-dd-bdS" secondAttribute="bottom" constant="8" id="cBd-5p-QKF"/>
+                        <constraint firstAttribute="trailing" secondItem="NTx-dd-bdS" secondAttribute="trailing" constant="24" id="jPN-Qz-czF"/>
+                        <constraint firstAttribute="trailing" secondItem="oiW-6W-sp5" secondAttribute="trailing" constant="29" id="jgD-km-7XT"/>
+                        <constraint firstItem="NTx-dd-bdS" firstAttribute="leading" secondItem="U2U-bR-LS6" secondAttribute="leading" constant="24" id="z5T-oa-ZQp"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" id="sbd-Of-zQz">
@@ -405,7 +475,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PCI-DSS COMPLIANT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5sW-5X-Cyr">
-                            <rect key="frame" x="104" y="97" width="123.5" height="15"/>
+                            <rect key="frame" x="105" y="97.5" width="123.5" height="14.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14.5" id="2gl-Oa-Hol"/>
                             </constraints>
@@ -414,7 +484,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3f-2j-jnk">
-                            <rect key="frame" x="16" y="29" width="301" height="50"/>
+                            <rect key="frame" x="16" y="29.5" width="301" height="50"/>
                             <color key="backgroundColor" red="0.0" green="0.63921568630000003" blue="0.51764705879999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="uGL-ZX-mAQ"/>
@@ -495,7 +565,7 @@
                             </constraints>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwE-Da-NOH">
-                            <rect key="frame" x="16" y="254" width="301" height="50"/>
+                            <rect key="frame" x="16" y="253.5" width="301" height="50"/>
                             <color key="backgroundColor" red="0.0" green="0.63921568627450975" blue="0.51764705882352935" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="yHj-dq-Vfi"/>
@@ -506,7 +576,7 @@
                             </state>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Bz-gB-aOJ">
-                            <rect key="frame" x="0.0" y="320" width="333" height="1"/>
+                            <rect key="frame" x="0.0" y="319.5" width="333" height="0.5"/>
                             <color key="backgroundColor" red="0.88235294117647056" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="JdB-FZ-CXS"/>
@@ -514,7 +584,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahi-OT-6Ia">
-                            <rect key="frame" x="16" y="337" width="301" height="50"/>
+                            <rect key="frame" x="16" y="336" width="301" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="20t-eL-B5n"/>
                             </constraints>
@@ -524,7 +594,7 @@
                             </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PCI-DSS COMPLIANT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BsP-1f-dw8">
-                            <rect key="frame" x="105.5" y="392" width="123.5" height="15"/>
+                            <rect key="frame" x="105" y="391" width="123.5" height="14.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14.5" id="8ZD-Iw-AWO"/>
                             </constraints>
@@ -642,7 +712,7 @@
                             </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PCI-DSS COMPLIANT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ut5-mx-Oj2">
-                            <rect key="frame" x="105.5" y="327" width="123.5" height="15"/>
+                            <rect key="frame" x="105" y="327" width="123.5" height="14.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14.5" id="Zt0-Ks-O4u"/>
                             </constraints>
@@ -729,7 +799,7 @@
                                 <rect key="frame" x="25" y="57" width="325" height="265"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="One Time Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aK-j0-hoW">
-                                        <rect key="frame" x="60.5" y="21" width="203.5" height="27"/>
+                                        <rect key="frame" x="61" y="21" width="203.5" height="27"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                         <color key="textColor" red="0.21960784310000001" green="0.18039215689999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
@@ -830,7 +900,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2b-B5-d3V">
-                                <rect key="frame" x="101" y="308" width="172" height="50"/>
+                                <rect key="frame" x="101.5" y="308.5" width="172" height="50"/>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.18039215689999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="doj-zS-Nyl"/>

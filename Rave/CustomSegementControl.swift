@@ -76,6 +76,7 @@ class CustomSegementControl: UIControl {
             let width = self.frame.width / CGFloat(buttonTitles.count)
             button.setTitleColor(buttonTitleColor, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             button.sizeToFit()
             buttons.append(button)
