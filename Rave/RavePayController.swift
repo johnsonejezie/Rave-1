@@ -549,22 +549,46 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     func getPaymentMethodsForCurrency() -> [PaymentMethods]{
         switch (currencyCode) {
         case "NGN":
-//            if supportedPaymentMethods.count > 0{
-//                return supportedPaymentMethods.filter({ (item) -> Bool in
-//                    return item == .mpesa
-//                })
-//            }else{
+            if supportedPaymentMethods.count > 0{
+                return supportedPaymentMethods.filter({ (item) -> Bool in
+                    return  item == .card || item == .account
+                })
+            }else{
                 return  [.card,.account]
-            //
-        //}
+            
+            }
         case "KES":
-            return  [.card,.mpesa]
+            if supportedPaymentMethods.count > 0{
+                return supportedPaymentMethods.filter({ (item) -> Bool in
+                    return  item == .card || item == .mpesa
+                })
+            }else{
+                return  [.card,.mpesa]
+                
+            }
+            //return  [.card,.mpesa]
         case "GHS":
-            return  [.card,.mobileMoney]
+            if supportedPaymentMethods.count > 0{
+                return supportedPaymentMethods.filter({ (item) -> Bool in
+                    return  item == .card || item == .mobileMoney
+                })
+            }else{
+                return  [.card,.mobileMoney]
+                
+            }
+           // return  [.card,.mobileMoney]
         case "UGX":
-            return  [.card,.mobileMoneyUganda]
+            if supportedPaymentMethods.count > 0{
+                return supportedPaymentMethods.filter({ (item) -> Bool in
+                    return  item == .card || item == .mobileMoneyUganda
+                })
+            }else{
+                return  [.card,.mobileMoneyUganda]
+                
+            }
+           // return  [.card,.mobileMoneyUganda]
         default:
-            return  [.card,.account]
+            return  [.card]
         }
     }
     
