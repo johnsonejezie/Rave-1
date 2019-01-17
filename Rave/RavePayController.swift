@@ -1286,6 +1286,7 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
                 "currency": currencyCode,
                 "payment_type": "mobilemoneyuganda",
                 "country":country!,
+                "network": "UGX",
                 "meta":"",
                 "IP": getIFAddresses().first!,
                 "txRef": merchantTransRef!,
