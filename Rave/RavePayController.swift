@@ -117,6 +117,9 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     var merchantTransRef:String? = "RaveMobileiOS"
     var email:String? = "segun.solaja@gmail.com"
     var amount:String? = "500"
+    var cardNumberValue: String?
+    var expiryValue: String?
+    var cvvValue: String?
     var paymentPlan:Int?
     var currencyCode:String = "NGN"
     var country:String!
@@ -161,6 +164,25 @@ class RavePayController: UIViewController,RavePayWebControllerDelegate,OTPContro
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    private func processPaymentIfNeedBe() {
+        if supportedPaymentMethods.first == .card {
+            guard let card = cardNumberValue,
+                !card.isEmpty,
+                let expiryDate = expiryValue,
+                !expiryDate.isEmpty,
+                let cvvValue = cvvValue,
+                !cvvValue.isEmpty else { return }
+            cardNumber.text = card
+            expiry.text = expiryDate
+            cvv.text = cvvValue
+            doCardPayButtonTapped()
+        } else if supportedPaymentMethods.first == .account {
+            guard let _ = selectedBank else { return }
+            dobankPayButtonTapped()
+        }
     }
     
     private func  configureView(){
@@ -2343,10 +2365,10 @@ extension RavePayController: UITableViewDelegate,UITableViewDataSource{
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath:IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if(indexPath.section == 0){
             selectedCard = cardList?[indexPath.row]
-            if (editingStyle == UITableViewCellEditingStyle.delete) {
+            if (editingStyle == UITableViewCell.EditingStyle.delete) {
                 let cards = self.cardList?.filter({ (item) -> Bool in
                     return item["card_token"] != selectedCard!["card_token"]
                 })

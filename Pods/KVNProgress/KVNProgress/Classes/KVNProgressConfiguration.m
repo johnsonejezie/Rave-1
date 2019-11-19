@@ -41,6 +41,10 @@
 		
 		_tapBlock = nil;
 		_allowUserInteraction = NO;
+
+		if (@available(iOS 10, *)) {
+			_enableUIFeedback = NO;
+		}
 	}
 	
 	return self;
@@ -78,6 +82,10 @@
 	
 	copy.tapBlock = self.tapBlock;
 	copy.allowUserInteraction = self.allowUserInteraction;
+
+	if (@available(iOS 10, *)) {
+		copy.enableUIFeedback = self.enableUIFeedback;
+	}
 	
 	return copy;
 }

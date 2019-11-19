@@ -25,7 +25,7 @@ func MD5(string: String) -> Data? {
     return digestData
 }
 
-func showMessageDialog (_ title:String, message:String , image:UIImage?, axis:UILayoutConstraintAxis,viewController:UIViewController, handler:(() -> Void)?){
+func showMessageDialog (_ title:String, message:String , image:UIImage?, axis:NSLayoutConstraint.Axis,viewController:UIViewController, handler:(() -> Void)?){
    //let popUp = PopupDialog(title: title, message: message, image: image, buttonAlignment: axis, transitionStyle: PopupDialogTransitionStyle.zoomIn, gestureDismissal: true, completion: handler)
     let popUp = PopupDialog(title: title, message: message, image:image, buttonAlignment: axis, transitionStyle: PopupDialogTransitionStyle.zoomIn, completion: handler)
     
@@ -100,7 +100,7 @@ extension String{
     }
     func index(of target: String) -> Int? {
         if let range = self.range(of: target) {
-            return characters.distance(from: startIndex, to: range.lowerBound)
+            return self.distance(from: startIndex, to: range.lowerBound)
         } else {
             return nil
         }
@@ -108,7 +108,7 @@ extension String{
     
     func lastIndex(of target: String) -> Int? {
         if let range = self.range(of: target, options: .backwards) {
-            return characters.distance(from: startIndex, to: range.lowerBound)
+            return self.distance(from: startIndex, to: range.lowerBound)
         } else {
             return nil
         }
@@ -175,14 +175,14 @@ public extension UIColor {
         var hex:   String = hex
         
         if hex.hasPrefix("#") {
-            let index   = hex.characters.index(hex.startIndex, offsetBy: 1)
+            let index   = hex.index(hex.startIndex, offsetBy: 1)
             hex         = hex.substring(from: index)
         }
         
         let scanner = Scanner(string: hex)
         var hexValue: CUnsignedLongLong = 0
         if scanner.scanHexInt64(&hexValue) {
-            switch (hex.characters.count) {
+            switch (hex.count) {
             case 3:
                 red   = CGFloat((hexValue & 0xF00) >> 8)       / 15.0
                 green = CGFloat((hexValue & 0x0F0) >> 4)       / 15.0

@@ -13,12 +13,12 @@ import CommonCrypto
 public class TripleDES {
     static func encrypt(string:String, key:String) -> NSData? {
         
-        let keyData: NSData! = (key as NSString).data(using: String.Encoding.utf8.rawValue) as NSData!
-        let keyBytes         = keyData.bytes
+        let keyData: Data! = (key as NSString).data(using: String.Encoding.utf8.rawValue)
+        let keyBytes         = (keyData as NSData).bytes
         
-        let data: NSData! = (string as NSString).data(using: String.Encoding.utf8.rawValue) as NSData!
-        let dataLength    = UInt(data.length)
-        let dataBytes     = data.bytes
+        let data: Data! = (string as NSString).data(using: String.Encoding.utf8.rawValue)
+        let dataLength    = UInt((data as NSData).length)
+        let dataBytes     = (data as NSData).bytes
         
         let cryptData    = NSMutableData(length: Int(dataLength) + kCCBlockSize3DES)!
         let cryptPointer = cryptData.mutableBytes

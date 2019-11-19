@@ -1,6 +1,7 @@
 {
   "name": "SwiftValidator",
   "version": "4.0.0",
+  "swift_versions": "4.2",
   "summary": "A UITextField Validation library for Swift",
   "homepage": "https://github.com/jpotts18/SwiftValidator",
   "screenshots": "https://raw.githubusercontent.com/jpotts18/SwiftValidator/master/swift-validator-v2.gif",
@@ -25,5 +26,6 @@
     "Foundation",
     "UIKit"
   ],
-  "requires_arc": true
+  "requires_arc": true,
+  "swift_version": "4.2"
 }
